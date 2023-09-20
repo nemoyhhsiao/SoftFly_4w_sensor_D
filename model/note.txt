@@ -1,0 +1,48 @@
+
+controller_v1:
+- created on 2021.11.22
+- achieved 5-sec hovering flight on 2021.11.27
+
+controller_v2:
+- created on 2021.12.01
+- include simulation of the robot to add i-terms
+
+controller_v3:
+- created on 2021.12.28
+- include yaw controll and update mapping
+
+controller_v4:
+- created on 2022.01.05
+- include forced landing feature
+- add safety enable for high voltage operation
+
+controller_v5:
+- created on 2022.02.07
+- change lowpass filter for yaw controller
+
+controller_v6:
+- created on 2022.02.28
+- implement different sampling times for each block
+- simplify voltage generation block #1 (2022.02.28)
+
+controller_v7:
+- created on 2022.03.09
+- implement different sampling times for each block
+- simplify voltage generation block #1-#2 (2022.03.09)
+
+controller_v8:
+- created on 2022.03.15
+- overload landing/disable
+
+controller_v9:
+- created on 2022.05.18
+- Andrea's MPC testing
+
+controller_v10:
+- created on 2022.07.01
+- copied from v8
+- added "delay" in simulation
+
+controller_v12:
+- created on 2022.07.26
+- MPC

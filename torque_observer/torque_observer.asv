@@ -1,0 +1,41 @@
+function [L] = make_external_torque_observer(rsim, mdl, ctr)
+% omega_dot = J^-1 tau_ext + theta_ext
+% theta_ext_dot = 0
+% x = [omega_xy, theta_ext_xy]
+% u = tau_xy 
+n_x = 4;
+n_u = 2;
+n_y = 2;
+J = diag([rsim.rbt.ixx, rsim.rbt.iyy]);
+A = zeros(n_x, n_x);
+A(1:2, 1:2) = inv(J);
+A(1:2, 3:4) = inv(J);
+
+B = zeros(n_x, n_u); 
+B(1:2, 1:2) = inv(J);
+
+% we measure the angular velocity
+C = [eye(2), zeros(2)];
+
+G = eye(n_x);
+H = zeros(n_u, n_x);
+
+Q = diag([0.1, 0.1, 0.01, 0.01]);
+R = diag([0.01, 0.01]);
+
+D = zeros(n_y,n_u);
+
+sys = ss(A, [B, G], C, [D, H]);
+
+c2d
+
+[kalmf,L,~,Mx,Z] = kalman(sys,Q,R);
+
+ctr.torque_obs.Q = Q;
+ctr.torque_obs.R = R;
+ctr.torque_obs.A = A;
+ctr.torque_obs.B = B;
+ctr.torque_obs.C = C;
+ctr.torque_obs.D = D;
+ctr.torque_obs.L = L;
+end
