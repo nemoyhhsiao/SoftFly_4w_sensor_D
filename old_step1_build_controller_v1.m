@@ -7,6 +7,7 @@ clear
 % add path to subfolder
 addpath('./model');
 addpath('./function');
+load('thrust2voltage_lut_20230829.mat')
 % addpath('E:\Dropbox\Shared\External\share_with_Andrea\octobee_control_collab\2022_07_26_simple_lee_hovering_test\octobee_control');
 
 % set flight time for the model

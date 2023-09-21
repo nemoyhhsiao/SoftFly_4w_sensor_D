@@ -19,6 +19,8 @@ ctr.yaw.en      = 0;
 ctr.integral.en = 0;
 ctr.safety.T    = 0.04;
 
+ctr.freq_vec = [400 400 400 400];
+
 % attitude controller gains
 ctr.gain.at3 = 62*0.75;				
 ctr.gain.at2 = 798*0.75;
@@ -117,7 +119,8 @@ mdl.T       = 1/mdl.f;		    % controller sampling rate
 mdl.T_high  = 1/mdl.f_high;
 mdl.i_delay = 2.0;				% initial delay (s)
 mdl.s_delay = 0.8;				% short delay (s) before i terms kicks in
-mdl.rt      = flight_time + mdl.i_delay;		% flight time
+mdl.rt      = flight_time + mdl.i_delay + 1;		% flight time
+mdl.flight_time = flight_time;
 mdl.g       = 9.80655;
 mdl.drag_force.linear = 2.5e-3;
 rsim.rbt.torque_damping = 9e-7; % mav_sim has 10e-7
@@ -244,6 +247,7 @@ rsim.p0 = [-0.049;-0.047;0.068];              % initial position
 rsim.v0 = [0,0,0];     % initial velocity.
 
 % robot parameter in simulation
+rsim.rbt.m   = 1.0*rbt.m;
 rsim.rbt.ixx = 1.0*rbt.ixx;		% kg.m^2;
 rsim.rbt.iyy = 1.0*rbt.iyy;
 rsim.rbt.izz = 1.0*rbt.izz;

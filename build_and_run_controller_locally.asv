@@ -35,11 +35,13 @@ if rsim.en
     set_param(strcat(model_name, '/UDP send to Arduino'), 'commented', 'on');
     set_param(strcat(model_name, '/Vicon UDP receive'), 'commented', 'on');
     warning("-->> using simulator")
-
+    
 else
     set_param(strcat(model_name, '/Flying Simulation'), 'commented', 'on');
     warning("-->> using Vicon data")
 end
+
+
 
 % set_param(strcat(model_name, '/Real-Time Interfaces'), 'commented', 'on');
 out = sim(model_name, 'SimulationMode','normal');
