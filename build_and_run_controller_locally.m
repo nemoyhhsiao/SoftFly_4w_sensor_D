@@ -1,4 +1,4 @@
-%% 
+ %% 
 
 clc
 clear
@@ -16,9 +16,10 @@ model_name = 'controller13';
 flight_time = 3.0;
 
 % setup controller parameter
-[mdl,rbt,ctr,flt,rsim,som] = controller_setup_v5(flight_time);
-
-run_controller
+setup_controller
+% [mdl,rbt,ctr,flt,rsim,som] = controller_setup_v5(flight_time);
+% 
+% run_controller
 
 rsim.en = true;
 r0 = [-0.053, -0.068, 0.069];
@@ -48,6 +49,7 @@ out = sim(model_name, 'SimulationMode','normal');
 % plot position and UKF output
 
 %% plots
+if false
 
 figure(1)
 labels_xyz = {'x', 'y', 'z'};
@@ -282,3 +284,5 @@ plot(out.torque.Time, out.torque.Data(:,4)/mdl.g/rbt.m, 'LineWidth', 2.0)
 xlabel("Time (s)");
 ylabel("Acc (gs)");
 hold off
+
+end

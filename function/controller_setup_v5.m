@@ -22,16 +22,16 @@ ctr.safety.T    = 0.04;
 ctr.freq_vec = [400 400 400 400];
 
 % attitude controller gains
-ctr.gain.at3 = 62*0.75;				
-ctr.gain.at2 = 798*0.75;
-ctr.gain.at1 = 6631*1.15;
-ctr.gain.at0 = 13608*1.1;				
-ctr.gain.ati = 0.5e4*1.5;				
+% ctr.gain.at3 = 62*0.75;				
+% ctr.gain.at2 = 798*0.75;
+% ctr.gain.at1 = 6631*1.15;
+% ctr.gain.at0 = 13608*1.1;				
+% ctr.gain.ati = 0.5e4*1.5;				
 
 % altitude controller gains 
-ctr.gain.al0 = 150*0.55;	% p gain		
-ctr.gain.al1 = 30*0.9;      % d gain
-ctr.gain.ali = 20*0.9;	
+% ctr.gain.al0 = 150*0.55;	% p gain		
+% ctr.gain.al1 = 30*0.9;      % d gain
+% ctr.gain.ali = 20*0.9;	
 
 % yaw controller gains
 % ctr.yaw.simulink = 0; % use the simulink embedded block
