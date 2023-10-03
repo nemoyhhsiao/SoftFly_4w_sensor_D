@@ -1,0 +1,76 @@
+function rsim = make_robot_simulation(flight_time)
+    % Initialize the 'rsim' structure with simulation parameters
+
+    % Enable or disable simulation
+    rsim.en = 1;
+
+    % Simulation sample time
+    rsim.mdl.f = 1000;
+    rsim.mdl.T = 1 / rsim.mdl.f;
+
+    % Initial conditions
+    rsim.R0 = [1; 0; 0; 0; 1; 0; 0; 0; 1];
+    rsim.w0 = [0; 0; 0];
+    rsim.p0 = [-0.049; -0.047; 0.068];
+    rsim.v0 = [0, 0, 0];
+
+    % Robot parameters in simulation
+    rsim.rbt.ixx = 1.0 * rbt.ixx;  % kg.m^2;
+    rsim.rbt.iyy = 1.0 * rbt.iyy;
+    rsim.rbt.izz = 1.0 * rbt.izz;
+
+    % Response delay for Vicon measurements
+    rsim.delay.Vicon.time = 0.004;
+    rsim.delay.Vicon.n_steps = floor(rsim.delay.Vicon.time / 0.002);
+    if rsim.delay.Vicon.n_steps > 0
+        rsim.delay.Vicon.init_val = repmat([rsim.p0; 0; 0; 0;], 1, rsim.delay.Vicon.n_steps);
+    else
+        rsim.delay.Vicon.init_val = 0;
+    end
+
+    % Response delay for actuator commands
+    rsim.delay.actuator.time = 0.015;
+    rsim.delay.actuator.n_steps = round(rsim.delay.actuator.time / mdl.T);
+    if rsim.delay.actuator.n_steps > 0
+        rsim.delay.actuator.init_val = ones(4, rsim.delay.actuator.n_steps) * rbt.m * mdl.g / 4;
+    else
+        rsim.delay.actuator.init_val = 0;
+    end
+
+    % Disturbance enable
+    rsim.dist.pos.en = 0;
+    rsim.dist.rot.en = 0;
+
+    % Force disturbance (N)
+    rbt_mg = mdl.g * rbt.m;  % Mass
+    rsim.dist.x.mean = 0.25 * rbt_mg;
+    rsim.dist.y.mean = 0.25 * rbt_mg;
+    rsim.dist.z.mean = -0.4 * rbt_mg;
+    rsim.dist.x.var = 1e-6 * rbt_mg;
+    rsim.dist.y.var = 1e-6 * rbt_mg;
+    rsim.dist.z.var = 1e-6 * rbt_mg;
+    rsim.dist.x.seed = 0;
+    rsim.dist.y.seed = 1;
+    rsim.dist.z.seed = 2;
+
+    % Torque disturbance (Nm)
+    rsim.dist.wx.mean = -1.5e-5;
+    rsim.dist.wy.mean = -1.5e-5;
+    rsim.dist.wz.mean = 0.0 * 0.1e-5;
+    rsim.dist.wx.var = 1e-13;
+    rsim.dist.wy.var = 1e-13;
+    rsim.dist.wz.var = 0;  % 10e-9;
+    rsim.dist.wx.seed = 3;
+    rsim.dist.wy.seed = 4;
+    rsim.dist.wz.seed = 5;
+
+    % Sensing noise in observer: 
+    rsim.sensing_noise.pos.enable = 1;
+    rsim.sensing_noise.rpy.enable = 1;
+    rsim.sensing_noise.pos_sigma = 0.03e-3 * ones(3, 1); % 0.5 mm
+    rsim.sensing_noise.rpy_sigma = 0.5 * ones(3, 1) / 180 * pi; % 0.5 deg
+    rsim.sensing_noise.pos.enable = 1;
+    rsim.sensing_noise.rpy.enable = 1;
+
+    % Return the initialized 'rsim' structure
+end
