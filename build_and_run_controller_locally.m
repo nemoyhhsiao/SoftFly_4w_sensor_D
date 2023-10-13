@@ -17,8 +17,9 @@ flight_time = 3.0;
 
 % setup controller parameter
 setup_controller
+
+
 % [mdl,rbt,ctr,flt,rsim,som] = controller_setup_v5(flight_time);
-% 
 % run_controller
 
 rsim.en = true;

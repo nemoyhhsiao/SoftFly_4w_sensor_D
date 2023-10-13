@@ -1,6 +1,19 @@
-function [ctr] = make_rtnmpc_controller(ctr, mdl)
-%MAKE_CONTROLLER Summary of this function goes here
-%   Detailed explanation goes here
+function [ctr] = make_rtnmpc_controller(ctr, mdl, rbt)
+
+    % MAKE_CONTROLLER Summary of this function goes here
+    % Detailed explanation goes here
+
+    % Lee attitude controller
+    ctr.lee.ixx = rbt.ixx;
+    ctr.lee.iyy = rbt.iyy;
+    ctr.lee.izz = rbt.izz;
+    ctr.lee.ang_acc_ff = 1;
+    ctr.lee.kR = 1.e-6*diag([18*0.7083, 54*0.9227, 0.0])*1.65*1.3; %*2.0; %*2.0;  % rotation error [10, 40, 0.0]
+    %ctr.lee.kOmega = 1.e-6*diag([3.0*0.7083, 9*0.9227, 0.0])*0.85*1.3*1.5; % setup used for p2p up to closed loop 10
+    ctr.lee.kOmega = 1.e-6*diag([3.5*3.0, 13.7*3.0, 0.0]);
+
+    % RTMPC Limits
+    ctr.rtmpc.lim.att = pi / 6.0;
 
 % MPC and LQR Settings;
 % load rtmpc nn params generated via generate_simulink_nn_from_onnx_model

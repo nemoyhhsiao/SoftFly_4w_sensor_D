@@ -4,6 +4,9 @@ function ctr = make_controller()
     % Controller enable
     ctr.en = 1;
 
+    % Flapping frequency of all four units (Hz)
+    ctr.freq_vec = [400 400 400 400];
+
     % Yaw control enable
     ctr.yaw.en = 0;
 
@@ -14,14 +17,14 @@ function ctr = make_controller()
     ctr.integral.yaw.upper = 3e-6;
     ctr.integral.yaw.lower = -3e-6;
 
-    % Attitude controller gains
+    % Attitude controller gains (Pakpong's lateral)
     ctr.gain.at3 = 62 * 0.75;
     ctr.gain.at2 = 798 * 0.75;
     ctr.gain.at1 = 6631 * 1.15;
     ctr.gain.at0 = 13608 * 1.1;
     ctr.gain.ati = 0.5e4 * 1.5;
 
-    % Altitude controller gains
+    % Altitude controller gains (Pakpong's altitude)
     ctr.gain.al0 = 150 * 0.55;
     ctr.gain.al1 = 30 * 0.9;
     ctr.gain.ali = 20 * 0.9;
@@ -79,39 +82,13 @@ function ctr = make_controller()
     ctr.adaptive_saturation.enable = 1;
     ctr.adaptive_saturation.Q = diag([1e2 * 0.5, 1e5 * 10, 1e5 * 5.0]);
 
-    % RTMPC Limits
-    ctr.rtmpc.lim.att = pi / 6.0;
-
-    % Torque Observer
-    ctr.torque_obs.enable = 1;
-    ctr.torque_obs.factor = 1;
-
     % Mode (You can uncomment and set this if needed)
     % ctr.mode = 2; % 0: rtmpc; 1: lqr v2; 2: lqr v3;
 
-    %% ==== cascaded parameters ====
-    %  =============================
-
-    ctr.casd.en = 1; % 1 for cascaded, 0 for geometric 
-    ctr.casd.yaw = 1; % 1 to enable yaw control
-    ctr.traj.en = 1;
-    ctr.traj.ome = 2;
+    % ctr.traj.en = 1;
+    % ctr.traj.ome = 2;
 
     % controller gains
-
-    % attitude controller
-    ctr.casd.att.x.p = 0.001;
-    ctr.casd.att.x.d = 0.00006; %4.6e-05;
-    ctr.casd.att.y.p = 0.001;
-    ctr.casd.att.y.d = 0.00008; %6.6e-05;
-    ctr.casd.att.z.p = 3e-5;  % 2021.12.28 3e-4
-    ctr.casd.att.z.d = 1e-5;  % 2021.12.28 1e-4  % old: 4e-05
-
-    % position controller
-    ctr.casd.pos.x.p = 6; % 17
-    ctr.casd.pos.x.d = 2;
-    ctr.casd.pos.y.p = 6; % 16
-    ctr.casd.pos.y.d = 2;
 
     ctr.lim.att = 0.05; % 0.25
 

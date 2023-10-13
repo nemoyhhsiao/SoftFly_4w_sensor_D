@@ -1,4 +1,4 @@
-function [rbt] = make_robot()
+function [rbt] = make_robot(mdl)
     rbt.m = 4 * 180e-6;
     rbt.base.th = 0.0 * rbt.m;
     rbt.base.xt = 0.0 * 1e-5;

@@ -1,8 +1,5 @@
-function rsim = make_robot_simulation(flight_time)
+function rsim = make_robot_simulation(rbt,mdl,rsim)
     % Initialize the 'rsim' structure with simulation parameters
-
-    % Enable or disable simulation
-    rsim.en = 1;
 
     % Simulation sample time
     rsim.mdl.f = 1000;
@@ -15,9 +12,13 @@ function rsim = make_robot_simulation(flight_time)
     rsim.v0 = [0, 0, 0];
 
     % Robot parameters in simulation
+    rsim.rbt.m   = 1.0 * rbt.m;
     rsim.rbt.ixx = 1.0 * rbt.ixx;  % kg.m^2;
     rsim.rbt.iyy = 1.0 * rbt.iyy;
     rsim.rbt.izz = 1.0 * rbt.izz;
+
+    % Robot rotational dynamics damping
+    rsim.rbt.torque_damping = 9e-7;
 
     % Response delay for Vicon measurements
     rsim.delay.Vicon.time = 0.004;

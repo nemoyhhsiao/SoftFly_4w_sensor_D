@@ -11,6 +11,10 @@ ctr.torque_obs.noise.process.torque_y = 1*1.25;
 ctr.torque_obs.noise.process.omega = 0.1;
 ctr.torque_obs.noise.meas = 1.0;
 
+    % Torque Observer Factor
+    ctr.torque_obs.factor = 1;
+
+
 %%
 ctr.torque_obs.initial_torque.x = 0;
 ctr.torque_obs.initial_torque.y = 0;

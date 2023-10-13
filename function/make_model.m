@@ -1,4 +1,7 @@
 function [mdl] = make_model(flight_time)
+    
+    mdl.flight_time = flight_time; % actual flapping time
+    mdl.exe_time    = mdl.flight_time + 6; % computer running time to data logging
     mdl.f = 1e3;
     mdl.f_high  = 10e3;
     mdl.T = 1 / mdl.f;
