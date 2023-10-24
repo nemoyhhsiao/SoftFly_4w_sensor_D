@@ -35,6 +35,12 @@ ShowPlot.omega          = 1;
 
 clearvars rbt
 
+if rsim.en == 1
+
+    rst_voltages = out.rst_voltages;
+
+end
+
 rbt.time      = rst_voltages.time;
 
 rbt.pos.t     = rst_p_raw.time;
@@ -42,10 +48,10 @@ rbt.pos.x     = rst_p_raw.signals.values(:,1);
 rbt.pos.y     = rst_p_raw.signals.values(:,2);
 rbt.pos.z     = rst_p_raw.signals.values(:,3);
 
-rbt.vel.t     = rst_p_dot.time;
-rbt.vel.x     = rst_p_dot.signals.values(:,1);
-rbt.vel.y     = rst_p_dot.signals.values(:,2);
-rbt.vel.z     = rst_p_dot.signals.values(:,3);
+% rbt.vel.t     = rst_p_dot.time;
+% rbt.vel.x     = rst_p_dot.signals.values(:,1);
+% rbt.vel.y     = rst_p_dot.signals.values(:,2);
+% rbt.vel.z     = rst_p_dot.signals.values(:,3);
 
 rbt.EulXYZ.t  = rst_Eul_XYZ.time;
 rbt.EulXYZ.x  = rst_Eul_XYZ.signals.values(:,1);
@@ -62,19 +68,19 @@ rbt.EulZYX.x = rbt.EulZYX.zyx(:,3);
 % rbt.EulXYZ.y  = rst_Eul_XYZ.signals.values(2,1,:);
 % rbt.EulXYZ.z  = rst_Eul_XYZ.signals.values(3,1,:);
 
-rbt.ome.t     = rst_omega_b.time;
-rbt.ome.x     = rst_omega_b.signals.values(:,1);
-rbt.ome.y     = rst_omega_b.signals.values(:,2);
-rbt.ome.z     = rst_omega_b.signals.values(:,3);
+% rbt.ome.t     = rst_omega_b.time;
+% rbt.ome.x     = rst_omega_b.signals.values(:,1);
+% rbt.ome.y     = rst_omega_b.signals.values(:,2);
+% rbt.ome.z     = rst_omega_b.signals.values(:,3);
 
-rbt.pred.p.t  = rst_predicted_p_landing.time;
-rbt.pred.p.x  = rst_predicted_p_landing.signals.values(:,1);
-rbt.pred.p.y  = rst_predicted_p_landing.signals.values(:,2);
-rbt.pred.p.z  = rst_predicted_p_landing.signals.values(:,3);
-
-rbt.des.p.t   = rst_desired_xy.time;
-rbt.des.p.x   = rst_desired_xy.signals.values(:,1);
-rbt.des.p.y   = rst_desired_xy.signals.values(:,2);
+% rbt.pred.p.t  = rst_predicted_p_landing.time;
+% rbt.pred.p.x  = rst_predicted_p_landing.signals.values(:,1);
+% rbt.pred.p.y  = rst_predicted_p_landing.signals.values(:,2);
+% rbt.pred.p.z  = rst_predicted_p_landing.signals.values(:,3);
+% 
+% rbt.des.p.t   = rst_desired_xy.time;
+% rbt.des.p.x   = rst_desired_xy.signals.values(:,1);
+% rbt.des.p.y   = rst_desired_xy.signals.values(:,2);
 
 rbt.tor.x     = rst_torque_b.signals.values(:,1).*9.8e-6;
 rbt.tor.y     = rst_torque_b.signals.values(:,2).*9.8e-6;
@@ -90,12 +96,12 @@ rbt.vot.v4    = rst_voltages.signals.values(:,4);
 rbt.en.t      = rst_en.time;
 rbt.en.en     = rst_en.signals.values;
 
-rbt.z_b.x     = rst_z_b.signals.values(:,1);
-rbt.z_b.y     = rst_z_b.signals.values(:,2);
-rbt.z_b.z     = rst_z_b.signals.values(:,3);
-rbt.z_b_des.x = rst_z_b_desired.signals.values(:,1);
-rbt.z_b_des.y = rst_z_b_desired.signals.values(:,2);
-rbt.z_b_des.z = rst_z_b_desired.signals.values(:,3);
+% rbt.z_b.x     = rst_z_b.signals.values(:,1);
+% rbt.z_b.y     = rst_z_b.signals.values(:,2);
+% rbt.z_b.z     = rst_z_b.signals.values(:,3);
+% rbt.z_b_des.x = rst_z_b_desired.signals.values(:,1);
+% rbt.z_b_des.y = rst_z_b_desired.signals.values(:,2);
+% rbt.z_b_des.z = rst_z_b_desired.signals.values(:,3);
 
 rbt.drs.t     = rst_driving_signals.time;
 rbt.drs.s1    = rst_driving_signals.signals.values(:,1);
