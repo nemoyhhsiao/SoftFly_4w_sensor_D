@@ -1,17 +1,17 @@
 function [rbt] = make_robot(mdl)
-    rbt.m = 4 * 180e-6;
+    rbt.m = 4 * 190e-6;
     rbt.base.th = 0.0 * rbt.m;
     rbt.base.xt = 0.0 * 1e-5;
     rbt.base.yt = 0.0 * 1e-5;
     rbt.base.zt = 0.0 * 1e-5;
     rbt.offset.x = 0;
     rbt.offset.y = 0;
-    rbt.ixx = 2.4 * 48e-9;
-    rbt.iyy = 1.3 * 270e-9;
+    rbt.ixx = 0.438*1e-7;
+    rbt.iyy = 0.438*1e-7;
     rbt.izz = 1.2 * 320e-9;
-    rbt.ld = (14 + 8) * 1e-3;
-    rbt.lw = (6.3 + 4) * 1e-3;
-    rbt.lt = (7.0 + 1.5 + 3.5) * 1e-3;
+    rbt.ld = (15) * 1e-3;
+    rbt.lw = (15) * 1e-3;
+    rbt.lt = (15) * 1e-3;
     rbt.til = 0;
     rbt.A = [ones(1,4); ...
         rbt.lt * [-1, 1, 1, -1]; ...

@@ -1,0 +1,10 @@
+
+*.dmr
+*.bat
+*.c
+*.h
+*.mk
+*.o
+*.mat
+*.fig
+*.asv

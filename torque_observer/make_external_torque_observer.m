@@ -4,16 +4,28 @@ function [ctr] = make_external_torque_observer(rsim, mdl, ctr)
 % x = [omega_xy, theta_ext_xy]
 % u = tau_xy 
 
+% Sensing noise in obsever: 
+rsim.sensing_noise.pos.enable = 0;
+rsim.sensing_noise.rpy.enable = 0;
+rsim.sensing_noise.pos_sigma = 0.03e-3*ones(3, 1); % 0.5 mm
+rsim.sensing_noise.rpy_sigma = 0.5*ones(3, 1)/180*pi; % 0.5 deg
+rsim.sensing_noise.pos.enable = 1;
+rsim.sensing_noise.rpy.enable = 1;
+
 %% Torque observer params: 
 ctr.torque_obs.enable = 1;
-ctr.torque_obs.noise.process.torque_x = 0.25*1.25;
-ctr.torque_obs.noise.process.torque_y = 1*1.25;
-ctr.torque_obs.noise.process.omega = 0.1;
-ctr.torque_obs.noise.meas = 1.0;
+ctr.torque_obs.noise.process.torque_x = 0.1; %25; % 0.25
+ctr.torque_obs.noise.process.torque_y = 0.1; %25; % 0.25
+ctr.torque_obs.noise.process.omega = 0.1; % 0.1
+ctr.torque_obs.noise.meas = 5; % 1
 
-    % Torque Observer Factor
-    ctr.torque_obs.factor = 1;
+% Torque Observer Factor
+ctr.torque_obs.factor.x = 0;
+ctr.torque_obs.factor.y = 0;
 
+% Initial estimation
+ctr.torque_obs.ext_torq_hat_init = [0; 0;];
+ctr.torque_obs.omega_hat_init = [0; 0;];
 
 %%
 ctr.torque_obs.initial_torque.x = 0;

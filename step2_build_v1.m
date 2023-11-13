@@ -2,7 +2,7 @@
 
 % load_system(mdlName)
 % pause(3)
-set_param(mdlName,'SimulationMode','external')
+set_param(model_name,'SimulationMode','external')
 pause(2)
-slbuild(mdlName)
+slbuild(model_name)
 

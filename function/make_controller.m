@@ -1,33 +1,39 @@
-function ctr = make_controller()
+function [ctr, flight_time] = make_controller(flight_time)
     % Initialize the 'ctr' structure with the same parameters as in the code
 
     % Controller enable
     ctr.en = 1;
 
+    if ctr.en
+        flight_time = flight_time;
+    else
+        flight_time = 0.2;
+    end
+
     % Flapping frequency of all four units (Hz)
-    ctr.freq_vec = [400 400 400 400];
+    ctr.freq_vec = [330 330 330 330];
 
     % Yaw control enable
     ctr.yaw.en = 0;
 
     % Integral control enable
-    ctr.integral.en = 0;
-    ctr.integral.lim.upper = [10e-2, 3e-2, 1e-6, 3.5e-4];
-    ctr.integral.lim.lower = [-10e-2, -3e-2, -1e-6, -6e-4];
-    ctr.integral.yaw.upper = 3e-6;
-    ctr.integral.yaw.lower = -3e-6;
+    ctr.integral.en = 1;
+    ctr.integral.lim.upper = [1e-5, 1e-5, 1e-7, 1];
+    ctr.integral.lim.lower = [-1e-5, -1e-5, -1e-7, -1];
+    % ctr.integral.yaw.upper = 3e-6;
+    % ctr.integral.yaw.lower = -3e-6;
 
     % Attitude controller gains (Pakpong's lateral)
-    ctr.gain.at3 = 62 * 0.75;
-    ctr.gain.at2 = 798 * 0.75;
-    ctr.gain.at1 = 6631 * 1.15;
-    ctr.gain.at0 = 13608 * 1.1;
-    ctr.gain.ati = 0.5e4 * 1.5;
+    ctr.gain.at3 = 62 * 0.6;
+    ctr.gain.at2 = 798 * 0.6;
+    ctr.gain.at1 = 6631 * 0.05;
+    ctr.gain.at0 = 13608 * 0.05;
+    ctr.gain.ati = 1e-5 * 0;
 
     % Altitude controller gains (Pakpong's altitude)
     ctr.gain.al0 = 150 * 0.55;
     ctr.gain.al1 = 30 * 0.9;
-    ctr.gain.ali = 20 * 0.9;
+    ctr.gain.ali = 15 * 1;
 
     % Yaw controller gains
     ctr.gain.yaw.fw = 1.78e-5;
@@ -45,7 +51,7 @@ function ctr = make_controller()
     ctr.safety.enableZone.xmax = 0.35;
     ctr.safety.enableZone.ymax = 0.35;
     ctr.safety.enableZone.zmax = 0.6;
-    ctr.safety.volt = [1950, 1950, 1950, 1900];
+    ctr.safety.volt = [1999, 1999, 1999, 1999];
     ctr.safety.land.xmax = 0.25;
     ctr.safety.land.ymax = 0.25;
     ctr.safety.land.zmax = 0.2;
@@ -56,18 +62,18 @@ function ctr = make_controller()
     ctr.safety.overload.count = 10;
 
     % Setpoint (initial position and orientation)
-    ctr.setpoint.x = 0;
-    ctr.setpoint.y = 0;
-    ctr.setpoint.z = 0.05;
+    ctr.setpoint.x = 0.046;
+    ctr.setpoint.y = -0.085;
+    ctr.setpoint.z = 0.03; % 0.106
     ctr.setpoint.yaw = deg2rad(0);
 
     % Landing and takeoff parameters
     ctr.landing.en = 0;
-    ctr.landing.height = 0.001;
+    ctr.landing.height = 0.0055;
     ctr.landing.time = 1;
-    ctr.takeoff.en = 0;
-    ctr.takeoff.height = 0.012;
-    ctr.takeoff.time = 1;
+    ctr.takeoff.en = 1;
+    ctr.takeoff.height = 0.0059;
+    ctr.takeoff.time = 0.3;
 
     % Desired yaw trajectory (if needed)
     ctr.yaw.dy.en = 0;
