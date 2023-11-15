@@ -2,6 +2,7 @@
 
 clc
 clear
+close all
 
 % Add path to subfolder
 addpath('model');

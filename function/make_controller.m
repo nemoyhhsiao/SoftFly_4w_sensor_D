@@ -4,9 +4,8 @@ function [ctr, flight_time] = make_controller(flight_time)
     % Controller enable
     ctr.en = 1;
 
-    if ctr.en
-        flight_time = flight_time;
-    else
+    % Set flight time to 0.2 if it's openloop
+    if ~ctr.en
         flight_time = 0.2;
     end
 
@@ -26,21 +25,26 @@ function [ctr, flight_time] = make_controller(flight_time)
     % ctr.integral.yaw.upper = 3e-6;
     % ctr.integral.yaw.lower = -3e-6;
 
-    % Attitude controller gains 
-    gains = [62   798    6631   13608;  % pakpong nominal gains
-             36   486    2916    6561;   % (S+9)^4
-             48   864    6912   20736; % (S+12)^4
-             52  1014*0.8    8788   28561*0.8;]; % (S+13)^4
-    n = 4;
+    % Attitude controller gains [ att_d att_p pos_d pos_p ]
+    ctr.factor = [0.9 0.8 0.9 0.8]; 
+    ctr.gains = [62   798    6631   13608;     % #1 pakpong nominal gains
+                 36   486    2916    6561;     % #2 (S+9)^4
+                 48   864    6912   20736;     % #3 (S+12)^4
+                 52  1014    8788   28561; ... % #4 (S+13)^4
+                 56  1176   10976   38416; ... % #5 (S+14)^4
+                 60  1350   13500   50625; ... % #6 (S+15)^4
+                 64  1536   16384   65536; ... % #7 (S+16)^4 % too aggressive
+                 ].*ctr.factor; 
+    ctr.gain.n = 1;
     
     % Check stability criterion
-    rhStabilityCriterion([1,gains(n,:)]);
+    rhStabilityCriterion([1,ctr.gains(ctr.gain.n,:)]);
 
     % Attitude controller gains (Pakpong's lateral)
-    ctr.gain.at3 = gains(n,1) * 1; % 0.75;     % attitude d
-    ctr.gain.at2 = gains(n,2) * 1; %0.75;    % attitude p
-    ctr.gain.at1 = gains(n,3) * 1; %0.75;  % position d
-    ctr.gain.at0 = gains(n,4) * 1; %0.75; % position p
+    ctr.gain.at3 = ctr.gains(ctr.gain.n,1); % attitude d
+    ctr.gain.at2 = ctr.gains(ctr.gain.n,2); % attitude p
+    ctr.gain.at1 = ctr.gains(ctr.gain.n,3); % position d
+    ctr.gain.at0 = ctr.gains(ctr.gain.n,4); % position p
     ctr.gain.ati = 1e-5 * 0;
 
     % Altitude controller gains (Pakpong's altitude)
@@ -65,14 +69,14 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.safety.enableZone.ymax = 0.3;
     ctr.safety.enableZone.zmax = 0.6;
     ctr.safety.volt = [1999, 1999, 1999, 1999];
-    ctr.safety.land.xmax = 0.25;
-    ctr.safety.land.ymax = 0.25;
-    ctr.safety.land.zmax = 0.2;
-    ctr.safety.land.volt = 1950;
-    ctr.safety.land.T = 0.15;
+    % ctr.safety.land.xmax = 0.25;
+    % ctr.safety.land.ymax = 0.25;
+    % ctr.safety.land.zmax = 0.2;
+    % ctr.safety.land.volt = 1950;
+    % ctr.safety.land.T = 0.15;
     ctr.safety.min_cos_roll_pitch = -1;
-    ctr.safety.overload.T = 1;
-    ctr.safety.overload.count = 10;
+    % ctr.safety.overload.T = 1;
+    % ctr.safety.overload.count = 10;
 
     % Setpoint (initial position and orientation)
     ctr.setpoint.x = 0.004;

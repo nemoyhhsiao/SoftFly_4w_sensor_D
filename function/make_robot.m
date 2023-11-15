@@ -4,7 +4,7 @@ function [rbt] = make_robot()
     rbt.m = 4 * 190e-6;      % mass in kg
     rbt.ixx = 0.438*1e-7;    % MoI
     rbt.iyy = 0.438*1e-7;    % MoI
-    rbt.izz = 1.2 * 320e-9;  % MoI
+    rbt.izz = 0.438*1e-7 * 4;  % MoI
     rbt.ld = (15) * 1e-3;    % moment arm
     rbt.lt = (15) * 1e-3;    % moment arm
 

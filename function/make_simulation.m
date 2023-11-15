@@ -62,7 +62,7 @@ function rsim = make_simulation(rbt,mdl,rsim)
     % Torque disturbance (Nm)
     rsim.dist.wx.mean = -1e-6;
     rsim.dist.wy.mean = 1e-6;
-    rsim.dist.wz.mean = 0.0 * 0.1e-5;
+    rsim.dist.wz.mean = -5e-8;
     rsim.dist.wx.var = 5e-8;
     rsim.dist.wy.var = 5e-8;
     rsim.dist.wz.var = 1e-12;

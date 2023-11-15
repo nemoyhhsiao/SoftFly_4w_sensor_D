@@ -133,7 +133,8 @@ c = get_color;
 
 %% Position
 if ShowPlot.position
-    figure(1)
+    f = figure(1); 
+    f.Name = 'Positions';
 
     % plot(rst.des.p.t, rst.des.p.x.*100,'--','color',[0.6350, 0.0780, 0.1840],'linewidth',0.5); hold on
     % plot(rst.des.p.t, rst.des.p.y.*100,'--','color',[0, 0.5, 0],'linewidth',0.5)
@@ -194,7 +195,8 @@ end
 
 %% Euler angles
 if ShowPlot.angle
-    figure(2)
+    f = figure(2); 
+    f.Name = 'Euler angles XYZ';
     if 1
         plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.x)); hold on; grid on;
         plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.y))
@@ -238,7 +240,8 @@ end
 
 %% Driving signals
 if ShowPlot.driveSignal
-    figure(3)
+    f = figure(3); 
+    f.Name = 'Driving signals (sine wave)';
 %     if exist('DS_Time')
         plot(rst.drs.t, 200*rst.drs.s1, 'Color',c.yellow);    hold on
         plot(rst.drs.t, 200*rst.drs.s2, 'Color',c.blue)
@@ -270,7 +273,8 @@ end
 
 %% Voltages
 if ShowPlot.voltage
-    figure(4)
+    f = figure(4); 
+    f.Name = 'Voltages';
     plot(rst.time, rst.vot.v1, 'Color',c.yellow)
     hold on
     plot(rst.time, rst.vot.v2, 'Color',c.blue)
@@ -310,7 +314,8 @@ if ShowPlot.torque
     % xt_error = sum(rst.tor.x(t_start*rst.mdl.f:t_stop*rst.mdl.f))/(t_stop*rst.mdl.f-t_start*rst.mdl.f+1);
     % yt_error = sum(rst.tor.y(t_start*rst.mdl.f:t_stop*rst.mdl.f))/(t_stop*rst.mdl.f-t_start*rst.mdl.f+1);
     % zt_error = sum(rst.tor.z(t_start*rst.mdl.f:t_stop*rst.mdl.f))/(t_stop*rst.mdl.f-t_start*rst.mdl.f+1);
-    figure(5)
+    f = figure(5); 
+    f.Name = 'Torque';
     plot(rst.time, rst.tor.x); hold on; grid on;
     plot(rst.time, rst.tor.y)
     % plot(rst.time, rst.tor.z, 'b'); 
@@ -346,7 +351,8 @@ if ShowPlot.forceZ
     % get post-omega from real-time Euler
     rst.acc.fil.z = filtfilt(d1,rst.acc.z);
 
-    figure(6)
+    f = figure(6); 
+    f.Name = 'Thrust in Z';
     plot(rst.time, rst.thrust, 'm'); hold on; grid on; % in m/s^2
     plot(rst.acc.t, rst.acc.fil.z+rst.mdl.g, 'linewidth',1); 
     plot([rst.mdl.i_delay rst.mdl.rt], [rst.mdl.g, rst.mdl.g],'--')
@@ -375,7 +381,8 @@ end
 
 %% Enable
 if ShowPlot.en
-    figure(7)
+    f = figure(7); 
+    f.Name = 'Safety enable';
     plot(rst.en.t,rst.en.en(:,1:4),'linewidth',2); hold on
     plot([rst.t.start, rst.t.start],[-0.2, 1.2],'k--','linewidth',1)
     plot([rst.t.stop, rst.t.stop],[-0.2, 1.2],'k--','linewidth',1)
@@ -466,8 +473,8 @@ if ShowPlot.Tor2Ang
     % plot(rst.ome.x); hold on
     % plot(rst.ome.fil.x)
 
-    figure(8)
-
+    f = figure(8); 
+    f.Name = 'Torque to angular acc';
     
     t_start = rst.t.start + 0.2;
     t_stop  = rst.t.stop - 0.2;
@@ -524,7 +531,8 @@ end
 %% external torque
 if ShowPlot.extTorq
    
-    figure(9)
+    f = figure(9); 
+    f.Name = 'External torque';
     plot(rst.time,rst.ext.tor.x); hold on
     plot(rst.time,rst.ext.tor.y);
     legend('x','y','Location','northwest')
@@ -553,7 +561,8 @@ end
 
 %% velocity
 if ShowPlot.velocity
-    figure(10)
+    f = figure(10); 
+    f.Name = 'Velocity';
     plot(rst.vel.t, rst.vel.x.*100, 'linewidth',1); hold on
     plot(rst.vel.t, rst.vel.y.*100, 'linewidth',1)
     plot(rst.vel.t, rst.vel.z.*100, 'linewidth',1); 
@@ -583,7 +592,8 @@ end
 
 %% accelaration
 if ShowPlot.acceleration
-    figure(11)
+    f = figure(11); 
+    f.Name = 'Acceleration';
     plot(rst.acc.t, rst.acc.x.*100,'linewidth',1); hold on
     plot(rst.acc.t, rst.acc.y.*100,'linewidth',1)
     plot(rst.acc.t, rst.acc.z.*100,'linewidth',1); 
@@ -612,7 +622,8 @@ end
 
 if ShowPlot.omega
 
-    figure(12)
+    f = figure(12); 
+    f.Name = 'Omega (angular velocity)';
     plot(rst.ome.t, rst.ome.x); hold on; grid on;
     plot(rst.ome.t, rst.ome.y)
     plot(rst.ome.t, rst.ome.z); 
@@ -641,7 +652,8 @@ end
 
 %% Euler angles
 if 0
-    figure(13)
+    f = figure(13); 
+    f.Name = 'Euler angles ZYX';
     if 1
         plot(rst.EulXYZ.t, rad2deg(rst.EulZYX.x)); hold on; grid on;
         plot(rst.EulXYZ.t, rad2deg(rst.EulZYX.y))
