@@ -1,4 +1,4 @@
-function [ctr] = make_external_torque_observer(rsim, mdl, ctr)
+function [ctr] = make_ext_tor_observer(rsim, mdl, ctr)
 % omega_dot = J^-1 tau_ext + theta_ext
 % theta_ext_dot = 0
 % x = [omega_xy, theta_ext_xy]
@@ -15,7 +15,7 @@ ctr.torque_obs.enable = 1;
 ctr.torque_obs.noise.process.torque_x = 0.1; %25; % 0.25
 ctr.torque_obs.noise.process.torque_y = 0.1; %25; % 0.25
 ctr.torque_obs.noise.process.omega = 0.1; % 0.1
-ctr.torque_obs.noise.meas = 1; % 1
+ctr.torque_obs.noise.meas = 0.2; % 1
 
 % Torque Observer Factor
 ctr.torque_obs.factor.x = 1;

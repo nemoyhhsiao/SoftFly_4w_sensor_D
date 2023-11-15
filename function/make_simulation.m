@@ -1,4 +1,4 @@
-function rsim = make_robot_simulation(rbt,mdl,rsim)
+function rsim = make_simulation(rbt,mdl,rsim)
     % Initialize the 'rsim' structure with simulation parameters
 
     % Simulation sample time
@@ -44,24 +44,24 @@ function rsim = make_robot_simulation(rbt,mdl,rsim)
     end
 
     % Disturbance enable
-    rsim.dist.pos.en = 0;
+    rsim.dist.pos.en = 1;
     rsim.dist.rot.en = 1;
 
     % Force disturbance (N)
     rbt_mg = mdl.g * rbt.m;  % Mass
-    rsim.dist.x.mean = -0.1 * rbt_mg;
-    rsim.dist.y.mean = 0.1 * rbt_mg;
-    rsim.dist.z.mean = -0.1 * rbt_mg;
-    rsim.dist.x.var = 1e-4 * rbt_mg;
-    rsim.dist.y.var = 1e-4 * rbt_mg;
-    rsim.dist.z.var = 1e-4 * rbt_mg;
+    rsim.dist.x.mean = 0 * rbt_mg;
+    rsim.dist.y.mean = 0 * rbt_mg;
+    rsim.dist.z.mean = 0 * rbt_mg;
+    rsim.dist.x.var = 1e-3 * rbt_mg;
+    rsim.dist.y.var = 1e-3 * rbt_mg;
+    rsim.dist.z.var = 1e-3 * rbt_mg;
     rsim.dist.x.seed = 0;
     rsim.dist.y.seed = 1;
     rsim.dist.z.seed = 2;
 
     % Torque disturbance (Nm)
-    rsim.dist.wx.mean = -2e-6;
-    rsim.dist.wy.mean = -2e-6;
+    rsim.dist.wx.mean = -1e-6;
+    rsim.dist.wy.mean = 1e-6;
     rsim.dist.wz.mean = 0.0 * 0.1e-5;
     rsim.dist.wx.var = 5e-8;
     rsim.dist.wy.var = 5e-8;

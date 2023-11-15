@@ -6,13 +6,7 @@ function [rbt] = make_robot()
     rbt.iyy = 0.438*1e-7;    % MoI
     rbt.izz = 1.2 * 320e-9;  % MoI
     rbt.ld = (15) * 1e-3;    % moment arm
-    % rbt.lw = (15) * 1e-3;    % not used
     rbt.lt = (15) * 1e-3;    % moment arm
-
-    % rbt.base.th = 0.0 * rbt.m;
-    % rbt.base.xt = 0.0 * 1e-5;
-    % rbt.base.yt = 0.0 * 1e-5;
-    % rbt.base.zt = 0.0 * 1e-5;
 
     % Robot thrust vector offset
     rbt.angle_offset.x = 0;
@@ -20,6 +14,11 @@ function [rbt] = make_robot()
 
     % Inclined stroke-plane version
     rbt.til = 0;
+
+    % rbt.base.th = 0.0 * rbt.m;
+    % rbt.base.xt = 0.0 * 1e-5;
+    % rbt.base.yt = 0.0 * 1e-5;
+    % rbt.base.zt = 0.0 * 1e-5;
 
     % rbt.A = [ones(1,4); ...
     %     rbt.lt * [-1, 1, 1, -1]; ...

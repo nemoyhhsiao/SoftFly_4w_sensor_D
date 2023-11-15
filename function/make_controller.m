@@ -27,17 +27,20 @@ function [ctr, flight_time] = make_controller(flight_time)
     % ctr.integral.yaw.lower = -3e-6;
 
     % Attitude controller gains 
-    gains = [62 798 6631 13608;  % pakpong nominal gains
-             36 486 2916 6561;   % (S+9)^4
-             48 864 6912 20736; % (S+12)^4
-             52 1014 8788 28561;]; % (S+12)^4
-    n = 1;
+    gains = [62   798    6631   13608;  % pakpong nominal gains
+             36   486    2916    6561;   % (S+9)^4
+             48   864    6912   20736; % (S+12)^4
+             52  1014*0.8    8788   28561*0.8;]; % (S+13)^4
+    n = 4;
+    
+    % Check stability criterion
+    rhStabilityCriterion([1,gains(n,:)]);
 
     % Attitude controller gains (Pakpong's lateral)
-    ctr.gain.at3 = gains(n,1) * 0.75;     % attitude d
-    ctr.gain.at2 = gains(n,2) * 0.75;    % attitude p
-    ctr.gain.at1 = gains(n,3) * 0.75;  % position d
-    ctr.gain.at0 = gains(n,4) * 0.75; % position p
+    ctr.gain.at3 = gains(n,1) * 1; % 0.75;     % attitude d
+    ctr.gain.at2 = gains(n,2) * 1; %0.75;    % attitude p
+    ctr.gain.at1 = gains(n,3) * 1; %0.75;  % position d
+    ctr.gain.at0 = gains(n,4) * 1; %0.75; % position p
     ctr.gain.ati = 1e-5 * 0;
 
     % Altitude controller gains (Pakpong's altitude)

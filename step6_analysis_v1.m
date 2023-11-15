@@ -615,7 +615,7 @@ if ShowPlot.omega
     figure(12)
     plot(rst.ome.t, rst.ome.x); hold on; grid on;
     plot(rst.ome.t, rst.ome.y)
-    % plot(rst.ome.t, rst.tor.z, 'b'); 
+    plot(rst.ome.t, rst.ome.z); 
     % plot([t_start t_stop],[xt_error xt_error],'r--')
     % plot([t_start t_stop],[yt_error yt_error],'g--')
     % plot([t_start t_stop],[zt_error zt_error],'b--')
@@ -635,11 +635,12 @@ if ShowPlot.omega
         set(gcf, 'Units', 'normalized');
         set(gcf, 'Position', [1.25, 0.625, 0.25, 0.35]); % [l b w h]
     end
+    hold off
 end
 
 
 %% Euler angles
-if ShowPlot.angle
+if 0
     figure(13)
     if 1
         plot(rst.EulXYZ.t, rad2deg(rst.EulZYX.x)); hold on; grid on;

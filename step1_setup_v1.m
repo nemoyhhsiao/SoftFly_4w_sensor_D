@@ -16,7 +16,7 @@ load_system(model_name) % if it shows model not loaded, run this line in command
 load('t2v_lut_20231027.mat')
 
 % Use simulation or Vicon data
-rsim.en = 0;
+rsim.en = 1;
 
 % Flight time for the model
 flight_time = 10;
@@ -28,13 +28,13 @@ flight_time = 10;
 mdl = make_model(flight_time,rsim);
 
 % Initialize robot parameters
-rbt = make_robot();
+rbt = make_robot;
 
 % Initialize robot simulation parameters
-rsim = make_robot_simulation(rbt,mdl,rsim);
+rsim = make_simulation(rbt,mdl,rsim);
 
 % Initialize external torque observer
-ctr = make_external_torque_observer(rsim, mdl, ctr);
+ctr = make_ext_tor_observer(rsim, mdl, ctr);
 
 ctr2 = ctr; % some Simulink parameters are from 2-robot controller
 rbt2 = rbt; % some Simulink parameters are from 2-robot controller
