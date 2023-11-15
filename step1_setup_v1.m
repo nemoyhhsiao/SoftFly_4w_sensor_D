@@ -10,7 +10,7 @@ addpath("torque_observer")
 
 % Simulink model
 model_name = 'controller14';
-load_system(model_name) % if it shows model not loaded, run the following line in command window
+load_system(model_name) % if it shows model not loaded, run this line in command window
 
 % Load look-up table for thrust to voltage mapping
 load('t2v_lut_20231027.mat')
@@ -19,7 +19,7 @@ load('t2v_lut_20231027.mat')
 rsim.en = 0;
 
 % Flight time for the model
-flight_time = 0.5;
+flight_time = 10;
 
 % Initialize controller parameters
 [ctr, flight_time] = make_controller(flight_time);
@@ -28,7 +28,7 @@ flight_time = 0.5;
 mdl = make_model(flight_time,rsim);
 
 % Initialize robot parameters
-rbt = make_robot(mdl);
+rbt = make_robot();
 
 % Initialize robot simulation parameters
 rsim = make_robot_simulation(rbt,mdl,rsim);
@@ -36,19 +36,17 @@ rsim = make_robot_simulation(rbt,mdl,rsim);
 % Initialize external torque observer
 ctr = make_external_torque_observer(rsim, mdl, ctr);
 
-ctr2 = ctr;
-rbt2 = rbt;
+ctr2 = ctr; % some Simulink parameters are from 2-robot controller
+rbt2 = rbt; % some Simulink parameters are from 2-robot controller
 
-% Check model timing
-if (mdl.exe_time - mdl.flight_time) < 6
-    error("-->> execution time is too short")
+% Lower sample time for simulation (to save time)
+if rsim.en
+    mdl.T_high = mdl.T;
 end
 
 % set_param(model_name,'SimulationCommand','update')
 
 %%
-% set_param('controller_v13', 'SimulationCommand', 'start');
-% out = sim('controller_v13','SimulationMode','normal'); % RapidAccelerator
 
 % Use simulator or real-time hardware interface
 if rsim.en
@@ -64,8 +62,10 @@ if rsim.en
     set_param(strcat(model_name, '/Goto data_ready for rerun'), 'commented', 'on'); % comment out
     set_param(strcat(model_name, '/Goto vicon_measure for realtime'), 'commented', 'off'); % not use saved Vicon data
     set_param(strcat(model_name, '/Goto data_ready for realtime'), 'commented', 'off'); % not use saved Vicon data
+    set_param(strcat(model_name, '/Execution Time'), 'commented', 'on'); % comment out
     warning("-->> using simulator")
     out = sim(model_name, 'SimulationMode','normal');
+    step6_analysis_v1
 
 else
     if mdl.rerun
@@ -82,6 +82,7 @@ else
         set_param(strcat(model_name, '/Goto data_ready for rerun'), 'commented', 'off'); % use saved Vicon data to rerun
         set_param(strcat(model_name, '/Goto vicon_measure for realtime'), 'commented', 'on'); % comment out
         set_param(strcat(model_name, '/Goto data_ready for realtime'), 'commented', 'on'); % comment out
+        set_param(strcat(model_name, '/Execution Time'), 'commented', 'on'); % comment out
         disp("-->> using saved Vicon data")
     else
         set_param(strcat(model_name, '/Flying Simulation'), 'commented', 'on'); % comment out simulator
@@ -96,7 +97,9 @@ else
         set_param(strcat(model_name, '/Goto data_ready for rerun'), 'commented', 'on'); % comment out
         set_param(strcat(model_name, '/Goto vicon_measure for realtime'), 'commented', 'off'); % not use saved Vicon data
         set_param(strcat(model_name, '/Goto data_ready for realtime'), 'commented', 'off'); % not use saved Vicon data
+        set_param(strcat(model_name, '/Execution Time'), 'commented', 'off'); % comment out
         warning("-->> using real time Vicon data")
+        step2_build_v1
     end
 
     % if flight_time > 100

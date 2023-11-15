@@ -13,6 +13,9 @@ function [ctr, flight_time] = make_controller(flight_time)
     % Flapping frequency of all four units (Hz)
     ctr.freq_vec = [330 330 330 330];
 
+    % Voltage offset
+    ctr.DV = [105 -60 -200 110]; % 195 -5 -130 160
+
     % Yaw control enable
     ctr.yaw.en = 0;
 
@@ -23,11 +26,18 @@ function [ctr, flight_time] = make_controller(flight_time)
     % ctr.integral.yaw.upper = 3e-6;
     % ctr.integral.yaw.lower = -3e-6;
 
+    % Attitude controller gains 
+    gains = [62 798 6631 13608;  % pakpong nominal gains
+             36 486 2916 6561;   % (S+9)^4
+             48 864 6912 20736; % (S+12)^4
+             52 1014 8788 28561;]; % (S+12)^4
+    n = 1;
+
     % Attitude controller gains (Pakpong's lateral)
-    ctr.gain.at3 = 62 * 0.6;
-    ctr.gain.at2 = 798 * 0.6;
-    ctr.gain.at1 = 6631 * 0.05;
-    ctr.gain.at0 = 13608 * 0.05;
+    ctr.gain.at3 = gains(n,1) * 0.75;     % attitude d
+    ctr.gain.at2 = gains(n,2) * 0.75;    % attitude p
+    ctr.gain.at1 = gains(n,3) * 0.75;  % position d
+    ctr.gain.at0 = gains(n,4) * 0.75; % position p
     ctr.gain.ati = 1e-5 * 0;
 
     % Altitude controller gains (Pakpong's altitude)
@@ -48,8 +58,8 @@ function [ctr, flight_time] = make_controller(flight_time)
 
     % Safety and landing parameters
     ctr.safety.T = 0.04;
-    ctr.safety.enableZone.xmax = 0.35;
-    ctr.safety.enableZone.ymax = 0.35;
+    ctr.safety.enableZone.xmax = 0.6;
+    ctr.safety.enableZone.ymax = 0.3;
     ctr.safety.enableZone.zmax = 0.6;
     ctr.safety.volt = [1999, 1999, 1999, 1999];
     ctr.safety.land.xmax = 0.25;
@@ -62,18 +72,18 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.safety.overload.count = 10;
 
     % Setpoint (initial position and orientation)
-    ctr.setpoint.x = 0.046;
+    ctr.setpoint.x = 0.004;
     ctr.setpoint.y = -0.085;
-    ctr.setpoint.z = 0.03; % 0.106
+    ctr.setpoint.z = 0.1083; % 0.106
     ctr.setpoint.yaw = deg2rad(0);
 
     % Landing and takeoff parameters
-    ctr.landing.en = 0;
-    ctr.landing.height = 0.0055;
+    ctr.landing.en = 1;
+    ctr.landing.height = 0.0083;
     ctr.landing.time = 1;
     ctr.takeoff.en = 1;
-    ctr.takeoff.height = 0.0059;
-    ctr.takeoff.time = 0.3;
+    ctr.takeoff.height = 0.0083;
+    ctr.takeoff.time = 1;
 
     % Desired yaw trajectory (if needed)
     ctr.yaw.dy.en = 0;

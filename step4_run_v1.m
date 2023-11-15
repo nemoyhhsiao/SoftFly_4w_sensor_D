@@ -29,7 +29,7 @@ end
 
 % details for saving data (sd.) 
 sd.folder   = "data/";
-sd.robot    = "Nemo42_";
+sd.robot    = "Nemo44_";
 sd.date     = string(datetime('now','Format','yyyy-MM-dd_HH-mm-ss'));
 sd.filetype = ".mat";
 sd.filename = sd.folder + sd.robot + sd.date + sd.filetype;
@@ -56,3 +56,7 @@ disp('flight data successfully saved in the "data" folder as')
 disp("-->  " + sd.robot + "flight_" + sd.date + sd.filetype)
 disp('======================================================')
 disp(' ')
+
+% show analysis
+pause(2)
+step6_analysis_v1

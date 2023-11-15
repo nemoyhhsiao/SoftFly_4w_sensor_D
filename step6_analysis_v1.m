@@ -8,7 +8,7 @@ ShowPlot.angle          = 1;
 ShowPlot.driveSignal    = 1;
 ShowPlot.voltage        = 1;
 ShowPlot.torque         = 1;
-ShowPlot.forceZ         = 0;
+ShowPlot.forceZ         = 1;
 ShowPlot.iTorque        = 0;
 ShowPlot.iForceZ        = 0;
 ShowPlot.en             = 1;
@@ -22,25 +22,31 @@ ShowPlot.TorqueControlX = 1;
 ShowPlot.TorqueControlY = 1;
 ShowPlot.x_offset       = 1;
 ShowPlot.y_offset       = 1;
-ShowPlot.Tor2Ang        = 1;
+ShowPlot.Tor2Ang        = 0;
 ShowPlot.volt_comp      = 1;
-ShowPlot.extTorq        = 0;
+ShowPlot.extTorq        = 1;
 ShowPlot.ThisScreen     = 1;
 ShowPlot.NextScreen_4K  = 0;
 ShowPlot.velocity       = 1;
 ShowPlot.z_b            = 0;
 ShowPlot.omega          = 1;
-ShowPlot.acceleration   = 1;
+ShowPlot.acceleration   = 0;
+
+%% get simulation result from out
+
+if rsim.en
+
+    fields = out.who;  % Get a list of all the variable names in the object
+    for i = 1:length(fields)
+        % Create a variable in the base workspace with the same name and value
+        assignin('base', fields{i}, out.get(fields{i}));
+    end
+
+    rst.rsim.dist.tor.x = rst_rsim_dist_torque.signals.values(:,1);
+    rst.rsim.dist.tor.y = rst_rsim_dist_torque.signals.values(:,2);
+end
 
 %%
-
-% clearvars rbt
-
-if rsim.en == 1
-
-    rst_voltages = out.rst_voltages;
-
-end
 
 rst.time      = rst_voltages.time;
 
@@ -71,25 +77,23 @@ rst.EulZYX.zyx = rotm2eul(rst.rotm, 'ZYX');
 rst.EulZYX.z = rst.EulZYX.zyx(:,1);
 rst.EulZYX.y = rst.EulZYX.zyx(:,2);
 rst.EulZYX.x = rst.EulZYX.zyx(:,3);
-% rst.EulXYZ.x  = rst_Eul_XYZ.signals.values(1,1,:);
-% rst.EulXYZ.y  = rst_Eul_XYZ.signals.values(2,1,:);
-% rst.EulXYZ.z  = rst_Eul_XYZ.signals.values(3,1,:);
+
+rst.EulZXY.t  = rst_Eul_XYZ.time;
+rst.EulZXY.zxy = rotm2eul(rst.rotm, 'ZXY');
+rst.EulZXY.z = rst.EulZXY.zxy(:,1);
+rst.EulZXY.y = rst.EulZXY.zxy(:,2);
+rst.EulZXY.x = rst.EulZXY.zxy(:,3);
 
 rst.ome.t     = rst_omega_b.time;
-rst.ome.x     = rst_omega_b.signals(1).values(:,1);
-rst.ome.y     = rst_omega_b.signals(1).values(:,2);
-rst.ome.z     = rst_omega_b.signals(1).values(:,3);
+rst.ome.x     = rst_omega_b.signals(2).values(:,1);
+rst.ome.y     = rst_omega_b.signals(2).values(:,2);
+rst.ome.z     = rst_omega_b.signals(2).values(:,3);
 
 rst.ome.t     = rst_omega_b.time;
-rst.ome.raw_x = rst_omega_b.signals(2).values(:,1);
-rst.ome.raw_y = rst_omega_b.signals(2).values(:,2);
-rst.ome.raw_z = rst_omega_b.signals(2).values(:,3);
+rst.ome.raw_x = rst_omega_b.signals(1).values(:,1);
+rst.ome.raw_y = rst_omega_b.signals(1).values(:,2);
+rst.ome.raw_z = rst_omega_b.signals(1).values(:,3);
 
-% rst.pred.p.t  = rst_predicted_p_landing.time;
-% rst.pred.p.x  = rst_predicted_p_landing.signals.values(:,1);
-% rst.pred.p.y  = rst_predicted_p_landing.signals.values(:,2);
-% rst.pred.p.z  = rst_predicted_p_landing.signals.values(:,3);
-% 
 % rst.des.p.t   = rst_desired_xy.time;
 % rst.des.p.x   = rst_desired_xy.signals.values(:,1);
 % rst.des.p.y   = rst_desired_xy.signals.values(:,2);
@@ -108,32 +112,24 @@ rst.vot.v4    = rst_voltages.signals.values(:,4);
 rst.en.t      = rst_en.time;
 rst.en.en     = rst_en.signals.values;
 
-% rst.z_b.x     = rst_z_b.signals.values(:,1);
-% rst.z_b.y     = rst_z_b.signals.values(:,2);
-% rst.z_b.z     = rst_z_b.signals.values(:,3);
-% rst.z_b_des.x = rst_z_b_desired.signals.values(:,1);
-% rst.z_b_des.y = rst_z_b_desired.signals.values(:,2);
-% rst.z_b_des.z = rst_z_b_desired.signals.values(:,3);
-
 rst.drs.t     = rst_driving_signals.time;
 rst.drs.s1    = rst_driving_signals.signals.values(:,1);
 rst.drs.s2    = rst_driving_signals.signals.values(:,2);
 rst.drs.s3    = rst_driving_signals.signals.values(:,3);
 rst.drs.s4    = rst_driving_signals.signals.values(:,4);
 
+rst.ext.tor.x = rst_ext_torque_b.signals.values(:,1);
+rst.ext.tor.y = rst_ext_torque_b.signals.values(:,2);
+
 rst.rbt       = rbt2;
 rst.ctr       = ctr2;
 rst.mdl       = mdl;
 
-if exist('mdl.servo_drop_time','var')
-
-else
-    mdl.servo_drop_time = 5;
-end
-
 rst.t.opt.id  = find(rst.vot.v1>0);
 rst.t.start   = rst.time(rst.t.opt.id(1));
-rst.t.stop    = 39.177; %rst.time(rst.t.opt.id(end));
+rst.t.stop    = rst.time(rst.t.opt.id(end));
+
+c = get_color;
 
 %% Position
 if ShowPlot.position
@@ -146,9 +142,9 @@ if ShowPlot.position
     % plot(rst.pred.p.t, rst.pred.p.y.*100, 'g--','linewidth',0.5)
     % plot(rst.pred.p.t, rst.pred.p.z.*100, 'b--','linewidth',0.5); 
 
-    plot(rst.pos.t, rst.pos.x.*100, 'r','linewidth',1); hold on
-    plot(rst.pos.t, rst.pos.y.*100, 'g','linewidth',1)
-    plot(rst.pos.t, rst.pos.z.*100, 'b','linewidth',1); 
+    plot(rst.pos.t, rst.pos.x.*100, 'linewidth',1); hold on
+    plot(rst.pos.t, rst.pos.y.*100, 'linewidth',1)
+    plot(rst.pos.t, rst.pos.z.*100, 'linewidth',1); 
     
 %     if 0 %ctr.rtmpc.en
 %         plot(rst.pos.t, rd_rtmpc(:,5).*100,'r--');
@@ -165,6 +161,11 @@ if ShowPlot.position
         plot(rst.pos.t, robot2.UKF.r(:,2).*100,'g--');
         plot(rst.pos.t, robot2.UKF.r(:,3).*100,'b--');
     end
+
+    % get error
+    error_x = rmse(ones(length(rst.pos.x(rst.t.start*mdl.f:rst.t.stop*mdl.f)),1)*ctr.setpoint.x, rst.pos.x(rst.t.start*mdl.f:rst.t.stop*mdl.f))
+    error_y = rmse(ones(length(rst.pos.y(rst.t.start*mdl.f:rst.t.stop*mdl.f)),1)*ctr.setpoint.y, rst.pos.y(rst.t.start*mdl.f:rst.t.stop*mdl.f))
+    
 %     plot(rst.pos.t,  ctr.envelope.xmax.*ones(length(rst.pos.t),1),'r--'); 
 %     plot(rst.pos.t, -ctr.envelope.xmax.*ones(length(rst.pos.t),1),'r--'); 
 %     plot(rst.pos.t,  ctr.envelope.ymax.*ones(length(rst.pos.t),1),'g--'); 
@@ -174,8 +175,9 @@ if ShowPlot.position
     plot([rst.t.stop, rst.t.stop],[min(min(min(rst.pos.x,rst.pos.y),rst.pos.z))*100, max(max(max(rst.pos.x,rst.pos.y),rst.pos.z))*100],'k--','linewidth',1.2)
     title('x y z position')
     ylabel('cm')
-    legend('x ref','y ref','x pred','y pred','z pred','x','y','z','Location','northwest')
+    legend('x','y','z','Location','northwest')
     xlim([rst.t.start, rst.t.stop])
+    grid on
     % ylim([min([rst.pos.x.*100; rst.pos.y.*100; rst.pos.z.*100])-5 max([rst.pos.x.*100; rst.pos.y.*100; rst.pos.z.*100; rst.ref.pos.x.*100;rst.ref.pos.y.*100;rst.ref.pos.z.*100;])+5])
     if ShowPlot.ThisScreen
         set(gcf, 'Units', 'centimeters');
@@ -194,9 +196,9 @@ end
 if ShowPlot.angle
     figure(2)
     if 1
-        plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.x), 'r'); hold on; grid on;
-        plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.y), 'g')
-        plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.z), 'b')
+        plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.x)); hold on; grid on;
+        plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.y))
+        plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.z))
         ylabel('degree');
     else
         plot(rst.EulXYZ.t, rst.EulXYZ.x, 'r'); hold on
@@ -217,14 +219,14 @@ if ShowPlot.angle
     plot([rst.t.start, rst.t.start],[rad2deg(min(min(min(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z))), rad2deg(max(max(max(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z)))],'k--','linewidth',1)
     plot([rst.t.stop, rst.t.stop],[rad2deg(min(min(min(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z))), rad2deg(max(max(max(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z)))],'k--','linewidth',1)
     xlim([rst.t.start, rst.t.stop])
-    ylim([-60 60])
+    ylim([-20 20])
     hold off
     title('euler angles XYZ')
 %     ylim([-pi,pi])
     legend('x','y','z','Location','northwest')
     if ShowPlot.ThisScreen
         set(gcf, 'Units', 'centimeters');
-        set(gcf, 'Position', [26, 1, 13, 10]); % [l b w h]
+        set(gcf, 'Position', [26, 13, 13, 10]); % [l b w h]
     elseif ShowPlot.NextScreen_4K
         set(gcf, 'Units', 'normalized');
         set(gcf, 'Position', [1, 0.45, 0.35, 0.45]); % [l b w h]
@@ -238,10 +240,10 @@ end
 if ShowPlot.driveSignal
     figure(3)
 %     if exist('DS_Time')
-        plot(rst.drs.t, 200*rst.drs.s1, 'r');    hold on
-        plot(rst.drs.t, 200*rst.drs.s2, 'Color','#EDB120')
-        plot(rst.drs.t, 200*rst.drs.s3, 'b')
-        plot(rst.drs.t, 200*rst.drs.s4, 'g')
+        plot(rst.drs.t, 200*rst.drs.s1, 'Color',c.yellow);    hold on
+        plot(rst.drs.t, 200*rst.drs.s2, 'Color',c.blue)
+        plot(rst.drs.t, 200*rst.drs.s3, 'Color',c.red)
+        plot(rst.drs.t, 200*rst.drs.s4, 'Color',c.green)
 %     else
 %         plot(rst.time, 200*rst.drs.s1, 'r');    hold on
 %         plot(rst.time, 200*rst.drs.s2, 'Color','#EDB120')
@@ -269,16 +271,16 @@ end
 %% Voltages
 if ShowPlot.voltage
     figure(4)
-    plot(rst.time, rst.vot.v1, 'r')
+    plot(rst.time, rst.vot.v1, 'Color',c.yellow)
     hold on
-    plot(rst.time, rst.vot.v2, 'Color','#EDB120')
-    plot(rst.time, rst.vot.v3, 'b')
-    plot(rst.time, rst.vot.v4, 'g')
+    plot(rst.time, rst.vot.v2, 'Color',c.blue)
+    plot(rst.time, rst.vot.v3, 'Color', c.red)
+    plot(rst.time, rst.vot.v4, 'Color',c.green)
     plot([0 rst.time(end)],[1600 1600],'k--')
     plot([0 rst.time(end)],[1700 1700],'r--')
     hold off
 %     ylim([1300 max(rst.mdl.max_v_vec)])
-    ylim([300 1900])
+    ylim([1300 2000])
     xlim([rst.t.start, rst.t.stop])
     title('voltage amplitudes')
     legend('1','2','3','4','Location','northwest')
@@ -309,8 +311,8 @@ if ShowPlot.torque
     % yt_error = sum(rst.tor.y(t_start*rst.mdl.f:t_stop*rst.mdl.f))/(t_stop*rst.mdl.f-t_start*rst.mdl.f+1);
     % zt_error = sum(rst.tor.z(t_start*rst.mdl.f:t_stop*rst.mdl.f))/(t_stop*rst.mdl.f-t_start*rst.mdl.f+1);
     figure(5)
-    plot(rst.time, rst.tor.x, 'r'); hold on; grid on;
-    plot(rst.time, rst.tor.y, 'g')
+    plot(rst.time, rst.tor.x); hold on; grid on;
+    plot(rst.time, rst.tor.y)
     % plot(rst.time, rst.tor.z, 'b'); 
     % plot([t_start t_stop],[xt_error xt_error],'r--')
     % plot([t_start t_stop],[yt_error yt_error],'g--')
@@ -319,7 +321,7 @@ if ShowPlot.torque
     plot([rst.t.stop, rst.t.stop],[-1e-4, 1e-4],'k--')
     title('torque')
     xlim([rst.t.start, rst.t.stop])
-    %ylim([-1,1]*1e-5)
+    ylim([-3,3]*1e-5)
     legend('x','y','z','Location','northwest')
     if ShowPlot.ThisScreen
         set(gcf, 'Units', 'centimeters');
@@ -331,16 +333,26 @@ if ShowPlot.torque
         set(gcf, 'Units', 'normalized');
         set(gcf, 'Position', [1.25, 0.625, 0.25, 0.35]); % [l b w h]
     end
+    hold off
 end
 
 %% Z Force
 if ShowPlot.forceZ
+
+    % design filter
+    d1 = designfilt("lowpassiir",'FilterOrder', 2, ...
+    'HalfPowerFrequency', 0.005, 'DesignMethod', "butter");
+ 
+    % get post-omega from real-time Euler
+    rst.acc.fil.z = filtfilt(d1,rst.acc.z);
+
     figure(6)
-    plot(rst.time, rst.thrust/rst.rbt.m, 'm'); hold on; grid on; % in m/s^2
-    plot(rst.time, rst.acc.z+rst.mdl.g, 'linewidth',1); 
+    plot(rst.time, rst.thrust, 'm'); hold on; grid on; % in m/s^2
+    plot(rst.acc.t, rst.acc.fil.z+rst.mdl.g, 'linewidth',1); 
     plot([rst.mdl.i_delay rst.mdl.rt], [rst.mdl.g, rst.mdl.g],'--')
     title('force z')
     xlim([rst.mdl.i_delay rst.mdl.rt])
+    ylim([6 13])
     legend('control', 'robot acc')
 % %     set(gcf, 'Units', 'centimeters');
 % %     set(gcf, 'Position', [26, 1, 13, 10]); % [l b w h]
@@ -348,7 +360,7 @@ if ShowPlot.forceZ
 %     set(gcf, 'Position', [1.25, 0.2, 0.25, 0.35]); % [l b w h]
     if ShowPlot.ThisScreen
         set(gcf, 'Units', 'centimeters');
-        set(gcf, 'Position', [0, 13, 13, 10]); % [l b w h]
+        set(gcf, 'Position', [52, 1, 13, 10]); % [l b w h]
     elseif ShowPlot.NextScreen_4K
         set(gcf, 'Units', 'normalized');
         set(gcf, 'Position', [1.35, -0.05, 0.35, 0.45]); % [l b w h]
@@ -356,19 +368,20 @@ if ShowPlot.forceZ
         set(gcf, 'Units', 'normalized');
         set(gcf, 'Position', [1.25, 0.625, 0.25, 0.35]); % [l b w h]
     end
+    hold off
 end
 
 
 
 %% Enable
 if ShowPlot.en
-    figure(9)
-    plot(rst.en.t,rst.en.en(:,1:6),'linewidth',2); hold on
+    figure(7)
+    plot(rst.en.t,rst.en.en(:,1:4),'linewidth',2); hold on
     plot([rst.t.start, rst.t.start],[-0.2, 1.2],'k--','linewidth',1)
     plot([rst.t.stop, rst.t.stop],[-0.2, 1.2],'k--','linewidth',1)
     title('Safety Enable')
     ylim([-0.2,1.2])
-    legend('envolop','landing','z','lost','flip','voltage','Location','northwest')
+    legend('envolop','lost','flip','voltage','Location','northwest')
 %     set(gcf, 'Units', 'centimeters');
 %     set(gcf, 'Position', [39, 1, 12, 10]); % [l b w h]
 %     set(gcf, 'Units', 'normalized');
@@ -444,7 +457,7 @@ if ShowPlot.Tor2Ang
     % plot(rst.ome.from_Eul(:,3))
     % ylim([-10 10])
 
-    %%
+    %
     % % get pqr from real-time omega
     % rst.ome.fil.x = filtfilt(d1,rst.ome.x);
     % rst.ome.fil.y = filtfilt(d1,rst.ome.y);
@@ -453,7 +466,7 @@ if ShowPlot.Tor2Ang
     % plot(rst.ome.x); hold on
     % plot(rst.ome.fil.x)
 
-    figure(21)
+    figure(8)
 
     
     t_start = rst.t.start + 0.2;
@@ -462,7 +475,7 @@ if ShowPlot.Tor2Ang
     subplot(2,1,1)
     rst.pqr_dot.x = diff(rst.ome.fil.x)/rst.mdl.T;
     Tx_offset = mean(rst.tor.x(t_start*rst.mdl.f+0.1*rst.mdl.f:t_stop*rst.mdl.f)./rst.rbt.ixx);
-    plot(rst.ome.t(1:end-1), rst.pqr_dot.x,'Color','#EDB120'); hold on
+    plot(rst.EulXYZ.t(1:end-1), rst.pqr_dot.x,'Color','#EDB120'); hold on
     % plot(rst.time, rst.tor.x./rst.rbt.ixx,'Color','#7E2F8E')
     plot(rst.time, rst.tor.x./rst.rbt.ixx - Tx_offset,'Color',[0.3 0.3 0.3])
 
@@ -476,7 +489,7 @@ if ShowPlot.Tor2Ang
     subplot(2,1,2)
     rst.pqr_dot.y = diff(rst.ome.fil.y)/rst.mdl.T;
     Ty_offset = mean(rst.tor.y(t_start*rst.mdl.f+0.1*rst.mdl.f:t_stop*rst.mdl.f)./rst.rbt.iyy);
-    plot(rst.ome.t(1:end-1), rst.pqr_dot.y,'Color','#EDB120'); hold on
+    plot(rst.EulXYZ.t(1:end-1), rst.pqr_dot.y,'Color','#EDB120'); hold on
     % plot(rst.time, rst.tor.y./rst.rbt.iyy,'Color','#7E2F8E')
     plot(rst.time, rst.tor.y./rst.rbt.iyy - Ty_offset,'Color',[0.3 0.3 0.3])
     legend('angular acce', 'torque','Location','northwest')
@@ -511,17 +524,25 @@ end
 %% external torque
 if ShowPlot.extTorq
    
-    figure(31)
+    figure(9)
     plot(rst.time,rst.ext.tor.x); hold on
     plot(rst.time,rst.ext.tor.y);
+    legend('x','y','Location','northwest')
+
+    if rsim.en
+        plot(rst.time,rst.rsim.dist.tor.x)
+        plot(rst.time,rst.rsim.dist.tor.y)
+        legend('estimated x','estimated y','true x','true y','Location','northwest')
+    end
     
     title('external torque')
     xlim([rst.mdl.i_delay rst.mdl.rt])
-
-    legend('x','y','Location','northwest')
+    ylim([-3e-5, 3e-5])
+    grid on
+    
     if ShowPlot.ThisScreen
         set(gcf, 'Units', 'centimeters');
-        set(gcf, 'Position', [29, 3, 12, 10]); % [l b w h]  
+        set(gcf, 'Position', [39, 1, 13, 10]); % [l b w h]  
     elseif ShowPlot.NextScreen_4K
         set(gcf, 'Units', 'normalized');
         set(gcf, 'Position', [1, -0.45, 0.35, 0.45]); % [l b w h]
@@ -532,10 +553,10 @@ end
 
 %% velocity
 if ShowPlot.velocity
-    figure(31)
-    plot(rst.vel.t, rst.vel.x.*100, 'r','linewidth',1); hold on
-    plot(rst.vel.t, rst.vel.y.*100, 'g','linewidth',1)
-    plot(rst.vel.t, rst.vel.z.*100, 'b','linewidth',1); 
+    figure(10)
+    plot(rst.vel.t, rst.vel.x.*100, 'linewidth',1); hold on
+    plot(rst.vel.t, rst.vel.y.*100, 'linewidth',1)
+    plot(rst.vel.t, rst.vel.z.*100, 'linewidth',1); 
 
     % plot([mdl.servo_drop_time, mdl.servo_drop_time],[min(min(min(rst.vel.x,rst.vel.y),rst.vel.z))*100, max(max(max(rst.vel.x,rst.vel.y),rst.vel.z))*100],'k--','linewidth',1.2)
     plot([rst.t.start, rst.t.start],[-200,200],'k--','linewidth',1)
@@ -544,7 +565,8 @@ if ShowPlot.velocity
     ylabel('cm/s')
     legend('x','y','z','Location','northwest')
     xlim([rst.t.start, rst.t.stop])
-    ylim([-300, 300])
+    ylim([-100, 100])
+    grid on
     % ylim([min([rst.pos.x.*100; rst.pos.y.*100; rst.pos.z.*100])-5 max([rst.pos.x.*100; rst.pos.y.*100; rst.pos.z.*100; rst.ref.pos.x.*100;rst.ref.pos.y.*100;rst.ref.pos.z.*100;])+5])
     if ShowPlot.ThisScreen
         set(gcf, 'Units', 'centimeters');
@@ -561,20 +583,21 @@ end
 
 %% accelaration
 if ShowPlot.acceleration
-    figure(53)
-    plot(rst.acc.t, rst.acc.x.*100, 'r','linewidth',1); hold on
-    plot(rst.acc.t, rst.acc.y.*100, 'g','linewidth',1)
-    plot(rst.acc.t, rst.acc.z.*100, 'b','linewidth',1); 
+    figure(11)
+    plot(rst.acc.t, rst.acc.x.*100,'linewidth',1); hold on
+    plot(rst.acc.t, rst.acc.y.*100,'linewidth',1)
+    plot(rst.acc.t, rst.acc.z.*100,'linewidth',1); 
 
     title('x y z acceleration')
     ylabel('cm/s2')
     legend('x','y','z','Location','northwest')
     xlim([rst.t.start, rst.t.stop])
     ylim([-300, 300])
+    grid on
     % ylim([min([rst.pos.x.*100; rst.pos.y.*100; rst.pos.z.*100])-5 max([rst.pos.x.*100; rst.pos.y.*100; rst.pos.z.*100; rst.ref.pos.x.*100;rst.ref.pos.y.*100;rst.ref.pos.z.*100;])+5])
     if ShowPlot.ThisScreen
         set(gcf, 'Units', 'centimeters');
-        set(gcf, 'Position', [0, 1, 13, 10]); % [l b w h]
+        set(gcf, 'Position', [52, 1, 13, 10]); % [l b w h]
     elseif ShowPlot.NextScreen_4K
         set(gcf, 'Units', 'normalized');
         set(gcf, 'Position', [1, 0.95, 0.35, 0.45]); % [l b w h]
@@ -589,9 +612,9 @@ end
 
 if ShowPlot.omega
 
-    figure(45)
-    plot(rst.ome.t, rst.ome.x, 'r'); hold on; grid on;
-    plot(rst.ome.t, rst.ome.y, 'g')
+    figure(12)
+    plot(rst.ome.t, rst.ome.x); hold on; grid on;
+    plot(rst.ome.t, rst.ome.y)
     % plot(rst.ome.t, rst.tor.z, 'b'); 
     % plot([t_start t_stop],[xt_error xt_error],'r--')
     % plot([t_start t_stop],[yt_error yt_error],'g--')
@@ -604,7 +627,7 @@ if ShowPlot.omega
     legend('x','y','z','Location','northwest')
     if ShowPlot.ThisScreen
         set(gcf, 'Units', 'centimeters');
-        set(gcf, 'Position', [39, 13, 13, 10]); % [l b w h]
+        set(gcf, 'Position', [26, 1, 13, 10]); % [l b w h]
     elseif ShowPlot.NextScreen_4K
         set(gcf, 'Units', 'normalized');
         set(gcf, 'Position', [1.35, 0.45, 0.35, 0.45]); % [l b w h]
@@ -617,17 +640,19 @@ end
 
 %% Euler angles
 if ShowPlot.angle
-    figure(41)
-    if 0
-        plot(rst.EulXYZ.t, rad2deg(rst.EulZYX.x), 'r'); hold on; grid on;
-        plot(rst.EulXYZ.t, rad2deg(rst.EulZYX.y), 'g')
-        plot(rst.EulXYZ.t, rad2deg(rst.EulZYX.z), 'b')
+    figure(13)
+    if 1
+        plot(rst.EulXYZ.t, rad2deg(rst.EulZYX.x)); hold on; grid on;
+        plot(rst.EulXYZ.t, rad2deg(rst.EulZYX.y))
+        plot(rst.EulXYZ.t, rad2deg(rst.EulZYX.z))
         ylabel('degree');
+        ylim([-20 20])
     else
         plot(rst.EulXYZ.t, rst.EulZYX.x, 'r'); hold on
         plot(rst.EulXYZ.t, rst.EulZYX.y, 'g')
         plot(rst.EulXYZ.t, rst.EulZYX.z, 'b')
         ylabel('radian');
+        ylim([-0.3 0.3])
     end
 %     if som.en
 %         % flipping angle
@@ -642,14 +667,14 @@ if ShowPlot.angle
     plot([rst.t.start, rst.t.start],[rad2deg(min(min(min(rst.EulZYX.x,rst.EulZYX.y),rst.EulZYX.z))), rad2deg(max(max(max(rst.EulZYX.x,rst.EulZYX.y),rst.EulZYX.z)))],'k--','linewidth',1)
     plot([rst.t.stop, rst.t.stop],[rad2deg(min(min(min(rst.EulZYX.x,rst.EulZYX.y),rst.EulZYX.z))), rad2deg(max(max(max(rst.EulZYX.x,rst.EulZYX.y),rst.EulZYX.z)))],'k--','linewidth',1)
     xlim([rst.t.start, rst.t.stop])
-    ylim([-0.3 0.3])
+    
     hold off
     title('euler angles ZYX')
 %     ylim([-pi,pi])
     legend('x','y','z','Location','northwest')
     if ShowPlot.ThisScreen
         set(gcf, 'Units', 'centimeters');
-        set(gcf, 'Position', [26, 1, 13, 10]); % [l b w h]
+        set(gcf, 'Position', [52, 1, 13, 10]); % [l b w h]
     elseif ShowPlot.NextScreen_4K
         set(gcf, 'Units', 'normalized');
         set(gcf, 'Position', [1, 0.45, 0.35, 0.45]); % [l b w h]
