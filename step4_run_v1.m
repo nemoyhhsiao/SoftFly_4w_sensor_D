@@ -58,5 +58,5 @@ disp('======================================================')
 disp(' ')
 
 % show analysis
-pause(2)
-step6_analysis_v1
+% pause(2)
+% step6_analysis_v1

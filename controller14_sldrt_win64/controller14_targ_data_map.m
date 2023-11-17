@@ -193,213 +193,213 @@
                     section.data(8).logicalSrcIdx = 24;
                     section.data(8).dtTransOffset = 15;
 
-                    ;% controller14_P.Constant_Value_a
+                    ;% controller14_P.Switch2_Threshold
                     section.data(9).logicalSrcIdx = 25;
                     section.data(9).dtTransOffset = 16;
 
-                    ;% controller14_P.Constant8_Value
+                    ;% controller14_P.Constant_Value_a
                     section.data(10).logicalSrcIdx = 26;
-                    section.data(10).dtTransOffset = 19;
+                    section.data(10).dtTransOffset = 17;
 
-                    ;% controller14_P.Saturation_UpperSat
+                    ;% controller14_P.Constant8_Value
                     section.data(11).logicalSrcIdx = 27;
                     section.data(11).dtTransOffset = 20;
 
-                    ;% controller14_P.Saturation_LowerSat
+                    ;% controller14_P.Saturation_UpperSat
                     section.data(12).logicalSrcIdx = 28;
                     section.data(12).dtTransOffset = 21;
 
-                    ;% controller14_P.Constant40_Value
+                    ;% controller14_P.Saturation_LowerSat
                     section.data(13).logicalSrcIdx = 29;
                     section.data(13).dtTransOffset = 22;
 
-                    ;% controller14_P.Gain6_Gain
+                    ;% controller14_P.Constant40_Value
                     section.data(14).logicalSrcIdx = 30;
-                    section.data(14).dtTransOffset = 25;
+                    section.data(14).dtTransOffset = 23;
 
-                    ;% controller14_P.Constant_Value_l
+                    ;% controller14_P.Gain6_Gain
                     section.data(15).logicalSrcIdx = 31;
                     section.data(15).dtTransOffset = 26;
 
-                    ;% controller14_P.Constant1_Value
+                    ;% controller14_P.Constant_Value_l
                     section.data(16).logicalSrcIdx = 32;
                     section.data(16).dtTransOffset = 27;
 
-                    ;% controller14_P.Constant2_Value
+                    ;% controller14_P.Constant1_Value
                     section.data(17).logicalSrcIdx = 33;
                     section.data(17).dtTransOffset = 28;
 
-                    ;% controller14_P.Constant3_Value
+                    ;% controller14_P.Constant2_Value
                     section.data(18).logicalSrcIdx = 34;
                     section.data(18).dtTransOffset = 29;
 
-                    ;% controller14_P.Constant_Value_a3
+                    ;% controller14_P.Constant3_Value
                     section.data(19).logicalSrcIdx = 35;
                     section.data(19).dtTransOffset = 30;
 
-                    ;% controller14_P.Constant_Value_l4
+                    ;% controller14_P.Constant_Value_a3
                     section.data(20).logicalSrcIdx = 36;
                     section.data(20).dtTransOffset = 31;
 
-                    ;% controller14_P.Constant_Value_k
+                    ;% controller14_P.Constant_Value_l4
                     section.data(21).logicalSrcIdx = 37;
                     section.data(21).dtTransOffset = 32;
 
-                    ;% controller14_P.Constant_Value_m
+                    ;% controller14_P.Constant_Value_k
                     section.data(22).logicalSrcIdx = 38;
                     section.data(22).dtTransOffset = 33;
 
-                    ;% controller14_P.Constant_Value_p
+                    ;% controller14_P.Constant_Value_m
                     section.data(23).logicalSrcIdx = 39;
                     section.data(23).dtTransOffset = 34;
 
-                    ;% controller14_P.Constant_Value_c
+                    ;% controller14_P.Constant_Value_p
                     section.data(24).logicalSrcIdx = 40;
                     section.data(24).dtTransOffset = 35;
 
-                    ;% controller14_P.Constant_Value_h
+                    ;% controller14_P.Constant_Value_c
                     section.data(25).logicalSrcIdx = 41;
                     section.data(25).dtTransOffset = 36;
 
-                    ;% controller14_P.Constant_Value_g
+                    ;% controller14_P.Constant_Value_h
                     section.data(26).logicalSrcIdx = 42;
                     section.data(26).dtTransOffset = 37;
 
-                    ;% controller14_P.Constant_Value_kj
+                    ;% controller14_P.Constant_Value_g
                     section.data(27).logicalSrcIdx = 43;
                     section.data(27).dtTransOffset = 38;
 
-                    ;% controller14_P.Constant4_Value
+                    ;% controller14_P.Constant_Value_kj
                     section.data(28).logicalSrcIdx = 44;
                     section.data(28).dtTransOffset = 39;
 
-                    ;% controller14_P.Constant5_Value
+                    ;% controller14_P.Constant4_Value
                     section.data(29).logicalSrcIdx = 45;
-                    section.data(29).dtTransOffset = 42;
+                    section.data(29).dtTransOffset = 40;
+
+                    ;% controller14_P.Constant5_Value
+                    section.data(30).logicalSrcIdx = 46;
+                    section.data(30).dtTransOffset = 43;
 
                     ;% controller14_P.Switch_Threshold
-                    section.data(30).logicalSrcIdx = 46;
-                    section.data(30).dtTransOffset = 45;
-
-                    ;% controller14_P.Delay2_InitialCondition
                     section.data(31).logicalSrcIdx = 47;
                     section.data(31).dtTransOffset = 46;
 
-                    ;% controller14_P.Delay1_InitialCondition
+                    ;% controller14_P.Delay2_InitialCondition
                     section.data(32).logicalSrcIdx = 48;
-                    section.data(32).dtTransOffset = 50;
+                    section.data(32).dtTransOffset = 47;
 
-                    ;% controller14_P.Delay_InitialCondition
+                    ;% controller14_P.Delay1_InitialCondition
                     section.data(33).logicalSrcIdx = 49;
                     section.data(33).dtTransOffset = 51;
 
-                    ;% controller14_P.Switch2_Threshold
+                    ;% controller14_P.Delay_InitialCondition
                     section.data(34).logicalSrcIdx = 50;
                     section.data(34).dtTransOffset = 52;
 
-                    ;% controller14_P.time_gainval
+                    ;% controller14_P.Switch2_Threshold_b
                     section.data(35).logicalSrcIdx = 51;
                     section.data(35).dtTransOffset = 53;
 
-                    ;% controller14_P.time_IC
+                    ;% controller14_P.time_gainval
                     section.data(36).logicalSrcIdx = 52;
                     section.data(36).dtTransOffset = 54;
 
-                    ;% controller14_P.Switch_Threshold_l
+                    ;% controller14_P.time_IC
                     section.data(37).logicalSrcIdx = 53;
                     section.data(37).dtTransOffset = 55;
 
-                    ;% controller14_P.SaturatingRamp_gainval
+                    ;% controller14_P.Switch_Threshold_l
                     section.data(38).logicalSrcIdx = 54;
                     section.data(38).dtTransOffset = 56;
 
-                    ;% controller14_P.SaturatingRamp_IC
+                    ;% controller14_P.SaturatingRamp_gainval
                     section.data(39).logicalSrcIdx = 55;
                     section.data(39).dtTransOffset = 57;
 
-                    ;% controller14_P.SaturatingRamp_UpperSat
+                    ;% controller14_P.SaturatingRamp_IC
                     section.data(40).logicalSrcIdx = 56;
                     section.data(40).dtTransOffset = 58;
 
-                    ;% controller14_P.SaturatingRamp_LowerSat
+                    ;% controller14_P.SaturatingRamp_UpperSat
                     section.data(41).logicalSrcIdx = 57;
                     section.data(41).dtTransOffset = 59;
 
-                    ;% controller14_P.RampUpOrDown_gainval
+                    ;% controller14_P.SaturatingRamp_LowerSat
                     section.data(42).logicalSrcIdx = 58;
                     section.data(42).dtTransOffset = 60;
 
-                    ;% controller14_P.RampUpOrDown_IC
+                    ;% controller14_P.RampUpOrDown_gainval
                     section.data(43).logicalSrcIdx = 59;
                     section.data(43).dtTransOffset = 61;
 
-                    ;% controller14_P.RampUpOrDown_UpperSat
+                    ;% controller14_P.RampUpOrDown_IC
                     section.data(44).logicalSrcIdx = 60;
                     section.data(44).dtTransOffset = 62;
 
-                    ;% controller14_P.RampUpOrDown_LowerSat
+                    ;% controller14_P.RampUpOrDown_UpperSat
                     section.data(45).logicalSrcIdx = 61;
                     section.data(45).dtTransOffset = 63;
 
-                    ;% controller14_P.phaseoffset_Value
+                    ;% controller14_P.RampUpOrDown_LowerSat
                     section.data(46).logicalSrcIdx = 62;
                     section.data(46).dtTransOffset = 64;
 
-                    ;% controller14_P.degtorad_Gain
+                    ;% controller14_P.phaseoffset_Value
                     section.data(47).logicalSrcIdx = 63;
                     section.data(47).dtTransOffset = 65;
 
-                    ;% controller14_P.omegat_gainval
+                    ;% controller14_P.degtorad_Gain
                     section.data(48).logicalSrcIdx = 64;
                     section.data(48).dtTransOffset = 66;
 
-                    ;% controller14_P.omegat_IC
+                    ;% controller14_P.omegat_gainval
                     section.data(49).logicalSrcIdx = 65;
                     section.data(49).dtTransOffset = 67;
 
-                    ;% controller14_P.Gain1_Gain_o
+                    ;% controller14_P.omegat_IC
                     section.data(50).logicalSrcIdx = 66;
                     section.data(50).dtTransOffset = 68;
 
-                    ;% controller14_P.Delay_InitialCondition_g
+                    ;% controller14_P.Gain1_Gain_o
                     section.data(51).logicalSrcIdx = 67;
                     section.data(51).dtTransOffset = 69;
 
-                    ;% controller14_P.Delay1_InitialCondition_g
+                    ;% controller14_P.Delay_InitialCondition_g
                     section.data(52).logicalSrcIdx = 68;
                     section.data(52).dtTransOffset = 70;
 
-                    ;% controller14_P.Delay1_InitialCondition_g1
+                    ;% controller14_P.Delay1_InitialCondition_g
                     section.data(53).logicalSrcIdx = 69;
-                    section.data(53).dtTransOffset = 72;
+                    section.data(53).dtTransOffset = 71;
 
-                    ;% controller14_P.Switch5_Threshold
+                    ;% controller14_P.Delay1_InitialCondition_g1
                     section.data(54).logicalSrcIdx = 70;
                     section.data(54).dtTransOffset = 73;
 
-                    ;% controller14_P.Delay_InitialCondition_h
+                    ;% controller14_P.Switch5_Threshold
                     section.data(55).logicalSrcIdx = 71;
                     section.data(55).dtTransOffset = 74;
 
-                    ;% controller14_P.Gain_Gain
+                    ;% controller14_P.Delay_InitialCondition_h
                     section.data(56).logicalSrcIdx = 72;
-                    section.data(56).dtTransOffset = 77;
+                    section.data(56).dtTransOffset = 75;
 
-                    ;% controller14_P.Switch1_Threshold
+                    ;% controller14_P.Gain_Gain
                     section.data(57).logicalSrcIdx = 73;
                     section.data(57).dtTransOffset = 78;
 
-                    ;% controller14_P.Delay1_InitialCondition_o
+                    ;% controller14_P.Switch1_Threshold
                     section.data(58).logicalSrcIdx = 74;
                     section.data(58).dtTransOffset = 79;
 
-                    ;% controller14_P.Delay1_InitialCondition_e
+                    ;% controller14_P.Delay1_InitialCondition_o
                     section.data(59).logicalSrcIdx = 75;
-                    section.data(59).dtTransOffset = 82;
+                    section.data(59).dtTransOffset = 80;
 
-                    ;% controller14_P.Switch2_Threshold_b
+                    ;% controller14_P.Delay1_InitialCondition_e
                     section.data(60).logicalSrcIdx = 76;
-                    section.data(60).dtTransOffset = 85;
+                    section.data(60).dtTransOffset = 83;
 
                     ;% controller14_P.Switch3_Threshold
                     section.data(61).logicalSrcIdx = 77;
@@ -1053,8 +1053,8 @@
         ;%
         ;% Auto data (controller14_B)
         ;%
-            section.nData     = 90;
-            section.data(90)  = dumData; %prealloc
+            section.nData     = 87;
+            section.data(87)  = dumData; %prealloc
 
                     ;% controller14_B.Switch
                     section.data(1).logicalSrcIdx = 0;
@@ -1120,301 +1120,289 @@
                     section.data(16).logicalSrcIdx = 15;
                     section.data(16).dtTransOffset = 26;
 
-                    ;% controller14_B.DigitalFilter
+                    ;% controller14_B.p_dot
                     section.data(17).logicalSrcIdx = 16;
                     section.data(17).dtTransOffset = 29;
 
-                    ;% controller14_B.p_dot
+                    ;% controller14_B.ZeroOrderHold4_c
                     section.data(18).logicalSrcIdx = 17;
                     section.data(18).dtTransOffset = 32;
 
-                    ;% controller14_B.ZeroOrderHold4_c
+                    ;% controller14_B.p_dotdot
                     section.data(19).logicalSrcIdx = 18;
                     section.data(19).dtTransOffset = 35;
 
-                    ;% controller14_B.p_dotdot
+                    ;% controller14_B.ZeroOrderHold5_a
                     section.data(20).logicalSrcIdx = 19;
                     section.data(20).dtTransOffset = 38;
 
-                    ;% controller14_B.p_dotdot_a
+                    ;% controller14_B.Reshape1
                     section.data(21).logicalSrcIdx = 20;
                     section.data(21).dtTransOffset = 41;
 
-                    ;% controller14_B.ZeroOrderHold5_a
+                    ;% controller14_B.ZeroOrderHold2
                     section.data(22).logicalSrcIdx = 21;
                     section.data(22).dtTransOffset = 44;
 
-                    ;% controller14_B.Reshape1
+                    ;% controller14_B.p_raw_h
                     section.data(23).logicalSrcIdx = 22;
                     section.data(23).dtTransOffset = 47;
 
-                    ;% controller14_B.ZeroOrderHold2
+                    ;% controller14_B.DigitalFilter
                     section.data(24).logicalSrcIdx = 23;
                     section.data(24).dtTransOffset = 50;
 
-                    ;% controller14_B.p_raw_h
+                    ;% controller14_B.ZeroOrderHold1_b
                     section.data(25).logicalSrcIdx = 24;
                     section.data(25).dtTransOffset = 53;
 
-                    ;% controller14_B.DigitalFilter_f
+                    ;% controller14_B.Delay2
                     section.data(26).logicalSrcIdx = 25;
                     section.data(26).dtTransOffset = 56;
 
-                    ;% controller14_B.ZeroOrderHold1_b
-                    section.data(27).logicalSrcIdx = 26;
-                    section.data(27).dtTransOffset = 59;
-
-                    ;% controller14_B.Delay2
-                    section.data(28).logicalSrcIdx = 27;
-                    section.data(28).dtTransOffset = 62;
-
                     ;% controller14_B.times2
-                    section.data(29).logicalSrcIdx = 28;
-                    section.data(29).dtTransOffset = 66;
+                    section.data(27).logicalSrcIdx = 26;
+                    section.data(27).dtTransOffset = 60;
 
                     ;% controller14_B.Switch17
-                    section.data(30).logicalSrcIdx = 29;
-                    section.data(30).dtTransOffset = 70;
+                    section.data(28).logicalSrcIdx = 27;
+                    section.data(28).dtTransOffset = 64;
 
                     ;% controller14_B.Switch1
-                    section.data(31).logicalSrcIdx = 30;
-                    section.data(31).dtTransOffset = 71;
+                    section.data(29).logicalSrcIdx = 28;
+                    section.data(29).dtTransOffset = 65;
 
                     ;% controller14_B.Switch2
-                    section.data(32).logicalSrcIdx = 31;
-                    section.data(32).dtTransOffset = 72;
+                    section.data(30).logicalSrcIdx = 29;
+                    section.data(30).dtTransOffset = 66;
 
                     ;% controller14_B.Switch3
-                    section.data(33).logicalSrcIdx = 32;
-                    section.data(33).dtTransOffset = 73;
+                    section.data(31).logicalSrcIdx = 30;
+                    section.data(31).dtTransOffset = 67;
 
                     ;% controller14_B.half1
-                    section.data(34).logicalSrcIdx = 33;
-                    section.data(34).dtTransOffset = 74;
-
-                    ;% controller14_B.Gain4
-                    section.data(35).logicalSrcIdx = 34;
-                    section.data(35).dtTransOffset = 78;
+                    section.data(32).logicalSrcIdx = 31;
+                    section.data(32).dtTransOffset = 68;
 
                     ;% controller14_B.SaturatingRamp_d
-                    section.data(36).logicalSrcIdx = 35;
-                    section.data(36).dtTransOffset = 79;
+                    section.data(33).logicalSrcIdx = 32;
+                    section.data(33).dtTransOffset = 72;
 
                     ;% controller14_B.RampUpOrDown_l
-                    section.data(37).logicalSrcIdx = 36;
-                    section.data(37).dtTransOffset = 80;
+                    section.data(34).logicalSrcIdx = 33;
+                    section.data(34).dtTransOffset = 73;
 
                     ;% controller14_B.Gain1_c
-                    section.data(38).logicalSrcIdx = 37;
-                    section.data(38).dtTransOffset = 81;
-
-                    ;% controller14_B.Gain1_b
-                    section.data(39).logicalSrcIdx = 38;
-                    section.data(39).dtTransOffset = 82;
+                    section.data(35).logicalSrcIdx = 34;
+                    section.data(35).dtTransOffset = 74;
 
                     ;% controller14_B.SaturatingRamp_f
-                    section.data(40).logicalSrcIdx = 39;
-                    section.data(40).dtTransOffset = 83;
+                    section.data(36).logicalSrcIdx = 35;
+                    section.data(36).dtTransOffset = 75;
 
                     ;% controller14_B.RampUpOrDown_c
-                    section.data(41).logicalSrcIdx = 40;
-                    section.data(41).dtTransOffset = 84;
+                    section.data(37).logicalSrcIdx = 36;
+                    section.data(37).dtTransOffset = 76;
 
                     ;% controller14_B.Gain1_d
-                    section.data(42).logicalSrcIdx = 41;
-                    section.data(42).dtTransOffset = 85;
-
-                    ;% controller14_B.Gain2
-                    section.data(43).logicalSrcIdx = 42;
-                    section.data(43).dtTransOffset = 86;
+                    section.data(38).logicalSrcIdx = 37;
+                    section.data(38).dtTransOffset = 77;
 
                     ;% controller14_B.SaturatingRamp_j
-                    section.data(44).logicalSrcIdx = 43;
-                    section.data(44).dtTransOffset = 87;
+                    section.data(39).logicalSrcIdx = 38;
+                    section.data(39).dtTransOffset = 78;
 
                     ;% controller14_B.RampUpOrDown_lb
-                    section.data(45).logicalSrcIdx = 44;
-                    section.data(45).dtTransOffset = 88;
+                    section.data(40).logicalSrcIdx = 39;
+                    section.data(40).dtTransOffset = 79;
 
                     ;% controller14_B.Gain1_j
-                    section.data(46).logicalSrcIdx = 45;
-                    section.data(46).dtTransOffset = 89;
-
-                    ;% controller14_B.Gain3
-                    section.data(47).logicalSrcIdx = 46;
-                    section.data(47).dtTransOffset = 90;
+                    section.data(41).logicalSrcIdx = 40;
+                    section.data(41).dtTransOffset = 80;
 
                     ;% controller14_B.DiscreteTimeIntegrator
-                    section.data(48).logicalSrcIdx = 47;
-                    section.data(48).dtTransOffset = 91;
+                    section.data(42).logicalSrcIdx = 41;
+                    section.data(42).dtTransOffset = 81;
 
                     ;% controller14_B.Product_f
-                    section.data(49).logicalSrcIdx = 48;
-                    section.data(49).dtTransOffset = 95;
+                    section.data(43).logicalSrcIdx = 42;
+                    section.data(43).dtTransOffset = 85;
 
                     ;% controller14_B.Saturation6
-                    section.data(50).logicalSrcIdx = 49;
-                    section.data(50).dtTransOffset = 99;
+                    section.data(44).logicalSrcIdx = 43;
+                    section.data(44).dtTransOffset = 89;
 
                     ;% controller14_B.Saturation7
-                    section.data(51).logicalSrcIdx = 50;
-                    section.data(51).dtTransOffset = 100;
+                    section.data(45).logicalSrcIdx = 44;
+                    section.data(45).dtTransOffset = 90;
 
                     ;% controller14_B.Saturation8
-                    section.data(52).logicalSrcIdx = 51;
-                    section.data(52).dtTransOffset = 101;
+                    section.data(46).logicalSrcIdx = 45;
+                    section.data(46).dtTransOffset = 91;
 
                     ;% controller14_B.Saturation9
-                    section.data(53).logicalSrcIdx = 52;
-                    section.data(53).dtTransOffset = 102;
+                    section.data(47).logicalSrcIdx = 46;
+                    section.data(47).dtTransOffset = 92;
 
                     ;% controller14_B.TmpSignalConversionAtDigitalFilterInport1
-                    section.data(54).logicalSrcIdx = 53;
-                    section.data(54).dtTransOffset = 103;
+                    section.data(48).logicalSrcIdx = 47;
+                    section.data(48).dtTransOffset = 93;
 
                     ;% controller14_B.DigitalFilter_j
-                    section.data(55).logicalSrcIdx = 54;
-                    section.data(55).dtTransOffset = 107;
+                    section.data(49).logicalSrcIdx = 48;
+                    section.data(49).dtTransOffset = 97;
 
                     ;% controller14_B.upi
-                    section.data(56).logicalSrcIdx = 55;
-                    section.data(56).dtTransOffset = 111;
+                    section.data(50).logicalSrcIdx = 49;
+                    section.data(50).dtTransOffset = 101;
 
                     ;% controller14_B.Add
-                    section.data(57).logicalSrcIdx = 56;
-                    section.data(57).dtTransOffset = 112;
+                    section.data(51).logicalSrcIdx = 50;
+                    section.data(51).dtTransOffset = 102;
 
                     ;% controller14_B.Add_i
-                    section.data(58).logicalSrcIdx = 57;
-                    section.data(58).dtTransOffset = 113;
+                    section.data(52).logicalSrcIdx = 51;
+                    section.data(52).dtTransOffset = 103;
 
                     ;% controller14_B.upi_i
-                    section.data(59).logicalSrcIdx = 58;
-                    section.data(59).dtTransOffset = 114;
+                    section.data(53).logicalSrcIdx = 52;
+                    section.data(53).dtTransOffset = 104;
 
                     ;% controller14_B.Add_l
-                    section.data(60).logicalSrcIdx = 59;
-                    section.data(60).dtTransOffset = 115;
+                    section.data(54).logicalSrcIdx = 53;
+                    section.data(54).dtTransOffset = 105;
 
                     ;% controller14_B.Add_a
-                    section.data(61).logicalSrcIdx = 60;
-                    section.data(61).dtTransOffset = 116;
+                    section.data(55).logicalSrcIdx = 54;
+                    section.data(55).dtTransOffset = 106;
 
                     ;% controller14_B.upi_k
-                    section.data(62).logicalSrcIdx = 61;
-                    section.data(62).dtTransOffset = 117;
+                    section.data(56).logicalSrcIdx = 55;
+                    section.data(56).dtTransOffset = 107;
 
                     ;% controller14_B.Add_m
-                    section.data(63).logicalSrcIdx = 62;
-                    section.data(63).dtTransOffset = 118;
+                    section.data(57).logicalSrcIdx = 56;
+                    section.data(57).dtTransOffset = 108;
 
                     ;% controller14_B.Add_f
-                    section.data(64).logicalSrcIdx = 63;
-                    section.data(64).dtTransOffset = 119;
+                    section.data(58).logicalSrcIdx = 57;
+                    section.data(58).dtTransOffset = 109;
 
                     ;% controller14_B.upi_m
-                    section.data(65).logicalSrcIdx = 64;
-                    section.data(65).dtTransOffset = 120;
+                    section.data(59).logicalSrcIdx = 58;
+                    section.data(59).dtTransOffset = 110;
 
                     ;% controller14_B.Add_p
-                    section.data(66).logicalSrcIdx = 65;
-                    section.data(66).dtTransOffset = 121;
+                    section.data(60).logicalSrcIdx = 59;
+                    section.data(60).dtTransOffset = 111;
 
                     ;% controller14_B.Add_mt
-                    section.data(67).logicalSrcIdx = 66;
-                    section.data(67).dtTransOffset = 122;
+                    section.data(61).logicalSrcIdx = 60;
+                    section.data(61).dtTransOffset = 112;
 
                     ;% controller14_B.ExecutionTime
-                    section.data(68).logicalSrcIdx = 67;
-                    section.data(68).dtTransOffset = 123;
+                    section.data(62).logicalSrcIdx = 61;
+                    section.data(62).dtTransOffset = 113;
 
                     ;% controller14_B.motors_thrust
-                    section.data(69).logicalSrcIdx = 68;
-                    section.data(69).dtTransOffset = 124;
+                    section.data(63).logicalSrcIdx = 62;
+                    section.data(63).dtTransOffset = 114;
 
                     ;% controller14_B.torque_thrust
-                    section.data(70).logicalSrcIdx = 69;
-                    section.data(70).dtTransOffset = 128;
+                    section.data(64).logicalSrcIdx = 63;
+                    section.data(64).dtTransOffset = 118;
 
                     ;% controller14_B.Timestamp
-                    section.data(71).logicalSrcIdx = 71;
-                    section.data(71).dtTransOffset = 132;
+                    section.data(65).logicalSrcIdx = 65;
+                    section.data(65).dtTransOffset = 122;
 
                     ;% controller14_B.R
-                    section.data(72).logicalSrcIdx = 72;
-                    section.data(72).dtTransOffset = 133;
+                    section.data(66).logicalSrcIdx = 66;
+                    section.data(66).dtTransOffset = 123;
 
                     ;% controller14_B.UnitDelay
-                    section.data(73).logicalSrcIdx = 73;
-                    section.data(73).dtTransOffset = 142;
+                    section.data(67).logicalSrcIdx = 67;
+                    section.data(67).dtTransOffset = 132;
 
                     ;% controller14_B.In2
-                    section.data(74).logicalSrcIdx = 74;
-                    section.data(74).dtTransOffset = 151;
+                    section.data(68).logicalSrcIdx = 68;
+                    section.data(68).dtTransOffset = 141;
 
                     ;% controller14_B.UnitDelay1
-                    section.data(75).logicalSrcIdx = 75;
-                    section.data(75).dtTransOffset = 152;
+                    section.data(69).logicalSrcIdx = 69;
+                    section.data(69).dtTransOffset = 142;
 
                     ;% controller14_B.R_i
-                    section.data(76).logicalSrcIdx = 76;
-                    section.data(76).dtTransOffset = 153;
+                    section.data(70).logicalSrcIdx = 70;
+                    section.data(70).dtTransOffset = 143;
 
                     ;% controller14_B.en
-                    section.data(77).logicalSrcIdx = 77;
-                    section.data(77).dtTransOffset = 162;
+                    section.data(71).logicalSrcIdx = 71;
+                    section.data(71).dtTransOffset = 152;
 
                     ;% controller14_B.en_o
-                    section.data(78).logicalSrcIdx = 78;
-                    section.data(78).dtTransOffset = 163;
+                    section.data(72).logicalSrcIdx = 72;
+                    section.data(72).dtTransOffset = 153;
 
                     ;% controller14_B.en_out
-                    section.data(79).logicalSrcIdx = 79;
-                    section.data(79).dtTransOffset = 164;
+                    section.data(73).logicalSrcIdx = 73;
+                    section.data(73).dtTransOffset = 154;
 
                     ;% controller14_B.cum_out
-                    section.data(80).logicalSrcIdx = 80;
-                    section.data(80).dtTransOffset = 165;
+                    section.data(74).logicalSrcIdx = 74;
+                    section.data(74).dtTransOffset = 155;
 
                     ;% controller14_B.a
-                    section.data(81).logicalSrcIdx = 85;
-                    section.data(81).dtTransOffset = 166;
+                    section.data(75).logicalSrcIdx = 79;
+                    section.data(75).dtTransOffset = 156;
 
                     ;% controller14_B.alt_e
-                    section.data(82).logicalSrcIdx = 86;
-                    section.data(82).dtTransOffset = 167;
+                    section.data(76).logicalSrcIdx = 80;
+                    section.data(76).dtTransOffset = 157;
 
                     ;% controller14_B.omega_hat
+                    section.data(77).logicalSrcIdx = 82;
+                    section.data(77).dtTransOffset = 158;
+
+                    ;% controller14_B.ext_torque_hat
+                    section.data(78).logicalSrcIdx = 83;
+                    section.data(78).dtTransOffset = 160;
+
+                    ;% controller14_B.torque_x
+                    section.data(79).logicalSrcIdx = 84;
+                    section.data(79).dtTransOffset = 162;
+
+                    ;% controller14_B.torque_y
+                    section.data(80).logicalSrcIdx = 85;
+                    section.data(80).dtTransOffset = 163;
+
+                    ;% controller14_B.torque_z
+                    section.data(81).logicalSrcIdx = 86;
+                    section.data(81).dtTransOffset = 164;
+
+                    ;% controller14_B.att_e
+                    section.data(82).logicalSrcIdx = 87;
+                    section.data(82).dtTransOffset = 165;
+
+                    ;% controller14_B.new_torque_x
                     section.data(83).logicalSrcIdx = 88;
                     section.data(83).dtTransOffset = 168;
 
-                    ;% controller14_B.ext_torque_hat
+                    ;% controller14_B.new_torque_y
                     section.data(84).logicalSrcIdx = 89;
-                    section.data(84).dtTransOffset = 170;
-
-                    ;% controller14_B.torque_x
-                    section.data(85).logicalSrcIdx = 90;
-                    section.data(85).dtTransOffset = 172;
-
-                    ;% controller14_B.torque_y
-                    section.data(86).logicalSrcIdx = 91;
-                    section.data(86).dtTransOffset = 173;
-
-                    ;% controller14_B.torque_z
-                    section.data(87).logicalSrcIdx = 92;
-                    section.data(87).dtTransOffset = 174;
-
-                    ;% controller14_B.att_e
-                    section.data(88).logicalSrcIdx = 93;
-                    section.data(88).dtTransOffset = 175;
+                    section.data(84).dtTransOffset = 169;
 
                     ;% controller14_B.rd
-                    section.data(89).logicalSrcIdx = 94;
-                    section.data(89).dtTransOffset = 178;
+                    section.data(85).logicalSrcIdx = 90;
+                    section.data(85).dtTransOffset = 170;
 
                     ;% controller14_B.id_out
-                    section.data(90).logicalSrcIdx = 99;
-                    section.data(90).dtTransOffset = 181;
+                    section.data(86).logicalSrcIdx = 95;
+                    section.data(86).dtTransOffset = 173;
+
+                    ;% controller14_B.DigitalFilter_o
+                    section.data(87).logicalSrcIdx = 96;
+                    section.data(87).dtTransOffset = 174;
 
             nTotData = nTotData + section.nData;
             sigMap.sections(1) = section;
@@ -1424,7 +1412,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_B.PacketInput1_o1
-                    section.data(1).logicalSrcIdx = 100;
+                    section.data(1).logicalSrcIdx = 97;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -1435,19 +1423,19 @@
             section.data(4)  = dumData; %prealloc
 
                     ;% controller14_B.UDPuint162
-                    section.data(1).logicalSrcIdx = 101;
+                    section.data(1).logicalSrcIdx = 98;
                     section.data(1).dtTransOffset = 0;
 
                     ;% controller14_B.UDPuint163
-                    section.data(2).logicalSrcIdx = 102;
+                    section.data(2).logicalSrcIdx = 99;
                     section.data(2).dtTransOffset = 1;
 
                     ;% controller14_B.UDPuint164
-                    section.data(3).logicalSrcIdx = 103;
+                    section.data(3).logicalSrcIdx = 100;
                     section.data(3).dtTransOffset = 2;
 
                     ;% controller14_B.Switch_b
-                    section.data(4).logicalSrcIdx = 104;
+                    section.data(4).logicalSrcIdx = 101;
                     section.data(4).dtTransOffset = 3;
 
             nTotData = nTotData + section.nData;
@@ -1458,19 +1446,19 @@
             section.data(4)  = dumData; %prealloc
 
                     ;% controller14_B.Compare
-                    section.data(1).logicalSrcIdx = 105;
+                    section.data(1).logicalSrcIdx = 102;
                     section.data(1).dtTransOffset = 0;
 
                     ;% controller14_B.Compare_d
-                    section.data(2).logicalSrcIdx = 106;
+                    section.data(2).logicalSrcIdx = 103;
                     section.data(2).dtTransOffset = 1;
 
                     ;% controller14_B.envelope
-                    section.data(3).logicalSrcIdx = 107;
+                    section.data(3).logicalSrcIdx = 104;
                     section.data(3).dtTransOffset = 2;
 
                     ;% controller14_B.voltage
-                    section.data(4).logicalSrcIdx = 108;
+                    section.data(4).logicalSrcIdx = 105;
                     section.data(4).dtTransOffset = 3;
 
             nTotData = nTotData + section.nData;
@@ -1481,7 +1469,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_B.dataready
-                    section.data(1).logicalSrcIdx = 109;
+                    section.data(1).logicalSrcIdx = 106;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -1492,7 +1480,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_B.sf_MATLABFunction_k.output
-                    section.data(1).logicalSrcIdx = 110;
+                    section.data(1).logicalSrcIdx = 107;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -1503,7 +1491,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_B.sf_MATLABFunction_lw.output
-                    section.data(1).logicalSrcIdx = 111;
+                    section.data(1).logicalSrcIdx = 108;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -1514,7 +1502,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_B.sf_MATLABFunction_l.output
-                    section.data(1).logicalSrcIdx = 112;
+                    section.data(1).logicalSrcIdx = 109;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -1525,7 +1513,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_B.sf_MATLABFunction_i.output
-                    section.data(1).logicalSrcIdx = 113;
+                    section.data(1).logicalSrcIdx = 110;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -1536,7 +1524,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_B.sf_RotationMatrix3.w
-                    section.data(1).logicalSrcIdx = 114;
+                    section.data(1).logicalSrcIdx = 111;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -1547,7 +1535,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_B.sf_RotationMatrix2.w
-                    section.data(1).logicalSrcIdx = 115;
+                    section.data(1).logicalSrcIdx = 112;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -1558,19 +1546,19 @@
             section.data(4)  = dumData; %prealloc
 
                     ;% controller14_B.TriggeredSubsystem_d.In1
-                    section.data(1).logicalSrcIdx = 116;
+                    section.data(1).logicalSrcIdx = 113;
                     section.data(1).dtTransOffset = 0;
 
                     ;% controller14_B.TriggeredSubsystem_d.UnitDelay
-                    section.data(2).logicalSrcIdx = 117;
+                    section.data(2).logicalSrcIdx = 114;
                     section.data(2).dtTransOffset = 3;
 
                     ;% controller14_B.TriggeredSubsystem_d.In2
-                    section.data(3).logicalSrcIdx = 118;
+                    section.data(3).logicalSrcIdx = 115;
                     section.data(3).dtTransOffset = 6;
 
                     ;% controller14_B.TriggeredSubsystem_d.UnitDelay1
-                    section.data(4).logicalSrcIdx = 119;
+                    section.data(4).logicalSrcIdx = 116;
                     section.data(4).dtTransOffset = 7;
 
             nTotData = nTotData + section.nData;
@@ -1581,19 +1569,19 @@
             section.data(4)  = dumData; %prealloc
 
                     ;% controller14_B.TriggeredSubsystem.In1
-                    section.data(1).logicalSrcIdx = 120;
+                    section.data(1).logicalSrcIdx = 117;
                     section.data(1).dtTransOffset = 0;
 
                     ;% controller14_B.TriggeredSubsystem.UnitDelay
-                    section.data(2).logicalSrcIdx = 121;
+                    section.data(2).logicalSrcIdx = 118;
                     section.data(2).dtTransOffset = 3;
 
                     ;% controller14_B.TriggeredSubsystem.In2
-                    section.data(3).logicalSrcIdx = 122;
+                    section.data(3).logicalSrcIdx = 119;
                     section.data(3).dtTransOffset = 6;
 
                     ;% controller14_B.TriggeredSubsystem.UnitDelay1
-                    section.data(4).logicalSrcIdx = 123;
+                    section.data(4).logicalSrcIdx = 120;
                     section.data(4).dtTransOffset = 7;
 
             nTotData = nTotData + section.nData;
@@ -1852,8 +1840,8 @@
             dworkMap.sections(1) = section;
             clear section
 
-            section.nData     = 26;
-            section.data(26)  = dumData; %prealloc
+            section.nData     = 22;
+            section.data(22)  = dumData; %prealloc
 
                     ;% controller14_DW.PacketInput1_PWORK
                     section.data(1).logicalSrcIdx = 51;
@@ -1867,97 +1855,81 @@
                     section.data(3).logicalSrcIdx = 53;
                     section.data(3).dtTransOffset = 2;
 
-                    ;% controller14_DW.highdrivingsignal_PWORK.LoggedData
+                    ;% controller14_DW.motorthrustsmgf_PWORK.LoggedData
                     section.data(4).logicalSrcIdx = 54;
                     section.data(4).dtTransOffset = 4;
 
-                    ;% controller14_DW.motorthrustsmgf_PWORK.LoggedData
+                    ;% controller14_DW.safetyprobe_PWORK.LoggedData
                     section.data(5).logicalSrcIdx = 55;
                     section.data(5).dtTransOffset = 5;
 
-                    ;% controller14_DW.safetyprobe_PWORK.LoggedData
+                    ;% controller14_DW.voltages_PWORK.LoggedData
                     section.data(6).logicalSrcIdx = 56;
                     section.data(6).dtTransOffset = 6;
 
-                    ;% controller14_DW.voltages_PWORK.LoggedData
+                    ;% controller14_DW.Scope1_PWORK.LoggedData
                     section.data(7).logicalSrcIdx = 57;
                     section.data(7).dtTransOffset = 7;
 
-                    ;% controller14_DW.Scope_PWORK_b.LoggedData
-                    section.data(8).logicalSrcIdx = 58;
-                    section.data(8).dtTransOffset = 8;
-
-                    ;% controller14_DW.Scope1_PWORK.LoggedData
-                    section.data(9).logicalSrcIdx = 59;
-                    section.data(9).dtTransOffset = 10;
-
                     ;% controller14_DW.Scope2_PWORK.LoggedData
+                    section.data(8).logicalSrcIdx = 58;
+                    section.data(8).dtTransOffset = 10;
+
+                    ;% controller14_DW.pvsp_des_PWORK.LoggedData
+                    section.data(9).logicalSrcIdx = 59;
+                    section.data(9).dtTransOffset = 11;
+
+                    ;% controller14_DW.Scope_PWORK_j.LoggedData
                     section.data(10).logicalSrcIdx = 60;
                     section.data(10).dtTransOffset = 13;
 
-                    ;% controller14_DW.Scope_PWORK_j.LoggedData
+                    ;% controller14_DW.Scope1_PWORK_c.LoggedData
                     section.data(11).logicalSrcIdx = 61;
                     section.data(11).dtTransOffset = 14;
 
                     ;% controller14_DW.Scope1_PWORK_p.LoggedData
                     section.data(12).logicalSrcIdx = 62;
-                    section.data(12).dtTransOffset = 15;
+                    section.data(12).dtTransOffset = 18;
 
                     ;% controller14_DW.Scope2_PWORK_p.LoggedData
                     section.data(13).logicalSrcIdx = 63;
-                    section.data(13).dtTransOffset = 16;
+                    section.data(13).dtTransOffset = 19;
 
                     ;% controller14_DW.Eul_XYZ_PWORK.LoggedData
                     section.data(14).logicalSrcIdx = 64;
-                    section.data(14).dtTransOffset = 17;
-
-                    ;% controller14_DW.omega_b_PWORK.LoggedData
-                    section.data(15).logicalSrcIdx = 65;
-                    section.data(15).dtTransOffset = 18;
-
-                    ;% controller14_DW.p_dot_PWORK.LoggedData
-                    section.data(16).logicalSrcIdx = 66;
-                    section.data(16).dtTransOffset = 20;
-
-                    ;% controller14_DW.p_dotdot_PWORK.LoggedData
-                    section.data(17).logicalSrcIdx = 67;
-                    section.data(17).dtTransOffset = 21;
+                    section.data(14).dtTransOffset = 20;
 
                     ;% controller14_DW.p_raw_PWORK.LoggedData
-                    section.data(18).logicalSrcIdx = 68;
-                    section.data(18).dtTransOffset = 22;
-
-                    ;% controller14_DW.Scope_PWORK_p.LoggedData
-                    section.data(19).logicalSrcIdx = 69;
-                    section.data(19).dtTransOffset = 23;
+                    section.data(15).logicalSrcIdx = 65;
+                    section.data(15).dtTransOffset = 21;
 
                     ;% controller14_DW.Vicon2bodiesdataready_PWORK.LoggedData
-                    section.data(20).logicalSrcIdx = 70;
-                    section.data(20).dtTransOffset = 25;
+                    section.data(16).logicalSrcIdx = 66;
+                    section.data(16).dtTransOffset = 22;
 
                     ;% controller14_DW.Scope_PWORK_h.LoggedData
-                    section.data(21).logicalSrcIdx = 71;
-                    section.data(21).dtTransOffset = 26;
+                    section.data(17).logicalSrcIdx = 67;
+                    section.data(17).dtTransOffset = 23;
 
                     ;% controller14_DW.Scope1_PWORK_j.LoggedData
-                    section.data(22).logicalSrcIdx = 72;
-                    section.data(22).dtTransOffset = 28;
+                    section.data(18).logicalSrcIdx = 68;
+                    section.data(18).dtTransOffset = 25;
 
                     ;% controller14_DW.Scope1_PWORK_o.LoggedData
-                    section.data(23).logicalSrcIdx = 73;
-                    section.data(23).dtTransOffset = 29;
+                    section.data(19).logicalSrcIdx = 69;
+                    section.data(19).dtTransOffset = 26;
 
                     ;% controller14_DW.Scope2_PWORK_h.LoggedData
-                    section.data(24).logicalSrcIdx = 74;
-                    section.data(24).dtTransOffset = 30;
+                    section.data(20).logicalSrcIdx = 70;
+                    section.data(20).dtTransOffset = 27;
 
                     ;% controller14_DW.highexecutiontime_PWORK.LoggedData
-                    section.data(25).logicalSrcIdx = 75;
-                    section.data(25).dtTransOffset = 31;
+                    section.data(21).logicalSrcIdx = 71;
+                    section.data(21).dtTransOffset = 28;
 
                     ;% controller14_DW.Scope_PWORK_f.LoggedData
-                    section.data(26).logicalSrcIdx = 76;
-                    section.data(26).dtTransOffset = 32;
+                    section.data(22).logicalSrcIdx = 72;
+                    section.data(22).dtTransOffset = 29;
 
             nTotData = nTotData + section.nData;
             dworkMap.sections(2) = section;
@@ -1967,55 +1939,55 @@
             section.data(13)  = dumData; %prealloc
 
                     ;% controller14_DW.sfEvent
-                    section.data(1).logicalSrcIdx = 77;
+                    section.data(1).logicalSrcIdx = 73;
                     section.data(1).dtTransOffset = 0;
 
                     ;% controller14_DW.sfEvent_a
-                    section.data(2).logicalSrcIdx = 78;
+                    section.data(2).logicalSrcIdx = 74;
                     section.data(2).dtTransOffset = 1;
 
                     ;% controller14_DW.sfEvent_l
-                    section.data(3).logicalSrcIdx = 79;
+                    section.data(3).logicalSrcIdx = 75;
                     section.data(3).dtTransOffset = 2;
 
                     ;% controller14_DW.sfEvent_i
-                    section.data(4).logicalSrcIdx = 80;
+                    section.data(4).logicalSrcIdx = 76;
                     section.data(4).dtTransOffset = 3;
 
                     ;% controller14_DW.sfEvent_lr
-                    section.data(5).logicalSrcIdx = 81;
+                    section.data(5).logicalSrcIdx = 77;
                     section.data(5).dtTransOffset = 4;
 
                     ;% controller14_DW.sfEvent_k
-                    section.data(6).logicalSrcIdx = 82;
+                    section.data(6).logicalSrcIdx = 78;
                     section.data(6).dtTransOffset = 5;
 
                     ;% controller14_DW.sfEvent_f
-                    section.data(7).logicalSrcIdx = 83;
+                    section.data(7).logicalSrcIdx = 79;
                     section.data(7).dtTransOffset = 6;
 
                     ;% controller14_DW.sfEvent_e
-                    section.data(8).logicalSrcIdx = 84;
+                    section.data(8).logicalSrcIdx = 80;
                     section.data(8).dtTransOffset = 7;
 
                     ;% controller14_DW.sfEvent_ag
-                    section.data(9).logicalSrcIdx = 85;
+                    section.data(9).logicalSrcIdx = 81;
                     section.data(9).dtTransOffset = 8;
 
                     ;% controller14_DW.sfEvent_am
-                    section.data(10).logicalSrcIdx = 86;
+                    section.data(10).logicalSrcIdx = 82;
                     section.data(10).dtTransOffset = 9;
 
                     ;% controller14_DW.sfEvent_ez
-                    section.data(11).logicalSrcIdx = 87;
+                    section.data(11).logicalSrcIdx = 83;
                     section.data(11).dtTransOffset = 10;
 
                     ;% controller14_DW.sfEvent_an
-                    section.data(12).logicalSrcIdx = 88;
+                    section.data(12).logicalSrcIdx = 84;
                     section.data(12).dtTransOffset = 11;
 
                     ;% controller14_DW.sfEvent_i1
-                    section.data(13).logicalSrcIdx = 89;
+                    section.data(13).logicalSrcIdx = 85;
                     section.data(13).dtTransOffset = 12;
 
             nTotData = nTotData + section.nData;
@@ -2026,15 +1998,15 @@
             section.data(3)  = dumData; %prealloc
 
                     ;% controller14_DW.obj
-                    section.data(1).logicalSrcIdx = 90;
+                    section.data(1).logicalSrcIdx = 86;
                     section.data(1).dtTransOffset = 0;
 
                     ;% controller14_DW.obj_o
-                    section.data(2).logicalSrcIdx = 91;
+                    section.data(2).logicalSrcIdx = 87;
                     section.data(2).dtTransOffset = 1;
 
                     ;% controller14_DW.obj_p
-                    section.data(3).logicalSrcIdx = 92;
+                    section.data(3).logicalSrcIdx = 88;
                     section.data(3).dtTransOffset = 2;
 
             nTotData = nTotData + section.nData;
@@ -2045,15 +2017,15 @@
             section.data(3)  = dumData; %prealloc
 
                     ;% controller14_DW.TriggeredSubsystem_SubsysRanBC
-                    section.data(1).logicalSrcIdx = 93;
+                    section.data(1).logicalSrcIdx = 89;
                     section.data(1).dtTransOffset = 0;
 
                     ;% controller14_DW.IfActionSubsystem_SubsysRanBC
-                    section.data(2).logicalSrcIdx = 94;
+                    section.data(2).logicalSrcIdx = 90;
                     section.data(2).dtTransOffset = 1;
 
                     ;% controller14_DW.IfActionSubsystem1_SubsysRanBC
-                    section.data(3).logicalSrcIdx = 95;
+                    section.data(3).logicalSrcIdx = 91;
                     section.data(3).dtTransOffset = 2;
 
             nTotData = nTotData + section.nData;
@@ -2064,55 +2036,55 @@
             section.data(13)  = dumData; %prealloc
 
                     ;% controller14_DW.is_active_c31_controller14
-                    section.data(1).logicalSrcIdx = 96;
+                    section.data(1).logicalSrcIdx = 92;
                     section.data(1).dtTransOffset = 0;
 
                     ;% controller14_DW.is_active_c20_controller14
-                    section.data(2).logicalSrcIdx = 97;
+                    section.data(2).logicalSrcIdx = 93;
                     section.data(2).dtTransOffset = 1;
 
                     ;% controller14_DW.is_active_c7_controller14
-                    section.data(3).logicalSrcIdx = 98;
+                    section.data(3).logicalSrcIdx = 94;
                     section.data(3).dtTransOffset = 2;
 
                     ;% controller14_DW.is_active_c64_controller14
-                    section.data(4).logicalSrcIdx = 99;
+                    section.data(4).logicalSrcIdx = 95;
                     section.data(4).dtTransOffset = 3;
 
                     ;% controller14_DW.is_active_c51_controller14
-                    section.data(5).logicalSrcIdx = 100;
+                    section.data(5).logicalSrcIdx = 96;
                     section.data(5).dtTransOffset = 4;
 
                     ;% controller14_DW.is_active_c49_controller14
-                    section.data(6).logicalSrcIdx = 101;
+                    section.data(6).logicalSrcIdx = 97;
                     section.data(6).dtTransOffset = 5;
 
                     ;% controller14_DW.is_active_c48_controller14
-                    section.data(7).logicalSrcIdx = 102;
+                    section.data(7).logicalSrcIdx = 98;
                     section.data(7).dtTransOffset = 6;
 
                     ;% controller14_DW.is_active_c96_controller14
-                    section.data(8).logicalSrcIdx = 103;
+                    section.data(8).logicalSrcIdx = 99;
                     section.data(8).dtTransOffset = 7;
 
                     ;% controller14_DW.is_active_c72_controller14
-                    section.data(9).logicalSrcIdx = 104;
+                    section.data(9).logicalSrcIdx = 100;
                     section.data(9).dtTransOffset = 8;
 
                     ;% controller14_DW.is_active_c10_controller14
-                    section.data(10).logicalSrcIdx = 105;
+                    section.data(10).logicalSrcIdx = 101;
                     section.data(10).dtTransOffset = 9;
 
                     ;% controller14_DW.is_active_c71_controller14
-                    section.data(11).logicalSrcIdx = 106;
+                    section.data(11).logicalSrcIdx = 102;
                     section.data(11).dtTransOffset = 10;
 
                     ;% controller14_DW.is_active_c52_controller14
-                    section.data(12).logicalSrcIdx = 107;
+                    section.data(12).logicalSrcIdx = 103;
                     section.data(12).dtTransOffset = 11;
 
                     ;% controller14_DW.is_active_c46_controller14
-                    section.data(13).logicalSrcIdx = 108;
+                    section.data(13).logicalSrcIdx = 104;
                     section.data(13).dtTransOffset = 12;
 
             nTotData = nTotData + section.nData;
@@ -2123,67 +2095,67 @@
             section.data(16)  = dumData; %prealloc
 
                     ;% controller14_DW.doneDoubleBufferReInit
-                    section.data(1).logicalSrcIdx = 109;
+                    section.data(1).logicalSrcIdx = 105;
                     section.data(1).dtTransOffset = 0;
 
                     ;% controller14_DW.doneDoubleBufferReInit_l
-                    section.data(2).logicalSrcIdx = 110;
+                    section.data(2).logicalSrcIdx = 106;
                     section.data(2).dtTransOffset = 1;
 
                     ;% controller14_DW.doneDoubleBufferReInit_o
-                    section.data(3).logicalSrcIdx = 111;
+                    section.data(3).logicalSrcIdx = 107;
                     section.data(3).dtTransOffset = 2;
 
                     ;% controller14_DW.doneDoubleBufferReInit_k
-                    section.data(4).logicalSrcIdx = 112;
+                    section.data(4).logicalSrcIdx = 108;
                     section.data(4).dtTransOffset = 3;
 
                     ;% controller14_DW.doneDoubleBufferReInit_g
-                    section.data(5).logicalSrcIdx = 113;
+                    section.data(5).logicalSrcIdx = 109;
                     section.data(5).dtTransOffset = 4;
 
                     ;% controller14_DW.doneDoubleBufferReInit_gj
-                    section.data(6).logicalSrcIdx = 114;
+                    section.data(6).logicalSrcIdx = 110;
                     section.data(6).dtTransOffset = 5;
 
                     ;% controller14_DW.doneDoubleBufferReInit_i
-                    section.data(7).logicalSrcIdx = 115;
+                    section.data(7).logicalSrcIdx = 111;
                     section.data(7).dtTransOffset = 6;
 
                     ;% controller14_DW.objisempty
-                    section.data(8).logicalSrcIdx = 116;
+                    section.data(8).logicalSrcIdx = 112;
                     section.data(8).dtTransOffset = 7;
 
                     ;% controller14_DW.objisempty_f
-                    section.data(9).logicalSrcIdx = 117;
+                    section.data(9).logicalSrcIdx = 113;
                     section.data(9).dtTransOffset = 8;
 
                     ;% controller14_DW.doneDoubleBufferReInit_n
-                    section.data(10).logicalSrcIdx = 118;
+                    section.data(10).logicalSrcIdx = 114;
                     section.data(10).dtTransOffset = 9;
 
                     ;% controller14_DW.doneDoubleBufferReInit_c
-                    section.data(11).logicalSrcIdx = 119;
+                    section.data(11).logicalSrcIdx = 115;
                     section.data(11).dtTransOffset = 10;
 
                     ;% controller14_DW.doneDoubleBufferReInit_p
-                    section.data(12).logicalSrcIdx = 120;
+                    section.data(12).logicalSrcIdx = 116;
                     section.data(12).dtTransOffset = 11;
 
                     ;% controller14_DW.doneDoubleBufferReInit_d
-                    section.data(13).logicalSrcIdx = 121;
+                    section.data(13).logicalSrcIdx = 117;
                     section.data(13).dtTransOffset = 12;
 
                     ;% controller14_DW.doneDoubleBufferReInit_n2
-                    section.data(14).logicalSrcIdx = 122;
+                    section.data(14).logicalSrcIdx = 118;
                     section.data(14).dtTransOffset = 13;
 
                     ;% controller14_DW.doneDoubleBufferReInit_ib
-                    section.data(15).logicalSrcIdx = 123;
+                    section.data(15).logicalSrcIdx = 119;
                     section.data(15).dtTransOffset = 14;
 
                     ;% controller14_DW.objisempty_g
-                    section.data(16).logicalSrcIdx = 124;
+                    section.data(16).logicalSrcIdx = 120;
                     section.data(16).dtTransOffset = 15;
 
             nTotData = nTotData + section.nData;
@@ -2194,7 +2166,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.sf_MATLABFunction_k.sfEvent
-                    section.data(1).logicalSrcIdx = 125;
+                    section.data(1).logicalSrcIdx = 121;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2205,7 +2177,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.sf_MATLABFunction_k.is_active_c6_controller14
-                    section.data(1).logicalSrcIdx = 126;
+                    section.data(1).logicalSrcIdx = 122;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2216,7 +2188,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.sf_MATLABFunction_k.doneDoubleBufferReInit
-                    section.data(1).logicalSrcIdx = 127;
+                    section.data(1).logicalSrcIdx = 123;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2227,7 +2199,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.sf_MATLABFunction_lw.sfEvent
-                    section.data(1).logicalSrcIdx = 128;
+                    section.data(1).logicalSrcIdx = 124;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2238,7 +2210,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.sf_MATLABFunction_lw.is_active_c6_controller14
-                    section.data(1).logicalSrcIdx = 129;
+                    section.data(1).logicalSrcIdx = 125;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2249,7 +2221,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.sf_MATLABFunction_lw.doneDoubleBufferReInit
-                    section.data(1).logicalSrcIdx = 130;
+                    section.data(1).logicalSrcIdx = 126;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2260,7 +2232,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.sf_MATLABFunction_l.sfEvent
-                    section.data(1).logicalSrcIdx = 131;
+                    section.data(1).logicalSrcIdx = 127;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2271,7 +2243,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.sf_MATLABFunction_l.is_active_c6_controller14
-                    section.data(1).logicalSrcIdx = 132;
+                    section.data(1).logicalSrcIdx = 128;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2282,7 +2254,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.sf_MATLABFunction_l.doneDoubleBufferReInit
-                    section.data(1).logicalSrcIdx = 133;
+                    section.data(1).logicalSrcIdx = 129;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2293,7 +2265,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.sf_MATLABFunction_i.sfEvent
-                    section.data(1).logicalSrcIdx = 134;
+                    section.data(1).logicalSrcIdx = 130;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2304,7 +2276,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.sf_MATLABFunction_i.is_active_c6_controller14
-                    section.data(1).logicalSrcIdx = 135;
+                    section.data(1).logicalSrcIdx = 131;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2315,7 +2287,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.sf_MATLABFunction_i.doneDoubleBufferReInit
-                    section.data(1).logicalSrcIdx = 136;
+                    section.data(1).logicalSrcIdx = 132;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2326,7 +2298,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.sf_RotationMatrix3.sfEvent
-                    section.data(1).logicalSrcIdx = 137;
+                    section.data(1).logicalSrcIdx = 133;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2337,7 +2309,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.sf_RotationMatrix3.is_active_c1_controller14
-                    section.data(1).logicalSrcIdx = 138;
+                    section.data(1).logicalSrcIdx = 134;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2348,7 +2320,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.sf_RotationMatrix3.doneDoubleBufferReInit
-                    section.data(1).logicalSrcIdx = 139;
+                    section.data(1).logicalSrcIdx = 135;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2359,7 +2331,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.sf_RotationMatrix2.sfEvent
-                    section.data(1).logicalSrcIdx = 140;
+                    section.data(1).logicalSrcIdx = 136;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2370,7 +2342,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.sf_RotationMatrix2.is_active_c1_controller14
-                    section.data(1).logicalSrcIdx = 141;
+                    section.data(1).logicalSrcIdx = 137;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2381,7 +2353,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.sf_RotationMatrix2.doneDoubleBufferReInit
-                    section.data(1).logicalSrcIdx = 142;
+                    section.data(1).logicalSrcIdx = 138;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2392,11 +2364,11 @@
             section.data(2)  = dumData; %prealloc
 
                     ;% controller14_DW.TriggeredSubsystem_d.UnitDelay_DSTATE
-                    section.data(1).logicalSrcIdx = 143;
+                    section.data(1).logicalSrcIdx = 139;
                     section.data(1).dtTransOffset = 0;
 
                     ;% controller14_DW.TriggeredSubsystem_d.UnitDelay1_DSTATE
-                    section.data(2).logicalSrcIdx = 144;
+                    section.data(2).logicalSrcIdx = 140;
                     section.data(2).dtTransOffset = 3;
 
             nTotData = nTotData + section.nData;
@@ -2407,7 +2379,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.TriggeredSubsystem_d.Scope_PWORK.LoggedData
-                    section.data(1).logicalSrcIdx = 145;
+                    section.data(1).logicalSrcIdx = 141;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2418,7 +2390,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.TriggeredSubsystem_d.TriggeredSubsystem_SubsysRanBC
-                    section.data(1).logicalSrcIdx = 146;
+                    section.data(1).logicalSrcIdx = 142;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2429,7 +2401,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.IfActionSubsystem_m.IfActionSubsystem_SubsysRanBC
-                    section.data(1).logicalSrcIdx = 147;
+                    section.data(1).logicalSrcIdx = 143;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2440,7 +2412,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.IfActionSubsystem1_i.IfActionSubsystem1_SubsysRanBC
-                    section.data(1).logicalSrcIdx = 148;
+                    section.data(1).logicalSrcIdx = 144;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2451,11 +2423,11 @@
             section.data(2)  = dumData; %prealloc
 
                     ;% controller14_DW.TriggeredSubsystem.UnitDelay_DSTATE
-                    section.data(1).logicalSrcIdx = 149;
+                    section.data(1).logicalSrcIdx = 145;
                     section.data(1).dtTransOffset = 0;
 
                     ;% controller14_DW.TriggeredSubsystem.UnitDelay1_DSTATE
-                    section.data(2).logicalSrcIdx = 150;
+                    section.data(2).logicalSrcIdx = 146;
                     section.data(2).dtTransOffset = 3;
 
             nTotData = nTotData + section.nData;
@@ -2466,7 +2438,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.TriggeredSubsystem.Scope_PWORK.LoggedData
-                    section.data(1).logicalSrcIdx = 151;
+                    section.data(1).logicalSrcIdx = 147;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2477,7 +2449,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.TriggeredSubsystem.TriggeredSubsystem_SubsysRanBC
-                    section.data(1).logicalSrcIdx = 152;
+                    section.data(1).logicalSrcIdx = 148;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2488,7 +2460,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.IfActionSubsystem.IfActionSubsystem_SubsysRanBC
-                    section.data(1).logicalSrcIdx = 153;
+                    section.data(1).logicalSrcIdx = 149;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2499,7 +2471,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_DW.IfActionSubsystem1.IfActionSubsystem1_SubsysRanBC
-                    section.data(1).logicalSrcIdx = 154;
+                    section.data(1).logicalSrcIdx = 150;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -2532,8 +2504,8 @@
     ;%
 
 
-    targMap.checksum0 = 2466157987;
-    targMap.checksum1 = 45462431;
-    targMap.checksum2 = 3734439796;
-    targMap.checksum3 = 3529425387;
+    targMap.checksum0 = 1834271350;
+    targMap.checksum1 = 1629097952;
+    targMap.checksum2 = 2453453458;
+    targMap.checksum3 = 1451063804;
 

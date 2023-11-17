@@ -5,10 +5,10 @@ close all
 %% switch for showing plot
 ShowPlot.position       = 1;
 ShowPlot.angle          = 1;
-ShowPlot.driveSignal    = 1;
+ShowPlot.driveSignal    = 0;
 ShowPlot.voltage        = 1;
 ShowPlot.torque         = 1;
-ShowPlot.forceZ         = 1;
+ShowPlot.forceZ         = 0;
 ShowPlot.iTorque        = 0;
 ShowPlot.iForceZ        = 0;
 ShowPlot.en             = 1;
@@ -27,9 +27,9 @@ ShowPlot.volt_comp      = 1;
 ShowPlot.extTorq        = 1;
 ShowPlot.ThisScreen     = 1;
 ShowPlot.NextScreen_4K  = 0;
-ShowPlot.velocity       = 1;
+ShowPlot.velocity       = 0;
 ShowPlot.z_b            = 0;
-ShowPlot.omega          = 1;
+ShowPlot.omega          = 0;
 ShowPlot.acceleration   = 0;
 
 %% get simulation result from out
@@ -55,15 +55,15 @@ rst.pos.x     = rst_p_raw.signals.values(:,1);
 rst.pos.y     = rst_p_raw.signals.values(:,2);
 rst.pos.z     = rst_p_raw.signals.values(:,3);
 
-rst.vel.t     = rst_p_dot.time;
-rst.vel.x     = rst_p_dot.signals.values(:,1);
-rst.vel.y     = rst_p_dot.signals.values(:,2);
-rst.vel.z     = rst_p_dot.signals.values(:,3);
-
-rst.acc.t     = rst_p_dotdot.time;
-rst.acc.x     = rst_p_dotdot.signals.values(:,1);
-rst.acc.y     = rst_p_dotdot.signals.values(:,2);
-rst.acc.z     = rst_p_dotdot.signals.values(:,3);
+% rst.vel.t     = rst_p_dot.time;
+% rst.vel.x     = rst_p_dot.signals.values(:,1);
+% rst.vel.y     = rst_p_dot.signals.values(:,2);
+% rst.vel.z     = rst_p_dot.signals.values(:,3);
+% 
+% rst.acc.t     = rst_p_dotdot.time;
+% rst.acc.x     = rst_p_dotdot.signals.values(:,1);
+% rst.acc.y     = rst_p_dotdot.signals.values(:,2);
+% rst.acc.z     = rst_p_dotdot.signals.values(:,3);
 
 rst.EulXYZ.t  = rst_Eul_XYZ.time;
 rst.EulXYZ.x  = rst_Eul_XYZ.signals.values(:,1);
@@ -84,15 +84,15 @@ rst.EulZXY.z = rst.EulZXY.zxy(:,1);
 rst.EulZXY.y = rst.EulZXY.zxy(:,2);
 rst.EulZXY.x = rst.EulZXY.zxy(:,3);
 
-rst.ome.t     = rst_omega_b.time;
-rst.ome.x     = rst_omega_b.signals(2).values(:,1);
-rst.ome.y     = rst_omega_b.signals(2).values(:,2);
-rst.ome.z     = rst_omega_b.signals(2).values(:,3);
-
-rst.ome.t     = rst_omega_b.time;
-rst.ome.raw_x = rst_omega_b.signals(1).values(:,1);
-rst.ome.raw_y = rst_omega_b.signals(1).values(:,2);
-rst.ome.raw_z = rst_omega_b.signals(1).values(:,3);
+% rst.ome.t     = rst_omega_b.time;
+% rst.ome.x     = rst_omega_b.signals(2).values(:,1);
+% rst.ome.y     = rst_omega_b.signals(2).values(:,2);
+% rst.ome.z     = rst_omega_b.signals(2).values(:,3);
+% 
+% rst.ome.t     = rst_omega_b.time;
+% rst.ome.raw_x = rst_omega_b.signals(1).values(:,1);
+% rst.ome.raw_y = rst_omega_b.signals(1).values(:,2);
+% rst.ome.raw_z = rst_omega_b.signals(1).values(:,3);
 
 % rst.des.p.t   = rst_desired_xy.time;
 % rst.des.p.x   = rst_desired_xy.signals.values(:,1);
@@ -112,11 +112,11 @@ rst.vot.v4    = rst_voltages.signals.values(:,4);
 rst.en.t      = rst_en.time;
 rst.en.en     = rst_en.signals.values;
 
-rst.drs.t     = rst_driving_signals.time;
-rst.drs.s1    = rst_driving_signals.signals.values(:,1);
-rst.drs.s2    = rst_driving_signals.signals.values(:,2);
-rst.drs.s3    = rst_driving_signals.signals.values(:,3);
-rst.drs.s4    = rst_driving_signals.signals.values(:,4);
+% rst.drs.t     = rst_driving_signals.time;
+% rst.drs.s1    = rst_driving_signals.signals.values(:,1);
+% rst.drs.s2    = rst_driving_signals.signals.values(:,2);
+% rst.drs.s3    = rst_driving_signals.signals.values(:,3);
+% rst.drs.s4    = rst_driving_signals.signals.values(:,4);
 
 rst.ext.tor.x = rst_ext_torque_b.signals.values(:,1);
 rst.ext.tor.y = rst_ext_torque_b.signals.values(:,2);
@@ -125,9 +125,14 @@ rst.rbt       = rbt2;
 rst.ctr       = ctr2;
 rst.mdl       = mdl;
 
-rst.t.opt.id  = find(rst.vot.v1>0);
-rst.t.start   = rst.time(rst.t.opt.id(1));
-rst.t.stop    = rst.time(rst.t.opt.id(end));
+rst.t.id      = find(rst.vot.v1>0);
+rst.t.start   = rst.time(rst.t.id.opt(1));
+rst.t.stop    = rst.time(rst.t.id.opt(end));
+
+rst.t_h.log1  = rst.pos.t >= rst.t.start; 
+rst.t_h.log2  = rst.pos.t < rst.t.stop; 
+rst.t_h.log3  = rst.t_h.log1 == rst.t_h.log2;
+rst.t_h.id    = find(rst.t_h.log3);
 
 c = get_color;
 
@@ -164,8 +169,14 @@ if ShowPlot.position
     end
 
     % get error
-    error_x = rmse(ones(length(rst.pos.x(rst.t.start*mdl.f:rst.t.stop*mdl.f)),1)*ctr.setpoint.x, rst.pos.x(rst.t.start*mdl.f:rst.t.stop*mdl.f))
-    error_y = rmse(ones(length(rst.pos.y(rst.t.start*mdl.f:rst.t.stop*mdl.f)),1)*ctr.setpoint.y, rst.pos.y(rst.t.start*mdl.f:rst.t.stop*mdl.f))
+    rst.pos.flight.x = rst.pos.x(rst.t_h.id);
+    rst.pos.flight.y = rst.pos.y(rst.t_h.id);
+    rst.pos.flight.z = rst.pos.z(rst.t_h.id);
+    
+    
+
+    error_x = rmse(ones(length(rst.pos.x(floor(rst.t.start*mdl.f):floor(rst.t.stop*mdl.f))),1)*ctr.setpoint.x, rst.pos.x(floor(rst.t.start*mdl.f):floor(rst.t.stop*mdl.f)))
+    error_y = rmse(ones(length(rst.pos.y(floor(rst.t.start*mdl.f):floor(rst.t.stop*mdl.f))),1)*ctr.setpoint.y, rst.pos.y(floor(rst.t.start*mdl.f):floor(rst.t.stop*mdl.f)))
     
 %     plot(rst.pos.t,  ctr.envelope.xmax.*ones(length(rst.pos.t),1),'r--'); 
 %     plot(rst.pos.t, -ctr.envelope.xmax.*ones(length(rst.pos.t),1),'r--'); 
@@ -544,7 +555,7 @@ if ShowPlot.extTorq
     end
     
     title('external torque')
-    xlim([rst.mdl.i_delay rst.mdl.rt])
+    xlim([rst.t.start, rst.t.stop])
     ylim([-3e-5, 3e-5])
     grid on
     

@@ -12,14 +12,14 @@ rsim.sensing_noise.rpy.enable = 1;
 
 %% Torque observer params: 
 ctr.torque_obs.enable = 1;
-ctr.torque_obs.noise.process.torque_x = 0.1; %25; % 0.25
-ctr.torque_obs.noise.process.torque_y = 0.1; %25; % 0.25
+ctr.torque_obs.noise.process.torque_x = 0.06; %25; % 0.25
+ctr.torque_obs.noise.process.torque_y = 0.06; %25; % 0.25
 ctr.torque_obs.noise.process.omega = 0.1; % 0.1
-ctr.torque_obs.noise.meas = 0.2; % 1
+ctr.torque_obs.noise.meas = 0.1; % 1
 
 % Torque Observer Factor
-ctr.torque_obs.factor.x = 1;
-ctr.torque_obs.factor.y = 1;
+ctr.torque_obs.factor.x = 0.65;
+ctr.torque_obs.factor.y = 0.65;
 
 % Initial estimation
 ctr.torque_obs.ext_torq_hat_init = [0; 0;];

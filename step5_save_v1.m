@@ -1,7 +1,7 @@
 
 % details for saving data
-sf.folder   = "D:\Nemo\Video\Flight\20231114\";
-sf.control  = "closedloop6_";
+sf.folder   = "D:\Nemo\Video\Flight\20231116\";
+sf.control  = "closedloop9_";
 sf.robot    = "Nemo44_";
 sf.date     = string(datetime('now','Format','yyyy-MM-dd_HH-mm-ss'));
 sf.filetype = ".mat";

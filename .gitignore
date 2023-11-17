@@ -18,3 +18,5 @@
 *.xml
 *.autosave
 slprj/_sfprj/precompile/autoInferAccessInfo.mat
+*.dmr
+*.xml

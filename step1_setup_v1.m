@@ -17,10 +17,10 @@ load_system(model_name) % if it shows model not loaded, run this line in command
 load('t2v_lut_20231027.mat')
 
 % Use simulation or Vicon data
-rsim.en = 1;
+rsim.en = 0;
 
 % Flight time for the model
-flight_time = 10;
+flight_time = 400;
 
 % Initialize controller parameters
 [ctr, flight_time] = make_controller(flight_time);
