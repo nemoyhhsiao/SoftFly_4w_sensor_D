@@ -13,7 +13,7 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.freq_vec = [330 330 330 330];
 
     % Voltage offset
-    ctr.DV = [0 -100 -120 30]; % 195 -5 -130 160
+    ctr.DV = [60 -85 -125 45]; % 195 -5 -130 160
 
     % Yaw control enable
     ctr.yaw.en = 0;
@@ -22,8 +22,6 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.integral.en = 1;
     ctr.integral.lim.upper = [1e-5, 1e-5, 1e-7, 1];
     ctr.integral.lim.lower = [-1e-5, -1e-5, -1e-7, -1];
-    % ctr.integral.yaw.upper = 3e-6;
-    % ctr.integral.yaw.lower = -3e-6;
 
     % Attitude controller gains [ att_d att_p pos_d pos_p ]
     ctr.factor = [0.9 0.7 0.85 0.75]; 
@@ -45,7 +43,7 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.gain.at2 = ctr.gains(ctr.gain.n,2); % attitude p
     ctr.gain.at1 = ctr.gains(ctr.gain.n,3); % position d
     ctr.gain.at0 = ctr.gains(ctr.gain.n,4); % position p
-    ctr.gain.ati = 1e-5 * 0;
+    ctr.gain.ati = 1e-5 * 1;
 
     % Altitude controller gains (Pakpong's altitude)
     ctr.gain.al0 = 150 * 0.55;
@@ -72,17 +70,17 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.safety.min_cos_roll_pitch = -1;
 
     % Setpoint (initial position and orientation)
-    ctr.setpoint.x = 0.004;
-    ctr.setpoint.y = -0.085;
-    ctr.setpoint.z = 0.080; % 0.106
+    ctr.setpoint.x = 0.0062;
+    ctr.setpoint.y = -0.0876;
+    ctr.setpoint.z = 0.082; % 0.106
     ctr.setpoint.yaw = deg2rad(0);
 
     % Landing and takeoff parameters
     ctr.landing.en = 1;
-    ctr.landing.height = 0.01043;
+    ctr.landing.height = 0.012;
     ctr.landing.time = 1;
     ctr.takeoff.en = 1;
-    ctr.takeoff.height = 0.01043;
+    ctr.takeoff.height = 0.012;
     ctr.takeoff.time = 1;
 
     % Desired yaw trajectory (if needed)

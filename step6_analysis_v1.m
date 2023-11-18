@@ -126,13 +126,15 @@ rst.ctr       = ctr2;
 rst.mdl       = mdl;
 
 rst.t.id      = find(rst.vot.v1>0);
-rst.t.start   = rst.time(rst.t.id.opt(1));
-rst.t.stop    = rst.time(rst.t.id.opt(end));
+rst.t.start   = rst.time(rst.t.id(1));
+rst.t.stop    = rst.time(rst.t.id(end));
 
-rst.t_h.log1  = rst.pos.t >= rst.t.start; 
-rst.t_h.log2  = rst.pos.t < rst.t.stop; 
-rst.t_h.log3  = rst.t_h.log1 == rst.t_h.log2;
-rst.t_h.id    = find(rst.t_h.log3);
+rst.t_h.log1  = rst.pos.t >= (rst.t.start+1); 
+rst.t_h.log2  = rst.pos.t < (rst.t.stop-1); 
+rst.t_h.log3  = rst.pos.t > 41;
+rst.t_h.log4  = rst.pos.t < 43;
+rst.t_h.logic = (rst.t_h.log1 == rst.t_h.log2) == ~(rst.t_h.log3 == rst.t_h.log4);
+rst.t_h.id    = find(rst.t_h.logic);
 
 c = get_color;
 
@@ -169,22 +171,30 @@ if ShowPlot.position
     end
 
     % get error
-    rst.pos.flight.x = rst.pos.x(rst.t_h.id);
-    rst.pos.flight.y = rst.pos.y(rst.t_h.id);
-    rst.pos.flight.z = rst.pos.z(rst.t_h.id);
-    
-    
+    rst.pos.flight.x   = rst.pos.x(rst.t_h.id);
+    rst.pos.flight.y   = rst.pos.y(rst.t_h.id);
+    rst.pos.flight.z   = rst.pos.z(rst.t_h.id);
+    rst.pos.flight.lat = [rst.pos.flight.x, rst.pos.flight.y];
 
-    error_x = rmse(ones(length(rst.pos.x(floor(rst.t.start*mdl.f):floor(rst.t.stop*mdl.f))),1)*ctr.setpoint.x, rst.pos.x(floor(rst.t.start*mdl.f):floor(rst.t.stop*mdl.f)))
-    error_y = rmse(ones(length(rst.pos.y(floor(rst.t.start*mdl.f):floor(rst.t.stop*mdl.f))),1)*ctr.setpoint.y, rst.pos.y(floor(rst.t.start*mdl.f):floor(rst.t.stop*mdl.f)))
-    
+    rst.pos.flight.setpoint.x = ones(length(rst.pos.flight.x),1)*ctr.setpoint.x;
+    rst.pos.flight.setpoint.y = ones(length(rst.pos.flight.y),1)*ctr.setpoint.y;
+    rst.pos.flight.setpoint.z = ones(length(rst.pos.flight.z),1)*ctr.setpoint.z;
+    rst.pos.flight.setpoint.lat = [rst.pos.flight.setpoint.x, ...
+                                   rst.pos.flight.setpoint.y];
+
+    error_x   = rmse(rst.pos.flight.x,rst.pos.flight.setpoint.x)
+    error_y   = rmse(rst.pos.flight.y,rst.pos.flight.setpoint.y)
+    error_z   = rmse(rst.pos.flight.z,rst.pos.flight.setpoint.z)
+    error_lat = rmse(rst.pos.flight.lat,rst.pos.flight.setpoint.lat,2);
+    error_lat2 = sqrt(mean((sqrt((rst.pos.flight.x-rst.pos.flight.setpoint.x).^2 + (rst.pos.flight.y-rst.pos.flight.setpoint.y).^2)).^2))
+
 %     plot(rst.pos.t,  ctr.envelope.xmax.*ones(length(rst.pos.t),1),'r--'); 
 %     plot(rst.pos.t, -ctr.envelope.xmax.*ones(length(rst.pos.t),1),'r--'); 
 %     plot(rst.pos.t,  ctr.envelope.ymax.*ones(length(rst.pos.t),1),'g--'); 
 %     plot(rst.pos.t, -ctr.envelope.ymax.*ones(length(rst.pos.t),1),'g--'); 
 %     plot(rst.pos.t,  ctr.envelope.zmax.*ones(length(rst.pos.t),1),'b--'); hold off
-    plot([rst.t.start, rst.t.start],[min(min(min(rst.pos.x,rst.pos.y),rst.pos.z))*100, max(max(max(rst.pos.x,rst.pos.y),rst.pos.z))*100],'k--','linewidth',1.2)
-    plot([rst.t.stop, rst.t.stop],[min(min(min(rst.pos.x,rst.pos.y),rst.pos.z))*100, max(max(max(rst.pos.x,rst.pos.y),rst.pos.z))*100],'k--','linewidth',1.2)
+    plot([rst.t.start, rst.t.start],[min(min([rst.pos.x,rst.pos.y,rst.pos.z]))*100, max(max([rst.pos.x,rst.pos.y,rst.pos.z]))*100],'k--','linewidth',1.2)
+    plot([rst.t.stop, rst.t.stop],[min(min([rst.pos.x,rst.pos.y,rst.pos.z]))*100, max(max([rst.pos.x,rst.pos.y,rst.pos.z]))*100],'k--','linewidth',1.2)
     title('x y z position')
     ylabel('cm')
     legend('x','y','z','Location','northwest')
@@ -284,13 +294,31 @@ end
 
 %% Voltages
 if ShowPlot.voltage
+
+    % design filter
+    d1 = designfilt("lowpassiir",'FilterOrder', 2, ...
+    'HalfPowerFrequency', 0.005, 'DesignMethod', "butter");
+ 
+    % get post-omega from real-time Euler
+    rst.vot.filt.v1 = filtfilt(d1,rst.vot.v1);
+    rst.vot.filt.v2 = filtfilt(d1,rst.vot.v2);
+    rst.vot.filt.v3 = filtfilt(d1,rst.vot.v3);
+    rst.vot.filt.v4 = filtfilt(d1,rst.vot.v4);
+
     f = figure(4); 
     f.Name = 'Voltages';
-    plot(rst.time, rst.vot.v1, 'Color',c.yellow)
-    hold on
-    plot(rst.time, rst.vot.v2, 'Color',c.blue)
-    plot(rst.time, rst.vot.v3, 'Color', c.red)
-    plot(rst.time, rst.vot.v4, 'Color',c.green)
+    if 1
+        plot(rst.time, rst.vot.v1, 'Color',c.yellow); hold on
+        plot(rst.time, rst.vot.v2, 'Color',c.blue)
+        plot(rst.time, rst.vot.v3, 'Color', c.red)
+        plot(rst.time, rst.vot.v4, 'Color',c.green)
+    else
+        plot(rst.time, rst.vot.filt.v1, 'Color',c.yellow); hold on
+        plot(rst.time, rst.vot.filt.v2, 'Color',c.blue)
+        plot(rst.time, rst.vot.filt.v3, 'Color', c.red)
+        plot(rst.time, rst.vot.filt.v4, 'Color',c.green)
+    end
+
     plot([0 rst.time(end)],[1600 1600],'k--')
     plot([0 rst.time(end)],[1700 1700],'r--')
     hold off

@@ -20,7 +20,7 @@ load('t2v_lut_20231027.mat')
 rsim.en = 0;
 
 % Flight time for the model
-flight_time = 400;
+flight_time = 1000;
 
 % Initialize controller parameters
 [ctr, flight_time] = make_controller(flight_time);
@@ -70,7 +70,7 @@ if rsim.en
 
 else
     if mdl.rerun
-        load('39s_failed/archived_data.mat')
+        load('data/400s/400s_archived_data.mat')
         set_param(strcat(model_name, '/Flying Simulation'), 'commented', 'on'); % comment out simulator
         set_param(strcat(model_name, '/UDP send to Arduino'), 'commented', 'on'); % use realtime block
         set_param(strcat(model_name, '/Vicon UDP receive'), 'commented', 'on'); % use realtime block
@@ -85,6 +85,7 @@ else
         set_param(strcat(model_name, '/Goto data_ready for realtime'), 'commented', 'on'); % comment out
         set_param(strcat(model_name, '/Execution Time'), 'commented', 'on'); % comment out
         disp("-->> using saved Vicon data")
+        step2_build_v1
     else
         set_param(strcat(model_name, '/Flying Simulation'), 'commented', 'on'); % comment out simulator
         set_param(strcat(model_name, '/UDP send to Arduino'), 'commented', 'off'); % use realtime block
