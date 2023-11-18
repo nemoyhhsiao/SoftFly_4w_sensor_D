@@ -1,7 +1,12 @@
 
-This note provides the instructions on how to perform controlled flight on SoftFly
+This note provides the instructions on how to perform controlled flights on
+ SoftFly using Simulink Desktop Real-Time system.
 
-"controller_setup" in the "function" folder provides control parameters for compiling the model.
+"step1_setup" is to set all the required parameter for performing flights. 
+- It calls functions inside the "function" folder to get struct like ctr, 
+rbt, mdl ish for the simulink model. 
+- rsim.en decide whether to run in simulation (Simulink in normal mode) or 
+compiled Simulink Desktop Real-Time (C code).
 
 "build_controller" indicates the flight time (in sec), connects the target meachine (SpeedGoat), and builds (compiles) the Simulink model on the target machine.
 
