@@ -20,7 +20,7 @@ function [ctr, flight_time] = make_controller(flight_time)
 
     % Integral control enable
     ctr.integral.en = 1;
-    ctr.integral.lim.upper = [1e-5, 1e-5, 1e-7, 1];
+    ctr.integral.lim.upper = [1e-5, 1e-5, 1e-7, 1]; % [torque x y z, thrust]
     ctr.integral.lim.lower = [-1e-5, -1e-5, -1e-7, -1];
 
     % Attitude controller gains [ att_d att_p pos_d pos_p ]
@@ -38,17 +38,18 @@ function [ctr, flight_time] = make_controller(flight_time)
     % Check stability criterion
     rhStabilityCriterion([1,ctr.gains(ctr.gain.n,:)]);
 
-    % Attitude controller gains (Pakpong's lateral)
+    % Attitude controller gains (lateral)
     ctr.gain.at3 = ctr.gains(ctr.gain.n,1); % attitude d
     ctr.gain.at2 = ctr.gains(ctr.gain.n,2); % attitude p
     ctr.gain.at1 = ctr.gains(ctr.gain.n,3); % position d
     ctr.gain.at0 = ctr.gains(ctr.gain.n,4); % position p
     ctr.gain.ati = 1e-5 * 1;
 
-    % Altitude controller gains (Pakpong's altitude)
-    ctr.gain.al0 = 150 * 0.55;
-    ctr.gain.al1 = 30 * 0.9;
-    ctr.gain.ali = 15 * 1;
+    % Altitude controller gains (altitude)
+    ctr.gain.al0  = 150 * 0.75;  % p gain [0.55]
+    ctr.gain.al1  = 30 * 0.8;    % d gain [0.9]
+    ctr.gain.ali  = 15 * 0.5;    % i gain [15]
+    ctr.gain.alfd = 0.8;         % feedforward (tether weight) [0.7 - 1.5]
 
     % Yaw controller gains
     ctr.gain.yaw.fw = 1.78e-5;
@@ -69,18 +70,18 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.safety.volt = [1999, 1999, 1999, 1999];
     ctr.safety.min_cos_roll_pitch = -1;
 
-    % Setpoint (initial position and orientation)
-    ctr.setpoint.x = 0.0062;
-    ctr.setpoint.y = -0.0876;
-    ctr.setpoint.z = 0.082; % 0.106
+    % Setpoint (relative to the initital position
+    ctr.setpoint.x = 0; %0.0062;
+    ctr.setpoint.y = 0; %-0.0876;
+    ctr.setpoint.z = 0.05; %0.082; % 0.106
     ctr.setpoint.yaw = deg2rad(0);
 
     % Landing and takeoff parameters
     ctr.landing.en = 1;
-    ctr.landing.height = 0.012;
+    % ctr.landing.height = 0.012;
     ctr.landing.time = 1;
     ctr.takeoff.en = 1;
-    ctr.takeoff.height = 0.012;
+    % ctr.takeoff.height = 0.012;
     ctr.takeoff.time = 1;
 
     % Desired yaw trajectory (if needed)
@@ -96,12 +97,7 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.adaptive_saturation.enable = 1;
     ctr.adaptive_saturation.Q = diag([1e2 * 0.5, 1e5 * 10, 1e5 * 5.0]);
 
-    % ctr.traj.en = 1;
+    % Use pre-defined trajectory
+    ctr.traj.en = 0;
 
-
-    % controller gains
-
-    % ctr.lim.att = 0.05; % 0.25
-
-    % Return the initialized 'ctr' structure
 end
