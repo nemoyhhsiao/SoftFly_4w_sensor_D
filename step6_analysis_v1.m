@@ -129,13 +129,14 @@ rst.t.id      = find(rst.vot.v1>0);
 rst.t.start   = rst.time(rst.t.id(1));
 rst.t.stop    = rst.time(rst.t.id(end));
 
-rst.t_h.log1  = rst.pos.t >= (rst.t.start+1); 
-rst.t_h.log2  = rst.pos.t < (rst.t.stop-1); 
-rst.t_h.log3  = rst.pos.t > 41;
+rst.t_h.log1  = rst.pos.t >= (rst.t.start); 
+rst.t_h.log2  = rst.pos.t < (rst.t.stop); 
+rst.t_h.log3  = rst.pos.t > 45;
 rst.t_h.log4  = rst.pos.t < 43;
 rst.t_h.logic = (rst.t_h.log1 == rst.t_h.log2) == ~(rst.t_h.log3 == rst.t_h.log4);
 rst.t_h.id    = find(rst.t_h.logic);
 
+addpath("function");
 c = get_color;
 
 %% Position
@@ -688,63 +689,80 @@ if ShowPlot.omega
     hold off
 end
 
-%% plot 3D
+%% plot 3D real-time
 if 0
     f = figure(13);
     f.Name = '3D plot';
-    
-    t0 = mdl.i_delay*400;
-    tf = mdl.i_delay*400 + mdl.flight_time*400;
-    
-    plot3( ...
-        rst_p_raw.signals.values(1,1)*100, ...
-        rst_p_raw.signals.values(1,2)*100, ...
-        rst_p_raw.signals.values(1,3)*100, ...
-        'o', 'MarkerSize',20); hold on;
-    
-    plot3( ...
-        rst_p_raw.signals.values(t0:tf,1)*100, ...
-        rst_p_raw.signals.values(t0:tf,2)*100, ...
-        rst_p_raw.signals.values(t0:tf,3)*100, ...
-        'LineWidth', 2.0); hold on;
-    
-    % coordintate system
-    colors = {"c", "m", "y"};
-    arrow_scale = 2.0;
-    
-    for j = 1:3
-        e = zeros(3, 1);
-        e(j) = 1;
-        pf = e*arrow_scale;
-        quiver3(0, 0, 0, pf(1), pf(2), pf(3), "LineWidth", 2.0, "Color", colors{j}); hold on;
-    end
-    for i = [t0:50:tf]
-        p0 = rst_p_raw.signals.values(i,1:3)*100;
-        R = pakpongs_euler_to_rotm(rst_Eul_XYZ.signals.values(i,:));
-        arrow_scale = 1.0;
-        colors = {"r", "g", "b"};
-        for j = 1:3
-            e = zeros(3, 1);
-            e(j) = 1;
-            pf = R*e*arrow_scale;
-            quiver3(p0(1), p0(2), p0(3), pf(1), pf(2), pf(3), "LineWidth", 1.0, "Color", colors{j}); hold on;
+
+    e           = eye(3);
+    arrow_scale = 0.1;
+    plot_T      = 0.05; % (s)
+    plot_n      = round(plot_T/mdl.T_high);
+
+    for i = rst.t_h.id(1):plot_n:rst.t_h.id(end)
+
+        % position
+        plot3(rst.pos.x(i-plot_n:i,1)*100, ...
+              rst.pos.y(i-plot_n:i,1)*100, ...
+              rst.pos.z(i-plot_n:i,1)*100, ...
+        'LineWidth', 0.7, 'Color', c.dark_grey); 
+        hold on; grid on; axis equal; xlabel("x (cm)"); ylabel("y (cm)"); zlabel("z (cm)");
+        
+        % orientation
+        arrow_b = rst.rotm(:,:,i) * e .* arrow_scale;
+        for j = 1:3 % body x y z arrows
+            quiver3(rst.pos.x(i)*100,rst.pos.y(i)*100,rst.pos.z(i)*100,...
+                    arrow_b(1,j), arrow_b(2,j), arrow_b(3,j),...
+                    "LineWidth", 1.0, "Color", colors{j}); hold on;
         end
+
+        % pause(0.01)
+        drawnow
+
     end
-    % xlim([-10, 10]);
-    % ylim([-10, 10]);
-    % zlim([-5, 30]);
+    hold off
+end
+
+%% plot 3D 
+if 1
+    f = figure(14);
+    f.Name = '3D plot';
+
+    e           = eye(3);
+    arrow_scale = 0.1;
+    plot_T      = 0.05; % (s)
+    plot_n      = round(plot_T/mdl.T_high);
+    colors      = {c.yellow, c.green, c.blue};
+
+    % position
+    plot3( ...
+        rst.pos.x(rst.t_h.id,1)*100, ...
+        rst.pos.y(rst.t_h.id,1)*100, ...
+        rst.pos.z(rst.t_h.id,1)*100, ...
+        'LineWidth', 1.0, 'Color', c.dark_grey); hold on; grid on; axis equal
+
+    % orientation
+    for i = rst.t_h.id(1):plot_n:rst.t_h.id(end)
+        for j = 1:3 % body x y z arrows
+            arrow_b = rst.rotm(:,:,i) * e .* arrow_scale;
+            quiver3(rst.pos.x(i)*100,rst.pos.y(i)*100,rst.pos.z(i)*100,...
+                    arrow_b(1,j), arrow_b(2,j), arrow_b(3,j),...
+                    "LineWidth", 1.0, "Color", colors{j}); hold on;
+        end
+        % pause(0.1)
+        % drawnow
+    end
+
     xlabel("x (cm)");
     ylabel("y (cm)");
     zlabel("z (cm)");
-    axis equal
-    grid on
-    sgtitle("3D Position"); hold off
+    hold off
 
 end
 
 %% Euler angles
 if 0
-    f = figure(14); 
+    f = figure(15); 
     f.Name = 'Euler angles ZYX';
     if 1
         plot(rst.EulXYZ.t, rad2deg(rst.EulZYX.x)); hold on; grid on;

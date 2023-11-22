@@ -5,8 +5,8 @@ clear
 close all
 
 % Add path to subfolder
-addpath('model');
-addpath('function');
+addpath("model");
+addpath("function");
 addpath("torque_observer")
 
 % Simulink model
