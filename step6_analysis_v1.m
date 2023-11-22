@@ -688,10 +688,63 @@ if ShowPlot.omega
     hold off
 end
 
+%% plot 3D
+if 0
+    f = figure(13);
+    f.Name = '3D plot';
+    
+    t0 = mdl.i_delay*400;
+    tf = mdl.i_delay*400 + mdl.flight_time*400;
+    
+    plot3( ...
+        rst_p_raw.signals.values(1,1)*100, ...
+        rst_p_raw.signals.values(1,2)*100, ...
+        rst_p_raw.signals.values(1,3)*100, ...
+        'o', 'MarkerSize',20); hold on;
+    
+    plot3( ...
+        rst_p_raw.signals.values(t0:tf,1)*100, ...
+        rst_p_raw.signals.values(t0:tf,2)*100, ...
+        rst_p_raw.signals.values(t0:tf,3)*100, ...
+        'LineWidth', 2.0); hold on;
+    
+    % coordintate system
+    colors = {"c", "m", "y"};
+    arrow_scale = 2.0;
+    
+    for j = 1:3
+        e = zeros(3, 1);
+        e(j) = 1;
+        pf = e*arrow_scale;
+        quiver3(0, 0, 0, pf(1), pf(2), pf(3), "LineWidth", 2.0, "Color", colors{j}); hold on;
+    end
+    for i = [t0:50:tf]
+        p0 = rst_p_raw.signals.values(i,1:3)*100;
+        R = pakpongs_euler_to_rotm(rst_Eul_XYZ.signals.values(i,:));
+        arrow_scale = 1.0;
+        colors = {"r", "g", "b"};
+        for j = 1:3
+            e = zeros(3, 1);
+            e(j) = 1;
+            pf = R*e*arrow_scale;
+            quiver3(p0(1), p0(2), p0(3), pf(1), pf(2), pf(3), "LineWidth", 1.0, "Color", colors{j}); hold on;
+        end
+    end
+    % xlim([-10, 10]);
+    % ylim([-10, 10]);
+    % zlim([-5, 30]);
+    xlabel("x (cm)");
+    ylabel("y (cm)");
+    zlabel("z (cm)");
+    axis equal
+    grid on
+    sgtitle("3D Position"); hold off
+
+end
 
 %% Euler angles
 if 0
-    f = figure(13); 
+    f = figure(14); 
     f.Name = 'Euler angles ZYX';
     if 1
         plot(rst.EulXYZ.t, rad2deg(rst.EulZYX.x)); hold on; grid on;
