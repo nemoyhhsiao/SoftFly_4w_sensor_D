@@ -20,7 +20,7 @@ load('t2v_lut_20231027.mat')
 rsim.en = 1;
 
 % Flight time for the model
-flight_time = 5;
+flight_time = 20;
 
 % Initialize controller parameters
 [ctr, flight_time] = make_controller(flight_time);

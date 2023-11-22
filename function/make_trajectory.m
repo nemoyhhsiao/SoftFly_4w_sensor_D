@@ -20,7 +20,7 @@ traj.rd_dddd = zeros(3,(mdl.rt+1)*mdl.f);
 if traj.en
 
     % different mode of trajectory
-    mode = 2;
+    mode = 3;
 
     % time variables
     t      = mdl.T; % evolving variable for each time step
@@ -50,7 +50,7 @@ if traj.en
     
     elseif mode == 2
 
-        % vertical infinity
+        % vertical two circles
         radius       = 0.05; % (m)
         angular_rate = 60; % (deg/s)
         center       = [0; 0; 0.08];
@@ -73,6 +73,32 @@ if traj.en
                 traj.rd(:,round(t*mdl.f)) = center;
             elseif t <= t_vec(7)
                 traj.rd(:,round(t*mdl.f)) = center - center./(t_vec(7)-t_vec(6)).*(t-t_vec(6));
+            end      
+            t = t + mdl.T;
+        end
+
+    elseif mode == 3
+
+        % infinity
+        radius       = 0.05; % (m)
+        angular_rate = 60; % (deg/s)
+        center       = [0; 0; 0.08];
+        t_vec        = [2, 3, 4, 16, 17, 18, 18]; % (s)
+    
+        while t <= mdl.rt
+            if t <= t_vec(1)      
+                traj.rd(:,round(t*mdl.f)) = [0; 0; 0;];     
+            elseif t <= t_vec(2)        
+                traj.rd(:,round(t*mdl.f)) = center ./(t_vec(2)-t_vec(1)).*(t-t_vec(1));   
+            elseif t <= t_vec(3)        
+                traj.rd(:,round(t*mdl.f)) = center; 
+            elseif t <= t_vec(4)               
+                traj.rd(:,round(t*mdl.f)) = center + [0; 2*radius*sind(angular_rate/2*(t-t_vec(3))); radius*sind(angular_rate*(t-t_vec(3)));];    
+            elseif t <= t_vec(5)               
+                traj.rd(:,round(t*mdl.f)) = center;
+            elseif t <= t_vec(6)               
+                traj.rd(:,round(t*mdl.f)) = center - center./(t_vec(6)-t_vec(5)).*(t-t_vec(5));
+                
             end      
             t = t + mdl.T;
         end
@@ -104,37 +130,47 @@ if traj.en
     subplot(5,1,1)
     plot(t_plot,traj.rd')
     ylim([lower_bound,upper_bound])
+    title("position")
     
     subplot(5,1,2)
     plot(t_plot,traj.rd_d')
     ylim([lower_bound,upper_bound])
+    title("velocity")
     
     subplot(5,1,3)
     plot(t_plot,traj.rd_dd')
     ylim([lower_bound,upper_bound])
+    title("acceleration")
     
     subplot(5,1,4)
     plot(t_plot,traj.rd_ddd')
     ylim([lower_bound,upper_bound])
+    title("jerk")
     
     subplot(5,1,5)
     plot(t_plot,traj.rd_dddd')
     ylim([lower_bound,upper_bound])
+    title("snap")
     
     %
     figure()
     plot3(traj.rd(1,:),traj.rd(2,:),traj.rd(3,:))
-    grid on
+    grid on; axis equal
     cla
-    patch([traj.rd(1,:) nan],[traj.rd(2,:) nan],[traj.rd(3,:) nan],[t_plot nan],'EdgeColor','interp','FaceColor','none','linewidth',1.5)
+    patch([traj.rd(1,:) nan],[traj.rd(2,:) nan],[traj.rd(3,:) nan],...
+        [t_plot nan],'EdgeColor','interp','FaceColor','none','linewidth',1.5)
     colorbar; 
-    cb=colorbar; 
+    cb = colorbar; 
     cb.Title.String = "time (s)"; 
     colormap bone; % sky copper autumn bone
     
     xlabel("x (m)")
     ylabel("y (m)")
     zlabel("z (m)")
+
+    xlim([min(traj.rd(1,:))-0.03,max(traj.rd(1,:))+0.03])
+    ylim([min(traj.rd(2,:))-0.03,max(traj.rd(2,:))+0.03])
+    zlim([min(traj.rd(3,:))-0.03,max(traj.rd(3,:))+0.03])
 
     end
 end

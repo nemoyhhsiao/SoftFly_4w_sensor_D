@@ -98,6 +98,6 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.adaptive_saturation.Q = diag([1e2 * 0.5, 1e5 * 10, 1e5 * 5.0]);
 
     % Use pre-defined trajectory
-    ctr.traj.en = 0;
+    ctr.traj.en = 1;
 
 end

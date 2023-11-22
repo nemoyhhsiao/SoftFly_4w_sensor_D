@@ -65,6 +65,14 @@ rst.pos.z     = rst_p_raw.signals.values(:,3);
 % rst.acc.y     = rst_p_dotdot.signals.values(:,2);
 % rst.acc.z     = rst_p_dotdot.signals.values(:,3);
 
+rst.pdesp.t    = rst_p_vs_p_des.time;
+rst.pdesp.x    = rst_p_vs_p_des.signals(1).values(:,1);
+rst.pdesp.y    = rst_p_vs_p_des.signals(1).values(:,2);
+rst.pdesp.z    = rst_p_vs_p_des.signals(1).values(:,3);
+rst.pdesp.desx = rst_p_vs_p_des.signals(2).values(:,1);
+rst.pdesp.desy = rst_p_vs_p_des.signals(2).values(:,2);
+rst.pdesp.desz = rst_p_vs_p_des.signals(2).values(:,3);
+
 rst.EulXYZ.t  = rst_Eul_XYZ.time;
 rst.EulXYZ.x  = rst_Eul_XYZ.signals.values(:,1);
 rst.EulXYZ.y  = rst_Eul_XYZ.signals.values(:,2);
@@ -144,32 +152,17 @@ if ShowPlot.position
     f = figure(1); 
     f.Name = 'Positions';
 
-    % plot(rst.des.p.t, rst.des.p.x.*100,'--','color',[0.6350, 0.0780, 0.1840],'linewidth',0.5); hold on
-    % plot(rst.des.p.t, rst.des.p.y.*100,'--','color',[0, 0.5, 0],'linewidth',0.5)
+    plot(rst.pdesp.t, rst.pdesp.desx.*100,'--','linewidth',1, 'Color', c.blue); hold on
+    plot(rst.pdesp.t, rst.pdesp.desy.*100,'--','linewidth',1,'Color', c.red)
+    plot(rst.pdesp.t, rst.pdesp.desz.*100,'--','linewidth',1, 'Color', c.yellow); 
 
-    % plot(rst.pred.p.t, rst.pred.p.x.*100, 'r--','linewidth',0.5); hold on
-    % plot(rst.pred.p.t, rst.pred.p.y.*100, 'g--','linewidth',0.5)
-    % plot(rst.pred.p.t, rst.pred.p.z.*100, 'b--','linewidth',0.5); 
-
-    plot(rst.pos.t, rst.pos.x.*100, 'linewidth',1); hold on
-    plot(rst.pos.t, rst.pos.y.*100, 'linewidth',1)
-    plot(rst.pos.t, rst.pos.z.*100, 'linewidth',1); 
+    plot(rst.pdesp.t, rst.pdesp.x.*100, 'linewidth',1, 'Color', c.blue);
+    plot(rst.pdesp.t, rst.pdesp.y.*100, 'linewidth',1,'Color', c.red)
+    plot(rst.pdesp.t, rst.pdesp.z.*100, 'linewidth',1, 'Color', c.yellow); 
     
-%     if 0 %ctr.rtmpc.en
-%         plot(rst.pos.t, rd_rtmpc(:,5).*100,'r--');
-%         plot(rst.pos.t, rd_rtmpc(:,6).*100,'g--');
-%         plot(rst.pos.t, rd_rtmpc(:,7).*100,'b--');
-%     else
-%         plot(rst.pos.t, rst.ref.pos.x.*100,'r--');
-%         plot(rst.pos.t, rst.ref.pos.y.*100,'g--');
-%         plot(rst.pos.t, rst.ref.pos.z.*100,'b--');
-%     end
-    
-    if 0
-        plot(rst.pos.t, robot2.UKF.r(:,1).*100,'r--'); 
-        plot(rst.pos.t, robot2.UKF.r(:,2).*100,'g--');
-        plot(rst.pos.t, robot2.UKF.r(:,3).*100,'b--');
-    end
+    % plot(rst.pos.t, rst.pos.x.*100, 'linewidth',1); hold on
+    % plot(rst.pos.t, rst.pos.y.*100, 'linewidth',1)
+    % plot(rst.pos.t, rst.pos.z.*100, 'linewidth',1); 
 
     % get error
     rst.pos.flight.x   = rst.pos.x(rst.t_h.id);
@@ -690,7 +683,7 @@ if ShowPlot.omega
 end
 
 %% plot 3D real-time
-if 0
+if 1
     f = figure(13);
     f.Name = '3D plot';
 
@@ -698,13 +691,20 @@ if 0
     arrow_scale = 0.1;
     plot_T      = 0.05; % (s)
     plot_n      = round(plot_T/mdl.T_high);
+    colors      = {c.yellow, c.green, c.blue};
+
+    plot3(rst.pdesp.desx(rst.t.id).*100,...
+          rst.pdesp.desy(rst.t.id).*100, ...
+          rst.pdesp.desz(rst.t.id).*100,...
+          '--','linewidth',1, 'Color', c.blue)
+    hold on; grid on; axis equal; xlabel("x (cm)"); ylabel("y (cm)"); zlabel("z (cm)");
 
     for i = rst.t_h.id(1):plot_n:rst.t_h.id(end)
 
         % position
-        plot3(rst.pos.x(i-plot_n:i,1)*100, ...
-              rst.pos.y(i-plot_n:i,1)*100, ...
-              rst.pos.z(i-plot_n:i,1)*100, ...
+        plot3(rst.pos.x(max(i-plot_n,rst.t_h.id(1)):i,1)*100, ...
+              rst.pos.y(max(i-plot_n,rst.t_h.id(1)):i,1)*100, ...
+              rst.pos.z(max(i-plot_n,rst.t_h.id(1)):i,1)*100, ...
         'LineWidth', 0.7, 'Color', c.dark_grey); 
         hold on; grid on; axis equal; xlabel("x (cm)"); ylabel("y (cm)"); zlabel("z (cm)");
         
@@ -733,6 +733,12 @@ if 1
     plot_T      = 0.05; % (s)
     plot_n      = round(plot_T/mdl.T_high);
     colors      = {c.yellow, c.green, c.blue};
+
+    % desired position
+    plot3(rst.pdesp.desx(rst.t.id).*100,...
+          rst.pdesp.desy(rst.t.id).*100, ...
+          rst.pdesp.desz(rst.t.id).*100,...
+          '--','linewidth',1, 'Color', c.blue); hold on
 
     % position
     plot3( ...
