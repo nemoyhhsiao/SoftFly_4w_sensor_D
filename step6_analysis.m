@@ -165,14 +165,25 @@ if ShowPlot.position
     % plot(rst.pos.t, rst.pos.z.*100, 'linewidth',1); 
 
     % get error
-    rst.pos.flight.x   = rst.pos.x(rst.t_h.id);
-    rst.pos.flight.y   = rst.pos.y(rst.t_h.id);
-    rst.pos.flight.z   = rst.pos.z(rst.t_h.id);
+    % rst.pos.flight.x   = rst.pos.x(rst.t_h.id);
+    % rst.pos.flight.y   = rst.pos.y(rst.t_h.id);
+    % rst.pos.flight.z   = rst.pos.z(rst.t_h.id);
+    % rst.pos.flight.lat = [rst.pos.flight.x, rst.pos.flight.y];
+    % 
+    % rst.pos.flight.setpoint.x = ones(length(rst.pos.flight.x),1)*ctr.setpoint.x;
+    % rst.pos.flight.setpoint.y = ones(length(rst.pos.flight.y),1)*ctr.setpoint.y;
+    % rst.pos.flight.setpoint.z = ones(length(rst.pos.flight.z),1)*ctr.setpoint.z;
+    % rst.pos.flight.setpoint.lat = [rst.pos.flight.setpoint.x, ...
+    %                                rst.pos.flight.setpoint.y];
+
+    rst.pos.flight.x   = rst.pdesp.x(rst.t.id);
+    rst.pos.flight.y   = rst.pdesp.y(rst.t.id);
+    rst.pos.flight.z   = rst.pdesp.z(rst.t.id);
     rst.pos.flight.lat = [rst.pos.flight.x, rst.pos.flight.y];
 
-    rst.pos.flight.setpoint.x = ones(length(rst.pos.flight.x),1)*ctr.setpoint.x;
-    rst.pos.flight.setpoint.y = ones(length(rst.pos.flight.y),1)*ctr.setpoint.y;
-    rst.pos.flight.setpoint.z = ones(length(rst.pos.flight.z),1)*ctr.setpoint.z;
+    rst.pos.flight.setpoint.x = rst.pdesp.desx(rst.t.id); 
+    rst.pos.flight.setpoint.y = rst.pdesp.desy(rst.t.id); 
+    rst.pos.flight.setpoint.z = rst.pdesp.desz(rst.t.id); 
     rst.pos.flight.setpoint.lat = [rst.pos.flight.setpoint.x, ...
                                    rst.pos.flight.setpoint.y];
 
@@ -683,7 +694,7 @@ if ShowPlot.omega
 end
 
 %% plot 3D real-time
-if 1
+if 0
     f = figure(13);
     f.Name = '3D plot';
 
@@ -724,7 +735,7 @@ if 1
 end
 
 %% plot 3D 
-if 1
+if 0
     f = figure(14);
     f.Name = '3D plot';
 

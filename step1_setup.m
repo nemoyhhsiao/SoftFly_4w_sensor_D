@@ -17,10 +17,10 @@ load_system(model_name) % if it shows model not loaded, run this line in command
 load('t2v_lut_20231027.mat')
 
 % Use simulation or Vicon data
-rsim.en = 1;
+rsim.en = 0;
 
 % Flight time for the model
-flight_time = 20;
+flight_time = 6;
 
 % Initialize controller parameters
 [ctr, flight_time] = make_controller(flight_time);
@@ -69,7 +69,7 @@ if rsim.en
     set_param(strcat(model_name, '/Execution Time'), 'commented', 'on'); % comment out
     warning("-->> using simulator")
     out = sim(model_name, 'SimulationMode','normal');
-    step6_analysis_v1
+    step6_analysis
 
 else
     if mdl.rerun
@@ -88,7 +88,7 @@ else
         set_param(strcat(model_name, '/Goto data_ready for realtime'), 'commented', 'on'); % comment out
         set_param(strcat(model_name, '/Execution Time'), 'commented', 'on'); % comment out
         disp("-->> using saved Vicon data")
-        step2_build_v1
+        step2_build
     else
         set_param(strcat(model_name, '/Flying Simulation'), 'commented', 'on'); % comment out simulator
         set_param(strcat(model_name, '/UDP send to Arduino'), 'commented', 'off'); % use realtime block
@@ -104,10 +104,8 @@ else
         set_param(strcat(model_name, '/Goto data_ready for realtime'), 'commented', 'off'); % not use saved Vicon data
         set_param(strcat(model_name, '/Execution Time'), 'commented', 'off'); % comment out
         warning("-->> using real time Vicon data")
-        step2_build_v1
+        step2_build
     end
-
-    % if flight_time > 100
         
 end
 

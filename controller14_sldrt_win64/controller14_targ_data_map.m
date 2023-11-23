@@ -1343,7 +1343,7 @@
                     section.data(68).logicalSrcIdx = 70;
                     section.data(68).dtTransOffset = 143;
 
-                    ;% controller14_B.a
+                    ;% controller14_B.F
                     section.data(69).logicalSrcIdx = 75;
                     section.data(69).dtTransOffset = 144;
 
@@ -2489,8 +2489,8 @@
     ;%
 
 
-    targMap.checksum0 = 1101136511;
-    targMap.checksum1 = 2523965992;
-    targMap.checksum2 = 1627995054;
-    targMap.checksum3 = 536065355;
+    targMap.checksum0 = 214533059;
+    targMap.checksum1 = 1606164961;
+    targMap.checksum2 = 3019821606;
+    targMap.checksum3 = 871613890;
 

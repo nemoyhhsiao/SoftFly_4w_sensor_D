@@ -81,9 +81,9 @@ if traj.en
 
         % infinity
         radius       = 0.05; % (m)
-        angular_rate = 60; % (deg/s)
+        angular_rate = 360; % (deg/s)
         center       = [0; 0; 0.08];
-        t_vec        = [2, 3, 4, 16, 17, 18, 18]; % (s)
+        t_vec        = [2, 3, 4, 6, 7, 8]; % (s)
     
         while t <= mdl.rt
             if t <= t_vec(1)      
@@ -93,7 +93,7 @@ if traj.en
             elseif t <= t_vec(3)        
                 traj.rd(:,round(t*mdl.f)) = center; 
             elseif t <= t_vec(4)               
-                traj.rd(:,round(t*mdl.f)) = center + [0; 2*radius*sind(angular_rate/2*(t-t_vec(3))); radius*sind(angular_rate*(t-t_vec(3)));];    
+                traj.rd(:,round(t*mdl.f)) = center + [2*radius*sind(angular_rate/2*(t-t_vec(3))); 0; radius*sind(angular_rate*(t-t_vec(3)));];    
             elseif t <= t_vec(5)               
                 traj.rd(:,round(t*mdl.f)) = center;
             elseif t <= t_vec(6)               
@@ -111,7 +111,7 @@ if traj.en
     end
     
     % saturation
-    limit = 1;
+    limit = 4;
     
     % get higher order derivative
     traj.rd_d    = max(-limit,min(limit,gradient(traj.rd)./mdl.T));
@@ -120,8 +120,8 @@ if traj.en
     traj.rd_dddd = max(-limit,min(limit,gradient(traj.rd_ddd)./mdl.T));
                 
                 
-    lower_bound = -0.2;
-    upper_bound = 0.2;
+    lower_bound = -3;
+    upper_bound = 3;
     
     
     if 1
