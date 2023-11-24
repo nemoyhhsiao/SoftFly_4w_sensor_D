@@ -5,12 +5,12 @@ close all
 %% switch for showing plot
 ShowPlot.position       = 1;
 ShowPlot.angle          = 1;
-ShowPlot.driveSignal    = 0;
+ShowPlot.driveSignal    = 1;
 ShowPlot.voltage        = 1;
 ShowPlot.torque         = 1;
 ShowPlot.forceZ         = 0;
-ShowPlot.iTorque        = 0;
-ShowPlot.iForceZ        = 0;
+ShowPlot.iTorque        = 1;
+ShowPlot.iForceZ        = 1;
 ShowPlot.en             = 1;
 ShowPlot.iCompareX      = 0;
 ShowPlot.iCompareY      = 0;
@@ -27,10 +27,10 @@ ShowPlot.volt_comp      = 1;
 ShowPlot.extTorq        = 1;
 ShowPlot.ThisScreen     = 1;
 ShowPlot.NextScreen_4K  = 0;
-ShowPlot.velocity       = 0;
+ShowPlot.velocity       = 1;
 ShowPlot.z_b            = 0;
 ShowPlot.omega          = 0;
-ShowPlot.acceleration   = 0;
+ShowPlot.acceleration   = 1;
 
 %% get simulation result from out
 
@@ -55,15 +55,15 @@ rst.pos.x     = rst_p_raw.signals.values(:,1);
 rst.pos.y     = rst_p_raw.signals.values(:,2);
 rst.pos.z     = rst_p_raw.signals.values(:,3);
 
-% rst.vel.t     = rst_p_dot.time;
-% rst.vel.x     = rst_p_dot.signals.values(:,1);
-% rst.vel.y     = rst_p_dot.signals.values(:,2);
-% rst.vel.z     = rst_p_dot.signals.values(:,3);
-% 
-% rst.acc.t     = rst_p_dotdot.time;
-% rst.acc.x     = rst_p_dotdot.signals.values(:,1);
-% rst.acc.y     = rst_p_dotdot.signals.values(:,2);
-% rst.acc.z     = rst_p_dotdot.signals.values(:,3);
+rst.vel.t     = rst_p_dot.time;
+rst.vel.x     = rst_p_dot.signals.values(:,1);
+rst.vel.y     = rst_p_dot.signals.values(:,2);
+rst.vel.z     = rst_p_dot.signals.values(:,3);
+
+rst.acc.t     = rst_p_dotdot.time;
+rst.acc.x     = rst_p_dotdot.signals.values(:,1);
+rst.acc.y     = rst_p_dotdot.signals.values(:,2);
+rst.acc.z     = rst_p_dotdot.signals.values(:,3);
 
 rst.pdesp.t    = rst_p_vs_p_des.time;
 rst.pdesp.x    = rst_p_vs_p_des.signals(1).values(:,1);
@@ -102,10 +102,6 @@ rst.EulZXY.x = rst.EulZXY.zxy(:,3);
 % rst.ome.raw_y = rst_omega_b.signals(1).values(:,2);
 % rst.ome.raw_z = rst_omega_b.signals(1).values(:,3);
 
-% rst.des.p.t   = rst_desired_xy.time;
-% rst.des.p.x   = rst_desired_xy.signals.values(:,1);
-% rst.des.p.y   = rst_desired_xy.signals.values(:,2);
-
 rst.tor.x     = rst_torque_b.signals(1).values(:,1); %.*9.8e-6;
 rst.tor.y     = rst_torque_b.signals(2).values(:,1); %.*9.8e-6;
 rst.tor.z     = rst_torque_b.signals(3).values(:,1); %.*9.8e-6;
@@ -117,14 +113,23 @@ rst.vot.v2    = rst_voltages.signals.values(:,2);
 rst.vot.v3    = rst_voltages.signals.values(:,3);
 rst.vot.v4    = rst_voltages.signals.values(:,4);
 
+rst.itorq.t   = rst_int_torque.time;
+rst.itorq.x   = rst_int_torque.signals.values(:,1);
+rst.itorq.y   = rst_int_torque.signals.values(:,2);
+rst.itorq.z   = rst_int_torque.signals.values(:,3);
+
+rst.ithr.t    = rst_int_thrust.time;
+rst.ithr.thr  = rst_int_thrust.signals.values(:,1);
+
+
 rst.en.t      = rst_en.time;
 rst.en.en     = rst_en.signals.values;
 
-% rst.drs.t     = rst_driving_signals.time;
-% rst.drs.s1    = rst_driving_signals.signals.values(:,1);
-% rst.drs.s2    = rst_driving_signals.signals.values(:,2);
-% rst.drs.s3    = rst_driving_signals.signals.values(:,3);
-% rst.drs.s4    = rst_driving_signals.signals.values(:,4);
+rst.drs.t     = rst_driving_signals.time;
+rst.drs.s1    = rst_driving_signals.signals.values(:,1);
+rst.drs.s2    = rst_driving_signals.signals.values(:,2);
+rst.drs.s3    = rst_driving_signals.signals.values(:,3);
+rst.drs.s4    = rst_driving_signals.signals.values(:,4);
 
 rst.ext.tor.x = rst_ext_torque_b.signals.values(:,1);
 rst.ext.tor.y = rst_ext_torque_b.signals.values(:,2);
@@ -824,7 +829,59 @@ if 0
     end
 end
 
+%% intergral - torque
+if ShowPlot.iTorque 
+    f = figure(16); 
+    f.Name = 'Intergral torque (world error 2 torque)';
 
+    plot(rst.itorq.t, rst.itorq.x); hold on; grid on;
+    plot(rst.itorq.t, rst.itorq.y)
+    % plot(rst.itorq.t, rst.itorq.z)
+    ylabel('N m');
+    % ylim([-20 20])
+
+    xlim([rst.t.start, rst.t.stop])
+    
+    hold off
+    title('intergral torque')
+
+    % legend('x','y','Location','northwest')
+    if ShowPlot.ThisScreen
+        set(gcf, 'Units', 'centimeters');
+        set(gcf, 'Position', [65, 13, 13, 10]); % [l b w h]
+    elseif ShowPlot.NextScreen_4K
+        set(gcf, 'Units', 'normalized');
+        set(gcf, 'Position', [1, 0.45, 0.35, 0.45]); % [l b w h]
+    else
+        set(gcf, 'Units', 'normalized');
+        set(gcf, 'Position', [1, 0.625, 0.25, 0.35]); % [l b w h]        
+    end
+end
+
+%% intergral - thrust
+if ShowPlot.iForceZ
+    f = figure(17); 
+    f.Name = 'Intergral thrust (acc)';
+
+    plot(rst.ithr.t, rst.ithr.thr); hold on; grid on;
+    ylabel('acc in g');
+
+    xlim([rst.t.start, rst.t.stop])
+    
+    hold off
+    title('intergral thrust')
+
+    if ShowPlot.ThisScreen
+        set(gcf, 'Units', 'centimeters');
+        set(gcf, 'Position', [65, 1, 13, 10]); % [l b w h]
+    elseif ShowPlot.NextScreen_4K
+        set(gcf, 'Units', 'normalized');
+        set(gcf, 'Position', [1, 0.45, 0.35, 0.45]); % [l b w h]
+    else
+        set(gcf, 'Units', 'normalized');
+        set(gcf, 'Position', [1, 0.625, 0.25, 0.35]); % [l b w h]        
+    end
+end
 %% body frame error
 
 % rotm_z = eul2rotm([ rst.EulZYX.z zeros(length(rst.EulZYX.z),2)], 'ZYX');

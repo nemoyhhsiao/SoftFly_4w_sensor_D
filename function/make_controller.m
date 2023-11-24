@@ -4,24 +4,29 @@ function [ctr, flight_time] = make_controller(flight_time)
     % Controller enable
     ctr.en = 1;
 
-    % Set flight time to 0.2 if it's openloop
-    if ~ctr.en
-        flight_time = 0.2;
-    end
-
     % Flapping frequency of all four units (Hz)
     ctr.freq_vec = [330 330 330 330];
 
     % Voltage offset
-    ctr.DV = [25 -90 -135 60]; % 195 -5 -130 160
+    ctr.DV = [50 -100 -155 75]; % 195 -5 -130 160
+
+    % Use pre-defined trajectory
+    ctr.traj.en = 1;
 
     % Yaw control enable
     ctr.yaw.en = 0;
 
-    % Integral control enable
-    ctr.integral.en = 1;
-    ctr.integral.lim.upper = [1e-5, 1e-5, 1e-7, 1]; % [torque x y z, thrust]
-    ctr.integral.lim.lower = [-1e-5, -1e-5, -1e-7, -1];
+    % Setpoint (relative to the initital position
+    ctr.setpoint.x = 0; %0.0062;
+    ctr.setpoint.y = 0; %-0.0876;
+    ctr.setpoint.z = 0.08; %0.082; % 0.106
+    ctr.setpoint.yaw = deg2rad(0);
+
+    % Landing and takeoff parameters
+    ctr.landing.en = 1;
+    ctr.landing.time = 1;
+    ctr.takeoff.en = 1;
+    ctr.takeoff.time = 1;
 
     % Attitude controller gains [ att_d att_p pos_d pos_p ]
     ctr.factor = [0.9 0.7 0.9 0.85]; 
@@ -43,7 +48,7 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.gain.at2 = ctr.gains(ctr.gain.n,2); % attitude p
     ctr.gain.at1 = ctr.gains(ctr.gain.n,3); % position d
     ctr.gain.at0 = ctr.gains(ctr.gain.n,4); % position p
-    ctr.gain.ati = 1e-5 * 1;
+    ctr.gain.ati = 1e-5 * 3; % world p error to body torque -> i gain
 
     % Altitude controller gains (altitude)
     ctr.gain.al0  = 150 * 0.8;  % p gain [0.55]
@@ -56,6 +61,11 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.gain.yaw.p = 8e-6 * 1;
     ctr.gain.yaw.d = 8e-6 * 1;
     ctr.gain.yaw.i = 0.1e-6;
+
+    % Integral control enable
+    ctr.integral.en = 1;
+    ctr.integral.lim.upper = [1e-5, 1e-5, 1e-7, 1]; % [torque x y z, thrust]
+    ctr.integral.lim.lower = [-1e-5, -1e-5, -1e-7, -1];
 
     % Torque/force limits
     ctr.lim.taux = 10.0e-5;
@@ -70,32 +80,22 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.safety.volt = [1999, 1999, 1999, 1999];
     ctr.safety.min_cos_roll_pitch = -1;
 
-    % Setpoint (relative to the initital position
-    ctr.setpoint.x = 0; %0.0062;
-    ctr.setpoint.y = 0; %-0.0876;
-    ctr.setpoint.z = 0.08; %0.082; % 0.106
-    ctr.setpoint.yaw = deg2rad(0);
-
-    % Landing and takeoff parameters
-    ctr.landing.en = 1;
-    ctr.landing.time = 1;
-    ctr.takeoff.en = 1;
-    ctr.takeoff.time = 1;
-
     % Desired yaw trajectory (if needed)
     ctr.yaw.dy.en = 0;
     ctr.yaw.dy.angle = deg2rad([0, -45, 0, 0, 0]);
     ctr.yaw.dy.duration = [1, 1, 1, 1, 1];
     ctr.yaw.dy.trans = [1, 1, 1, 1];
 
-    % Additional parameters
-    ctr.baseline = 0;
+    % % Additional parameters
+    % ctr.baseline = 0;
+    % 
+    % % Adaptive Saturation
+    % ctr.adaptive_saturation.enable = 1;
+    % ctr.adaptive_saturation.Q = diag([1e2 * 0.5, 1e5 * 10, 1e5 * 5.0]);
 
-    % Adaptive Saturation
-    ctr.adaptive_saturation.enable = 1;
-    ctr.adaptive_saturation.Q = diag([1e2 * 0.5, 1e5 * 10, 1e5 * 5.0]);
-
-    % Use pre-defined trajectory
-    ctr.traj.en = 1;
+    % Set flight time to 0.2 if it's openloop
+    if ~ctr.en
+        flight_time = 0.2;
+    end
 
 end
