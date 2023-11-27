@@ -7,7 +7,7 @@
 %endfunction
 %function ChartDataMap(block, system) void
   %createrecord ChartDataElements {\
-    NumChartData   3 \
+    NumChartData   5 \
     ChartDataDefaults {\
       RecordType   "ChartData"\
       Dimensions   []\
@@ -34,6 +34,20 @@
       Path         "is_active_c52_controller14"\
       SrcLocation  ""\
       IsTestPoint  1\
+    }\
+    ChartData {\
+      Name         "id"\
+      Description  "EmlPersistent"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  "controller14:4080:200-202"\
+    }\
+    ChartData {\
+      Name         "id_not_empty"\
+      Description  "EmlPersistentSentinel"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  "controller14:4080:200-202"\
     }\
   }
   %return ChartDataElements

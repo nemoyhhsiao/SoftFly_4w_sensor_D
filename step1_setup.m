@@ -73,7 +73,8 @@ if rsim.en
 
 else
     if mdl.rerun
-        load('data/400s/400s_archived_data.mat')
+        load('data/20231125/closedloop22.mat')
+        % load('data/400s/400s_archived_data.mat')
         set_param(strcat(model_name, '/Flying Simulation'), 'commented', 'on'); % comment out simulator
         set_param(strcat(model_name, '/UDP send to Arduino'), 'commented', 'on'); % use realtime block
         set_param(strcat(model_name, '/Vicon UDP receive'), 'commented', 'on'); % use realtime block

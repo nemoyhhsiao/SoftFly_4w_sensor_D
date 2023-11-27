@@ -8,7 +8,7 @@ ShowPlot.angle          = 1;
 ShowPlot.driveSignal    = 1;
 ShowPlot.voltage        = 1;
 ShowPlot.torque         = 1;
-ShowPlot.forceZ         = 0;
+ShowPlot.forceZ         = 1;
 ShowPlot.iTorque        = 1;
 ShowPlot.iForceZ        = 1;
 ShowPlot.en             = 1;
@@ -79,6 +79,10 @@ rst.EulXYZ.y  = rst_Eul_XYZ.signals.values(:,2);
 rst.EulXYZ.z  = rst_Eul_XYZ.signals.values(:,3);
 
 rst.rotm = eul2rotm([rst.EulXYZ.x, rst.EulXYZ.y , rst.EulXYZ.z], 'XYZ');
+rst.rot.R = rst.rotm;
+rst.rot.R1 = rst.rot.R(:,1,:);
+rst.rot.R2 = rst.rot.R(:,2,:);
+rst.rot.R3 = rst.rot.R(:,3,:);
 
 rst.EulZYX.t  = rst_Eul_XYZ.time;
 rst.EulZYX.zyx = rotm2eul(rst.rotm, 'ZYX');
@@ -92,15 +96,15 @@ rst.EulZXY.z = rst.EulZXY.zxy(:,1);
 rst.EulZXY.y = rst.EulZXY.zxy(:,2);
 rst.EulZXY.x = rst.EulZXY.zxy(:,3);
 
-% rst.ome.t     = rst_omega_b.time;
-% rst.ome.x     = rst_omega_b.signals(2).values(:,1);
-% rst.ome.y     = rst_omega_b.signals(2).values(:,2);
-% rst.ome.z     = rst_omega_b.signals(2).values(:,3);
-% 
-% rst.ome.t     = rst_omega_b.time;
-% rst.ome.raw_x = rst_omega_b.signals(1).values(:,1);
-% rst.ome.raw_y = rst_omega_b.signals(1).values(:,2);
-% rst.ome.raw_z = rst_omega_b.signals(1).values(:,3);
+rst.ome.t     = rst_omega_b.time;
+rst.ome.x     = rst_omega_b.signals(2).values(:,1);
+rst.ome.y     = rst_omega_b.signals(2).values(:,2);
+rst.ome.z     = rst_omega_b.signals(2).values(:,3);
+
+rst.ome.t     = rst_omega_b.time;
+rst.ome.raw_x = rst_omega_b.signals(1).values(:,1);
+rst.ome.raw_y = rst_omega_b.signals(1).values(:,2);
+rst.ome.raw_z = rst_omega_b.signals(1).values(:,3);
 
 rst.tor.x     = rst_torque_b.signals(1).values(:,1); %.*9.8e-6;
 rst.tor.y     = rst_torque_b.signals(2).values(:,1); %.*9.8e-6;
@@ -402,8 +406,8 @@ if ShowPlot.forceZ
 
     f = figure(6); 
     f.Name = 'Thrust in Z';
-    plot(rst.time, rst.thrust, 'm'); hold on; grid on; % in m/s^2
-    plot(rst.acc.t, rst.acc.fil.z+rst.mdl.g, 'linewidth',1); 
+    plot(rst.time, rst.thrust./mdl.g./rbt.m + mdl.g, 'm'); hold on; grid on; % in m/s^2
+    plot(rst.acc.t, rst.acc.fil.z + rst.mdl.g, 'linewidth',1); 
     plot([rst.mdl.i_delay rst.mdl.rt], [rst.mdl.g, rst.mdl.g],'--')
     title('force z')
     xlim([rst.mdl.i_delay rst.mdl.rt])
@@ -615,6 +619,7 @@ if ShowPlot.velocity
     plot(rst.vel.t, rst.vel.x.*100, 'linewidth',1); hold on
     plot(rst.vel.t, rst.vel.y.*100, 'linewidth',1)
     plot(rst.vel.t, rst.vel.z.*100, 'linewidth',1); 
+    plot(rst.vel.t, sqrt(rst.vel.x.^2 + rst.vel.y.^2 + rst.vel.z.^2).*100)
 
     % plot([mdl.servo_drop_time, mdl.servo_drop_time],[min(min(min(rst.vel.x,rst.vel.y),rst.vel.z))*100, max(max(max(rst.vel.x,rst.vel.y),rst.vel.z))*100],'k--','linewidth',1.2)
     plot([rst.t.start, rst.t.start],[-200,200],'k--','linewidth',1)
@@ -643,9 +648,23 @@ end
 if ShowPlot.acceleration
     f = figure(11); 
     f.Name = 'Acceleration';
+
+    % filter acceleration
+    rst.acc.fil.x = filtfilt(d1,rst.acc.x);
+    rst.acc.fil.y = filtfilt(d1,rst.acc.y);
+    rst.acc.fil.z = filtfilt(d1,rst.acc.z);
+    
+    subplot(3,1,1)
     plot(rst.acc.t, rst.acc.x.*100,'linewidth',1); hold on
-    plot(rst.acc.t, rst.acc.y.*100,'linewidth',1)
-    plot(rst.acc.t, rst.acc.z.*100,'linewidth',1); 
+    plot(rst.acc.t, rst.acc.fil.x.*100,'linewidth',1); 
+
+    subplot(3,1,2)
+    plot(rst.acc.t, rst.acc.y.*100,'linewidth',1);hold on
+    plot(rst.acc.t, rst.acc.fil.z.*100,'linewidth',1); 
+
+    subplot(3,1,3)
+    plot(rst.acc.t, rst.acc.z.*100,'linewidth',1); hold on
+    plot(rst.acc.t, rst.acc.fil.z.*100,'linewidth',1); 
 
     title('x y z acceleration')
     ylabel('cm/s2')
@@ -699,12 +718,12 @@ if ShowPlot.omega
 end
 
 %% plot 3D real-time
-if 0
+if 1
     f = figure(13);
     f.Name = '3D plot';
 
     e           = eye(3);
-    arrow_scale = 0.1;
+    arrow_scale = 0.5;
     plot_T      = 0.05; % (s)
     plot_n      = round(plot_T/mdl.T_high);
     colors      = {c.yellow, c.green, c.blue};
@@ -714,6 +733,7 @@ if 0
           rst.pdesp.desz(rst.t.id).*100,...
           '--','linewidth',1, 'Color', c.blue)
     hold on; grid on; axis equal; xlabel("x (cm)"); ylabel("y (cm)"); zlabel("z (cm)");
+    view([30 30])
 
     for i = rst.t_h.id(1):plot_n:rst.t_h.id(end)
 
@@ -723,6 +743,7 @@ if 0
               rst.pos.z(max(i-plot_n,rst.t_h.id(1)):i,1)*100, ...
         'LineWidth', 0.7, 'Color', c.dark_grey); 
         hold on; grid on; axis equal; xlabel("x (cm)"); ylabel("y (cm)"); zlabel("z (cm)");
+        view([30 30])
         
         % orientation
         arrow_b = rst.rotm(:,:,i) * e .* arrow_scale;
@@ -783,7 +804,7 @@ if 0
 end
 
 %% Euler angles
-if 0
+if 1
     f = figure(15); 
     f.Name = 'Euler angles ZYX';
     if 1
@@ -882,6 +903,145 @@ if ShowPlot.iForceZ
         set(gcf, 'Position', [1, 0.625, 0.25, 0.35]); % [l b w h]        
     end
 end
+%% torque x control gain comparison
+if ShowPlot.TorqueControlX
+
+    f = figure(18); 
+    f.Name = 'Control comparison (Tx)';
+
+    catx3 = -ctr.gain.at3*( (mdl.g*rst.ome.x)' + dot(rst.rot.R2',traj.rd_ddd') );
+    catx2 = -ctr.gain.at2*( dot(R2',(mdl.g*[zeros(length(x),2),ones(length(x),1)]+rd_dd)') );
+    catx1 = ctr.gain.at1*( dot(R2',Dr_dot') );
+    catx0 = ctr.gain.at0*dot(R2',Dr');
+
+    plot(Time,catx0,'linewidth',1); hold on; grid on;
+    plot(Time,catx1,'linewidth',1);
+    plot(Time,catx2,'linewidth',1);
+    plot(Time,catx3,'linewidth',1); 
+    plot(Time,catx3+catx2+catx1+catx0,'linewidth',1); hold off
+    title('torque x control gains')
+    % ylim([-100,100])
+    legend('at0','at1','at2','at3','Total','Location','northwest')
+%     set(gcf, 'Units', 'centimeters');
+%     set(gcf, 'Position', [26, 13, 13, 10]); % [l b w h]  
+%     set(gcf, 'Units', 'normalized');
+%     set(gcf, 'Position', [1.5, 1.05, 0.25, 0.35]); % [l b w h]
+    xlim([mdl.i_delay mdl.rt])
+    if ShowPlot.ThisScreen
+        set(gcf, 'Units', 'centimeters');
+        set(gcf, 'Position', [0, 13, 13, 10]); % [l b w h]
+    elseif ShowPlot.NextScreen_4K
+        set(gcf, 'Units', 'normalized');
+        set(gcf, 'Position', [1.7, 0.95, 0.35, 0.45]); % [l b w h]
+    else
+        set(gcf, 'Units', 'normalized');
+        set(gcf, 'Position', [1.25, 0.625, 0.25, 0.35]); % [l b w h]
+    end
+end
+
+%% torque y control gain comparison
+if ShowPlot.TorqueControlY
+
+    f = figure(19); 
+    f.Name = 'Control comparison (Ty)';
+
+    caty3 = ctr.gain.at3*( (mdl.g*wy)'-dot(R1',rd_ddd') );
+    caty2 = -ctr.gain.at2*( dot(R1',-(mdl.g*[zeros(length(x),2),ones(length(x),1)]+rd_dd)') );
+    caty1 = -ctr.gain.at1*( dot(R1',Dr_dot') );
+    caty0 = -ctr.gain.at0*dot(R1',Dr');
+
+    plot(Time,caty0,'linewidth',1); hold on; grid on;
+    plot(Time,caty1,'linewidth',1);
+    plot(Time,caty2,'linewidth',1);
+    plot(Time,caty3,'linewidth',1); 
+    plot(Time,caty3+caty2+caty1+caty0,'linewidth',1); hold off
+    title('torque y control gains')
+    % ylim([-100,100])
+    legend('at0','at1','at2','at3','Total','Location','northwest')
+%     set(gcf, 'Units', 'centimeters');
+%     set(gcf, 'Position', [39, 13, 13, 10]); % [l b w h]  
+%     set(gcf, 'Units', 'normalized');
+%     set(gcf, 'Position', [1.5, 0.625, 0.25, 0.35]); % [l b w h]
+    xlim([mdl.i_delay mdl.rt])
+    if ShowPlot.ThisScreen
+        set(gcf, 'Units', 'centimeters');
+        set(gcf, 'Position', [0, 13, 13, 10]); % [l b w h]
+    elseif ShowPlot.NextScreen_4K
+        set(gcf, 'Units', 'normalized');
+        set(gcf, 'Position', [1.7, 0.45, 0.35, 0.45]); % [l b w h]
+    else
+        set(gcf, 'Units', 'normalized');
+        set(gcf, 'Position', [1.25, 0.625, 0.25, 0.35]); % [l b w h]
+    end
+end
+
+%% higher order trajectory
+if 1
+    
+    f = figure(20); 
+    f.Name = 'Higher order derivatives';
+
+    % design lowpass filter
+    d1 = designfilt("lowpassiir",'FilterOrder', 4, ...
+    'HalfPowerFrequency', 5, 'SampleRate',mdl.f, 'DesignMethod', "butter");
+    
+    % filter position
+    rst.pos.fil.x = filtfilt(d1,rst.pos.x);
+    rst.pos.fil.y = filtfilt(d1,rst.pos.y);
+    rst.pos.fil.z = filtfilt(d1,rst.pos.z);
+
+    % velocity from filtered position
+    rst.v4p.x = gradient(rst.pos.fil.x)./mdl.T_high;
+    rst.v4p.y = gradient(rst.pos.fil.y)./mdl.T_high;
+    rst.v4p.z = gradient(rst.pos.fil.z)./mdl.T_high;
+    
+    % acceleration from velocity
+    rst.a4v.x = gradient(rst.v4p.x)./mdl.T_high;
+    rst.a4v.y = gradient(rst.v4p.y)./mdl.T_high;
+    rst.a4v.z = gradient(rst.v4p.z)./mdl.T_high;
+
+    % jerk from acceleration
+    rst.j4a.x = gradient(rst.a4v.x)./mdl.T_high;
+    rst.j4a.y = gradient(rst.a4v.y)./mdl.T_high;
+    rst.j4a.z = gradient(rst.a4v.z)./mdl.T_high;
+
+    % snap from jerk
+    rst.s4j.x = gradient(rst.j4a.x)./mdl.T_high;
+    rst.s4j.y = gradient(rst.j4a.y)./mdl.T_high;
+    rst.s4j.z = gradient(rst.j4a.z)./mdl.T_high;
+
+    subplot(5,1,1)
+    plot(rst.pos.t, rst.pos.fil.x, 'Color', c.blue); hold on
+    plot(traj.t,  rst.pos.fil.x(1) + traj.rd(1,:)', '--', 'Color', c.blue)
+    plot(rst.pos.t, rst.pos.fil.y, 'Color', c.red);
+    plot(traj.t,  rst.pos.fil.x(2) + traj.rd(2,:)', '--', 'Color', c.red)
+
+    subplot(5,1,2)
+    plot(rst.pos.t, rst.v4p.x, 'Color', c.blue); hold on
+    plot(traj.t,  traj.rd_d(1,:)', '--', 'Color', c.blue)
+    plot(rst.pos.t, rst.v4p.y, 'Color', c.red); hold on
+    plot(traj.t,  traj.rd_d(2,:)', '--', 'Color', c.red)
+
+    subplot(5,1,3)
+    plot(rst.pos.t, rst.a4v.x, 'Color', c.blue); hold on
+    plot(traj.t,  traj.rd_dd(1,:)', '--', 'Color', c.blue)
+    plot(rst.pos.t, rst.a4v.y, 'Color', c.red); hold on
+    plot(traj.t,  traj.rd_dd(2,:)', '--', 'Color', c.red)
+
+    subplot(5,1,4)
+    plot(rst.pos.t, rst.j4a.x, 'Color', c.blue); hold on
+    plot(traj.t,  traj.rd_ddd(1,:)', '--', 'Color', c.blue)
+    plot(rst.pos.t, rst.j4a.y, 'Color', c.red); hold on
+    plot(traj.t,  traj.rd_ddd(2,:)', '--', 'Color', c.red)
+
+    subplot(5,1,5)
+    plot(rst.pos.t, rst.s4j.x, 'Color', c.blue); hold on
+    plot(traj.t,  traj.rd_dddd(1,:)', '--', 'Color', c.blue)
+    plot(rst.pos.t, rst.s4j.y, 'Color', c.red); hold on
+    plot(traj.t,  traj.rd_dddd(2,:)', '--', 'Color', c.red)
+
+end
+
 %% body frame error
 
 % rotm_z = eul2rotm([ rst.EulZYX.z zeros(length(rst.EulZYX.z),2)], 'ZYX');

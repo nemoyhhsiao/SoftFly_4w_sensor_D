@@ -8,7 +8,7 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.freq_vec = [330 330 330 330];
 
     % Voltage offset
-    ctr.DV = [50 -100 -155 75]; % 195 -5 -130 160
+    ctr.DV = [45 -75 -80 45]; % 195 -5 -130 160
 
     % Use pre-defined trajectory
     ctr.traj.en = 1;
@@ -19,7 +19,7 @@ function [ctr, flight_time] = make_controller(flight_time)
     % Setpoint (relative to the initital position
     ctr.setpoint.x = 0; %0.0062;
     ctr.setpoint.y = 0; %-0.0876;
-    ctr.setpoint.z = 0.08; %0.082; % 0.106
+    ctr.setpoint.z = 0.09; %0.082; % 0.106
     ctr.setpoint.yaw = deg2rad(0);
 
     % Landing and takeoff parameters
@@ -29,7 +29,7 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.takeoff.time = 1;
 
     % Attitude controller gains [ att_d att_p pos_d pos_p ]
-    ctr.factor = [0.9 0.7 0.9 0.85]; 
+    ctr.factor = [1.1 0.8 1.15 1.1]; 
     ctr.gains = [62   798    6631   13608;     % #1 pakpong nominal gains
                  36   486    2916    6561;     % #2 (S+9)^4
                  48   864    6912   20736;     % #3 (S+12)^4
@@ -44,17 +44,22 @@ function [ctr, flight_time] = make_controller(flight_time)
     rhStabilityCriterion([1,ctr.gains(ctr.gain.n,:)]);
 
     % Attitude controller gains (lateral)
-    ctr.gain.at3 = ctr.gains(ctr.gain.n,1); % attitude d
-    ctr.gain.at2 = ctr.gains(ctr.gain.n,2); % attitude p
-    ctr.gain.at1 = ctr.gains(ctr.gain.n,3); % position d
-    ctr.gain.at0 = ctr.gains(ctr.gain.n,4); % position p
-    ctr.gain.ati = 1e-5 * 3; % world p error to body torque -> i gain
+    ctr.gain.at3  = ctr.gains(ctr.gain.n,1); % attitude d
+    ctr.gain.at2  = ctr.gains(ctr.gain.n,2); % attitude p
+    ctr.gain.at1  = ctr.gains(ctr.gain.n,3); % position d
+    ctr.gain.at0  = ctr.gains(ctr.gain.n,4); % position p
+    ctr.gain.ati  = 1e-4 * 3; % world p error to body torque -> i gain
+    ctr.gain.atfd = ctr.gain.at0 * 0; 
+    
+    % Attitude controller divide by g factor
+    ctr.gain.atmg.factor.x = 1.45;
+    ctr.gain.atmg.factor.y = 1.45;
 
     % Altitude controller gains (altitude)
     ctr.gain.al0  = 150 * 0.8;  % p gain [0.55]
     ctr.gain.al1  = 30 * 0.8;    % d gain [0.9]
     ctr.gain.ali  = 15 * 0.5;    % i gain [15]
-    ctr.gain.alfd = 1;           % feedforward (tether weight) [0.7 - 1.5]
+    ctr.gain.alfd = 0.95;           % feedforward (tether weight) [0.7 - 1.5]
 
     % Yaw controller gains
     ctr.gain.yaw.fw = 1.78e-5;
@@ -67,6 +72,11 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.integral.lim.upper = [1e-5, 1e-5, 1e-7, 1]; % [torque x y z, thrust]
     ctr.integral.lim.lower = [-1e-5, -1e-5, -1e-7, -1];
 
+    % Torque offset
+    ctr.torque_offset.x = 0;
+    ctr.torque_offset.y = 0;
+    ctr.thrust_offset   = 0.035; % in acceleration
+
     % Torque/force limits
     ctr.lim.taux = 10.0e-5;
     ctr.lim.tauy = 10.0e-5;
@@ -77,7 +87,7 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.safety.enableZone.xmax = 0.6;
     ctr.safety.enableZone.ymax = 0.3;
     ctr.safety.enableZone.zmax = 0.6;
-    ctr.safety.volt = [1999, 1999, 1999, 1999];
+    ctr.safety.volt = [1950, 1950, 1950, 1950];
     ctr.safety.min_cos_roll_pitch = -1;
 
     % Desired yaw trajectory (if needed)
