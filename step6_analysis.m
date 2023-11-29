@@ -125,7 +125,6 @@ rst.itorq.z   = rst_int_torque.signals.values(:,3);
 rst.ithr.t    = rst_int_thrust.time;
 rst.ithr.thr  = rst_int_thrust.signals.values(:,1);
 
-
 rst.en.t      = rst_en.time;
 rst.en.en     = rst_en.signals.values;
 
@@ -137,6 +136,24 @@ rst.drs.s4    = rst_driving_signals.signals.values(:,4);
 
 rst.ext.tor.x = rst_ext_torque_b.signals.values(:,1);
 rst.ext.tor.y = rst_ext_torque_b.signals.values(:,2);
+
+rst.ast.t      = rst_all_states.time;
+rst.ast.pos    = rst_all_states.signals(1).values;
+rst.ast.vel    = rst_all_states.signals(2).values;
+rst.ast.ome    = rst_all_states.signals(4).values;
+rst.ast.posx  = rst_all_states.signals(1).values(:,1);
+rst.ast.posy  = rst_all_states.signals(1).values(:,2);
+rst.ast.posz  = rst_all_states.signals(1).values(:,3);
+rst.ast.velx  = rst_all_states.signals(2).values(:,1);
+rst.ast.vely  = rst_all_states.signals(2).values(:,2);
+rst.ast.velz  = rst_all_states.signals(2).values(:,3);
+rst.ast.rot.R  = rst_all_states.signals(3).values;
+rst.ast.rot.R1 = reshape(rst.ast.rot.R(:,1,:),[3,size(rst.ast.rot.R,3)]);
+rst.ast.rot.R2 = reshape(rst.ast.rot.R(:,2,:),[3,size(rst.ast.rot.R,3)]);
+rst.ast.rot.R3 = reshape(rst.ast.rot.R(:,3,:),[3,size(rst.ast.rot.R,3)]);
+rst.ast.omex  = rst_all_states.signals(4).values(:,1);
+rst.ast.omey  = rst_all_states.signals(4).values(:,2);
+rst.ast.omez  = rst_all_states.signals(4).values(:,3);
 
 rst.rbt       = rbt2;
 rst.ctr       = ctr2;
@@ -909,24 +926,21 @@ if ShowPlot.TorqueControlX
     f = figure(18); 
     f.Name = 'Control comparison (Tx)';
 
-    catx3 = -ctr.gain.at3*( (mdl.g*rst.ome.x)' + dot(rst.rot.R2',traj.rd_ddd') );
-    catx2 = -ctr.gain.at2*( dot(R2',(mdl.g*[zeros(length(x),2),ones(length(x),1)]+rd_dd)') );
-    catx1 = ctr.gain.at1*( dot(R2',Dr_dot') );
-    catx0 = ctr.gain.at0*dot(R2',Dr');
+    rst.cat.x3 = -ctr.gain.at3*( (mdl.g*rst.ast.omex)' + dot(rst.ast.rot.R2,traj.rd_ddd(:,1:size(rst.ast.rot.R2,2))) );
+    rst.cat.x2 = -ctr.gain.at2*( dot(rst.ast.rot.R2, (mdl.g * [zeros(length(rst.ast.rot.R2),2), ones(length(rst.ast.rot.R2),1) ]' + traj.rd_dd(:,1:size(rst.ast.rot.R2,2)))) );
+    rst.cat.x1 = ctr.gain.at1*( dot(rst.ast.rot.R2, (rst.ast.vel - traj.rd_d(:,1:size(rst.ast.rot.R2,2))')' ));
+    rst.cat.x0 = ctr.gain.at0*dot(rst.ast.rot.R2,(rst.ast.pos - traj.rd(:,1:size(rst.ast.rot.R2,2))')');
 
-    plot(Time,catx0,'linewidth',1); hold on; grid on;
-    plot(Time,catx1,'linewidth',1);
-    plot(Time,catx2,'linewidth',1);
-    plot(Time,catx3,'linewidth',1); 
-    plot(Time,catx3+catx2+catx1+catx0,'linewidth',1); hold off
+    plot(rst.ast.t,rst.cat.x0,'linewidth',1); hold on; grid on;
+    plot(rst.ast.t,rst.cat.x1,'linewidth',1);
+    plot(rst.ast.t,rst.cat.x2,'linewidth',1);
+    plot(rst.ast.t,rst.cat.x3,'linewidth',1); 
+    plot(rst.ast.t,rst.cat.x3+rst.cat.x2+rst.cat.x1+rst.cat.x0,'linewidth',1); hold off
     title('torque x control gains')
-    % ylim([-100,100])
     legend('at0','at1','at2','at3','Total','Location','northwest')
-%     set(gcf, 'Units', 'centimeters');
-%     set(gcf, 'Position', [26, 13, 13, 10]); % [l b w h]  
-%     set(gcf, 'Units', 'normalized');
-%     set(gcf, 'Position', [1.5, 1.05, 0.25, 0.35]); % [l b w h]
-    xlim([mdl.i_delay mdl.rt])
+
+    xlim([rst.t.start, rst.t.stop])
+
     if ShowPlot.ThisScreen
         set(gcf, 'Units', 'centimeters');
         set(gcf, 'Position', [0, 13, 13, 10]); % [l b w h]
