@@ -32,7 +32,7 @@ mdl = make_model(flight_time,rsim);
 rbt = make_robot;
 
 % Initialize robot simulation parameters
-rsim = make_simulation(rbt,mdl,rsim);
+[rsim, rbt] = make_simulation(rbt,mdl,rsim);
 
 % Initilaize pre-defined trajectory
 traj = make_trajectory(ctr, mdl);

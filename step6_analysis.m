@@ -19,7 +19,7 @@ ShowPlot.iCompareF      = 0;
 ShowPlot.yawControl     = 1;
 ShowPlot.yawControlPD   = 1;
 ShowPlot.TorqueControlX = 1;
-ShowPlot.TorqueControlY = 1;
+ShowPlot.TorqueControlY = 0;
 ShowPlot.x_offset       = 1;
 ShowPlot.y_offset       = 1;
 ShowPlot.Tor2Ang        = 0;
@@ -1028,7 +1028,7 @@ if 1
     plot(rst.pos.t, rst.pos.fil.x, 'Color', c.blue); hold on
     plot(traj.t,  rst.pos.fil.x(1) + traj.rd(1,:)', '--', 'Color', c.blue)
     plot(rst.pos.t, rst.pos.fil.y, 'Color', c.red);
-    plot(traj.t,  rst.pos.fil.x(2) + traj.rd(2,:)', '--', 'Color', c.red)
+    plot(traj.t,  rst.pos.fil.y(2) + traj.rd(2,:)', '--', 'Color', c.red)
 
     subplot(5,1,2)
     plot(rst.pos.t, rst.v4p.x, 'Color', c.blue); hold on

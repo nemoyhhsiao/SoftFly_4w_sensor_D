@@ -24,7 +24,7 @@ function [mdl] = make_model(flight_time,rsim)
     mdl.vicon.gain = 1e5;
 
     % Use archived data to rerun the experiment
-    mdl.rerun = 1;
+    mdl.rerun = 0;
     
     % Set the sampling frequency of the filter
     if rsim.en

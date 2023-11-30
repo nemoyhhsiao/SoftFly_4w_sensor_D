@@ -1,4 +1,4 @@
-function rsim = make_simulation(rbt,mdl,rsim)
+function [rsim, rbt] = make_simulation(rbt,mdl,rsim)
     % Initialize the 'rsim' structure with simulation parameters
 
     % Simulation sample time
@@ -77,6 +77,12 @@ function rsim = make_simulation(rbt,mdl,rsim)
     rsim.sensing_noise.rpy_sigma = 0.5 * ones(3, 1) / 180 * pi; % 0.5 deg
     rsim.sensing_noise.pos.enable = 1;
     rsim.sensing_noise.rpy.enable = 1;
+
+    % No angle offset in simulation 
+    if rsim.en
+        rbt.angle_offset.x = 0;
+        rbt.angle_offset.y = 0;
+    end
 
     % Return the initialized 'rsim' structure
 end

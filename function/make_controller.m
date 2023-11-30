@@ -8,7 +8,7 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.freq_vec = [330 330 330 330];
 
     % Voltage offset
-    ctr.DV = [45 -75 -80 45]; % 195 -5 -130 160
+    ctr.DV = [55 -65 -60 40]; % 195 -5 -130 160
 
     % Use pre-defined trajectory
     ctr.traj.en = 1;
@@ -29,7 +29,7 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.takeoff.time = 1;
 
     % Attitude controller gains [ att_d att_p pos_d pos_p ]
-    ctr.factor = [1.1 0.8 1.15 1.1]; 
+    ctr.factor = [0.9 0.8 0.95 0.9]; 
     ctr.gains = [62   798    6631   13608;     % #1 pakpong nominal gains
                  36   486    2916    6561;     % #2 (S+9)^4
                  48   864    6912   20736;     % #3 (S+12)^4
@@ -56,10 +56,10 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.gain.atmg.factor.y = 1.45;
 
     % Altitude controller gains (altitude)
-    ctr.gain.al0  = 150 * 0.8;  % p gain [0.55]
-    ctr.gain.al1  = 30 * 0.8;    % d gain [0.9]
-    ctr.gain.ali  = 15 * 0.5;    % i gain [15]
-    ctr.gain.alfd = 0.95;           % feedforward (tether weight) [0.7 - 1.5]
+    ctr.gain.al0  = 150 * 0.95;  % p gain [0.55]
+    ctr.gain.al1  = 30 * 0.85;    % d gain [0.9]
+    ctr.gain.ali  = 15 * 0.6;    % i gain [15]
+    ctr.gain.alfd = 0.8;           % feedforward (tether weight) [0.7 - 1.5]
 
     % Yaw controller gains
     ctr.gain.yaw.fw = 1.78e-5;

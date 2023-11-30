@@ -1,5 +1,5 @@
-function traj = make_trajectory(ctr, mdl)
-%%
+%function traj = make_trajectory(ctr, mdl)
+
 
 % decide to use predefined trajectory
 if ctr.traj.en
@@ -20,14 +20,15 @@ traj.rd_dddd = zeros(3,(mdl.rt+1)*mdl.f);
 if traj.en
 
     % type of trajectory
-    mode = 1;
+    traj.mode = 2;
 
     % time variables
     t      = mdl.T; % evolving variable for each time step
     t_plot = mdl.T:mdl.T:mdl.rt+1; % time vector for plot
+    traj.t = t_plot;
     
     % generate trajectory
-    if mode == 1
+    if traj.mode == 1
 
         % horizontal circle
         radius       = 0.06*1/0.82; % (m)
@@ -59,7 +60,7 @@ if traj.en
         end
     
     
-    elseif mode == 2
+    elseif traj.mode == 2
 
         % vertical two circles
         radius       = 0.05*1/0.865; % (m)
@@ -88,7 +89,7 @@ if traj.en
             t = t + mdl.T;
         end
 
-    elseif mode == 3
+    elseif traj.mode == 3
 
         % infinity
         radius       = 0.05; % (m)
@@ -114,7 +115,7 @@ if traj.en
             t = t + mdl.T;
         end
 
-    elseif mode == 4
+    elseif traj.mode == 4
 
         % vertical two circles
         radius       = 0.05; % (m)
@@ -143,6 +144,52 @@ if traj.en
             end      
             t = t + mdl.T;
         end
+
+    elseif traj.mode == 5
+
+        % vertical many circles
+        radius       = 0.05*1/0.865; % (m)
+        angular_rate = 360; % (deg/s)
+        center       = [0; 0; 0.1];
+        center_r     = center + [radius; 0; 0];
+        center_l     = center - [radius; 0; 0];
+        t_vec        = [2.1, 3, 4, 34, 0, 35, 36]; % (s)
+
+        t1 = 5;
+        t2 = 6;
+        R = eul2rotm([0 0 pi/15], 'XYZ');
+    
+        while t <= mdl.rt
+            if t <= t_vec(1)
+                % stay on the ground
+                traj.rd(:,round(t*mdl.f)) = [0; 0; 0;];     
+            elseif t <= t_vec(2)        
+                % going up linearly
+                traj.rd(:,round(t*mdl.f)) = center ./(t_vec(2)-t_vec(1)).*(t-t_vec(1));   
+            elseif t <= t_vec(3)   
+                % hovering
+                traj.rd(:,round(t*mdl.f)) = center; 
+            elseif t <= t_vec(4)   
+                % one set of trajectory
+                if t <= t1 
+                    traj.rd(:,round(t*mdl.f)) = center_r + [radius*cosd(-angular_rate*(t-t_vec(3))+180); 0; radius*sind(-angular_rate*(t-t_vec(3))+180);];  
+                elseif t <= t2
+                    traj.rd(:,round(t*mdl.f)) = center_l + [radius*cosd(angular_rate*(t-t_vec(4))); 0; radius*sind(angular_rate*(t-t_vec(4)));]; 
+                end
+           elseif t <= t_vec(6)               
+                traj.rd(:,round(t*mdl.f)) = center;
+           elseif t <= t_vec(7)
+                traj.rd(:,round(t*mdl.f)) = center - center./(t_vec(7)-t_vec(6)).*(t-t_vec(6));
+           end    
+           t = t + mdl.T;
+        end
+
+        % get intermediate trajectory
+        for i=1:14
+            traj.rd(:,round((t_vec(3)+2*i)*mdl.f):round((t_vec(3)+2*i+2)*mdl.f))...
+                = R*traj.rd(:,round((t_vec(3)+2*(i-1))*mdl.f):round((t_vec(3)+2*(i-1)+2)*mdl.f));
+        end
+            
         
     end
 
@@ -152,47 +199,83 @@ if traj.en
     end
     traj.t = t_plot;
     
-    % saturation
-    limit = [1 5 20 1e3];
-
     % design filter
     d1 = designfilt("lowpassiir",'FilterOrder', 1, ...
-    'HalfPowerFrequency', 2, 'SampleRate',mdl.f, 'DesignMethod', "butter");
+    'HalfPowerFrequency', 1.8, 'SampleRate',mdl.f, 'DesignMethod', "butter");
 
     d2 = designfilt("lowpassiir",'FilterOrder', 1, ...
-    'HalfPowerFrequency', 2, 'SampleRate',mdl.f, 'DesignMethod', "butter");
+    'HalfPowerFrequency', 1.8, 'SampleRate',mdl.f, 'DesignMethod', "butter");
 
     d3 = designfilt("lowpassiir",'FilterOrder', 1, ...
     'HalfPowerFrequency', 2.5, 'SampleRate',mdl.f, 'DesignMethod', "butter");
+
+    d11 = designfilt("lowpassiir",'FilterOrder', 4, ...
+    'HalfPowerFrequency', 2, 'SampleRate',mdl.f, 'DesignMethod', "butter");
+
+    d21 = designfilt("lowpassiir",'FilterOrder', 4, ...
+    'HalfPowerFrequency', 2, 'SampleRate',mdl.f, 'DesignMethod', "butter");
+
+    d31 = designfilt("lowpassiir",'FilterOrder', 2, ...
+    'HalfPowerFrequency', 4, 'SampleRate',mdl.f, 'DesignMethod', "butter");
     
-    % filter position
+    % 1st-order filter 
     traj.rd_raw  = traj.rd;
     traj.rd(1,:) = filtfilt(d1,traj.rd_raw(1,:));
     traj.rd(2,:) = filtfilt(d2,traj.rd_raw(2,:));
     traj.rd(3,:) = filtfilt(d3,traj.rd_raw(3,:));
+    traj.rd_1f   = traj.rd;
+
+    % 4th-order filter
+    traj.rd(1,:) = filtfilt(d11,traj.rd_1f(1,:));
+    traj.rd(2,:) = filtfilt(d21,traj.rd_1f(2,:));
+    traj.rd(3,:) = filtfilt(d31,traj.rd_1f(3,:));
+
+    % compensate tether force
+    traj.force_factor = 5; % 5
+    traj.rd_dd_add = traj.rd.^2;
+    traj.rd_dd_add(1:2,:) = traj.rd_dd_add(1:2,:).*traj.force_factor;
+
+    % saturation
+    limit = [1 5 20 300];
     
     % get higher order derivative
     traj.rd_d    = max(-limit(1),min(limit(1),gradient(traj.rd)./mdl.T));
-    traj.rd_dd   = max(-limit(2),min(limit(2),gradient(traj.rd_d)./mdl.T));
+    traj.rd_dd   = max(-limit(2),min(limit(2),gradient(traj.rd_d)./mdl.T+traj.rd_dd_add));
     traj.rd_ddd  = max(-limit(3),min(limit(3),gradient(traj.rd_dd)./mdl.T));
     traj.rd_dddd = max(-limit(4),min(limit(4),gradient(traj.rd_ddd)./mdl.T));
-                
-
-    lower_bound = -0.2;
-    upper_bound = 0.2;
-
     
     
     if 1
 
         figure(421)
-        plot(t_plot, traj.rd_raw'); hold on
-        plot(t_plot, traj.rd')
-        title("position"); 
-        legend; grid on; hold off
+        plot(t_plot, traj.rd_raw'); hold on;
+        legend; grid on; 
+        title("raw position"); hold off
+
+        figure(422)
+        subplot(3,1,1)
+        plot(t_plot, traj.rd_raw(1,:)'); hold on;
+        plot(t_plot, traj.rd_1f(1,:)'); 
+        plot(t_plot, traj.rd(1,:)'); 
+        legend('raw','1st filtered','higher filtered'); grid on; 
+        title("filtered x position"); hold off
+
+        subplot(3,1,2)
+        plot(t_plot, traj.rd_raw(2,:)'); hold on;
+        plot(t_plot, traj.rd_1f(2,:)'); 
+        plot(t_plot, traj.rd(2,:)'); 
+        legend('raw','1st filtered','higher filtered'); grid on; 
+        title("filtered y position"); hold off
+
+        subplot(3,1,3)
+        plot(t_plot, traj.rd_raw(3,:)'); hold on;
+        plot(t_plot, traj.rd_1f(3,:)'); 
+        plot(t_plot, traj.rd(3,:)'); 
+        legend('raw','1st filtered','higher filtered'); grid on; 
+        title("filtered z position"); hold off
 
 
-        figure(102)
+        figure(423)
         
         subplot(3,2,1)
         plot(t_plot,traj.rd'); grid on
@@ -225,7 +308,7 @@ if traj.en
         title("snap")
         
         %
-        figure(777)
+        figure(424)
         plot3(traj.rd(1,:),traj.rd(2,:),traj.rd(3,:))
         grid on; axis equal; view([30 30])
         cla
@@ -248,4 +331,4 @@ if traj.en
     end
 end
 
-end
+%end
