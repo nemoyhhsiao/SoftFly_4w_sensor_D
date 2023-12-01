@@ -735,7 +735,7 @@ if ShowPlot.omega
 end
 
 %% plot 3D real-time
-if 1
+if 0
     f = figure(13);
     f.Name = '3D plot';
 

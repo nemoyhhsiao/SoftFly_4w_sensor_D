@@ -8,7 +8,7 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.freq_vec = [330 330 330 330];
 
     % Voltage offset
-    ctr.DV = [55 -65 -60 40]; % 195 -5 -130 160
+    ctr.DV = [55 -90 -80 40]; % 195 -5 -130 160
 
     % Use pre-defined trajectory
     ctr.traj.en = 1;
@@ -19,7 +19,7 @@ function [ctr, flight_time] = make_controller(flight_time)
     % Setpoint (relative to the initital position
     ctr.setpoint.x = 0; %0.0062;
     ctr.setpoint.y = 0; %-0.0876;
-    ctr.setpoint.z = 0.09; %0.082; % 0.106
+    ctr.setpoint.z = 0.105; %0.082; % 0.106
     ctr.setpoint.yaw = deg2rad(0);
 
     % Landing and takeoff parameters
@@ -56,10 +56,10 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.gain.atmg.factor.y = 1.45;
 
     % Altitude controller gains (altitude)
-    ctr.gain.al0  = 150 * 0.95;  % p gain [0.55]
-    ctr.gain.al1  = 30 * 0.85;    % d gain [0.9]
+    ctr.gain.al0  = 150 * 0.9;  % p gain [0.55]
+    ctr.gain.al1  = 30 * 0.9;    % d gain [0.9]
     ctr.gain.ali  = 15 * 0.6;    % i gain [15]
-    ctr.gain.alfd = 0.8;           % feedforward (tether weight) [0.7 - 1.5]
+    ctr.gain.alfd = 0.9;           % feedforward (tether weight) [0.7 - 1.5]
 
     % Yaw controller gains
     ctr.gain.yaw.fw = 1.78e-5;

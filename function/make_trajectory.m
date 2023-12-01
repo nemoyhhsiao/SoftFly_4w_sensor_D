@@ -1,4 +1,4 @@
-%function traj = make_trajectory(ctr, mdl)
+function traj = make_trajectory(ctr, mdl)
 
 
 % decide to use predefined trajectory
@@ -20,7 +20,7 @@ traj.rd_dddd = zeros(3,(mdl.rt+1)*mdl.f);
 if traj.en
 
     % type of trajectory
-    traj.mode = 2;
+    traj.mode = 1;
 
     % time variables
     t      = mdl.T; % evolving variable for each time step
@@ -68,7 +68,7 @@ if traj.en
         center       = [0; 0; 0.105];
         center_r     = center + [radius; 0; 0];
         center_l     = center - [radius; 0; 0];
-        t_vec        = [2.2, 3, 4, 5, 6, 7, 7.9]; % (s)
+        t_vec        = [2.1, 3, 4, 5, 6, 7, 7.9]; % (s)
     
         while t <= mdl.rt
             if t <= t_vec(1)      
@@ -231,9 +231,12 @@ if traj.en
     traj.rd(3,:) = filtfilt(d31,traj.rd_1f(3,:));
 
     % compensate tether force
-    traj.force_factor = 5; % 5
-    traj.rd_dd_add = traj.rd.^2;
+    traj.force_factor = 80; % 5
+    traj.rd_dd_add = traj.rd.*abs(traj.rd);
     traj.rd_dd_add(1:2,:) = traj.rd_dd_add(1:2,:).*traj.force_factor;
+
+    figure()
+    plot(traj.rd_dd_add(1:2,:)')
 
     % saturation
     limit = [1 5 20 300];
@@ -331,4 +334,4 @@ if traj.en
     end
 end
 
-%end
+end
