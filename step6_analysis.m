@@ -685,7 +685,7 @@ if ShowPlot.acceleration
 
     title('x y z acceleration')
     ylabel('cm/s2')
-    legend('x','y','z','Location','northwest')
+    % legend('x','y','z','Location','northwest')
     xlim([rst.t.start, rst.t.stop])
     ylim([-300, 300])
     grid on
@@ -943,7 +943,7 @@ if ShowPlot.TorqueControlX
 
     if ShowPlot.ThisScreen
         set(gcf, 'Units', 'centimeters');
-        set(gcf, 'Position', [0, 13, 13, 10]); % [l b w h]
+        set(gcf, 'Position', [78, 13, 13, 10]); % [l b w h]
     elseif ShowPlot.NextScreen_4K
         set(gcf, 'Units', 'normalized');
         set(gcf, 'Position', [1.7, 0.95, 0.35, 0.45]); % [l b w h]
@@ -1024,35 +1024,40 @@ if 1
     rst.s4j.y = gradient(rst.j4a.y)./mdl.T_high;
     rst.s4j.z = gradient(rst.j4a.z)./mdl.T_high;
 
-    subplot(5,1,1)
+    subplot(2,2,1); %subplot(5,1,1)
     plot(rst.pos.t, rst.pos.fil.x, 'Color', c.blue); hold on
     plot(traj.t,  rst.pos.fil.x(1) + traj.rd(1,:)', '--', 'Color', c.blue)
     plot(rst.pos.t, rst.pos.fil.y, 'Color', c.red);
-    plot(traj.t,  rst.pos.fil.y(2) + traj.rd(2,:)', '--', 'Color', c.red)
+    plot(traj.t,  rst.pos.fil.y(2) + traj.rd(2,:)', '--', 'Color', c.red); grid on
+    title("Position")
 
-    subplot(5,1,2)
+    subplot(2,2,2); %subplot(5,1,2)
     plot(rst.pos.t, rst.v4p.x, 'Color', c.blue); hold on
     plot(traj.t,  traj.rd_d(1,:)', '--', 'Color', c.blue)
     plot(rst.pos.t, rst.v4p.y, 'Color', c.red); hold on
-    plot(traj.t,  traj.rd_d(2,:)', '--', 'Color', c.red)
+    plot(traj.t,  traj.rd_d(2,:)', '--', 'Color', c.red); grid on
+    title("Velocity")
 
-    subplot(5,1,3)
+    subplot(2,2,3); %subplot(5,1,3)
     plot(rst.pos.t, rst.a4v.x, 'Color', c.blue); hold on
     plot(traj.t,  traj.rd_dd(1,:)', '--', 'Color', c.blue)
     plot(rst.pos.t, rst.a4v.y, 'Color', c.red); hold on
-    plot(traj.t,  traj.rd_dd(2,:)', '--', 'Color', c.red)
+    plot(traj.t,  traj.rd_dd(2,:)', '--', 'Color', c.red); grid on
+    title("Acceleration")
 
-    subplot(5,1,4)
+    subplot(2,2,4); %subplot(5,1,4)
     plot(rst.pos.t, rst.j4a.x, 'Color', c.blue); hold on
     plot(traj.t,  traj.rd_ddd(1,:)', '--', 'Color', c.blue)
     plot(rst.pos.t, rst.j4a.y, 'Color', c.red); hold on
-    plot(traj.t,  traj.rd_ddd(2,:)', '--', 'Color', c.red)
+    plot(traj.t,  traj.rd_ddd(2,:)', '--', 'Color', c.red); grid on
+    title("Jerk")
 
-    subplot(5,1,5)
-    plot(rst.pos.t, rst.s4j.x, 'Color', c.blue); hold on
-    plot(traj.t,  traj.rd_dddd(1,:)', '--', 'Color', c.blue)
-    plot(rst.pos.t, rst.s4j.y, 'Color', c.red); hold on
-    plot(traj.t,  traj.rd_dddd(2,:)', '--', 'Color', c.red)
+    % subplot(5,1,5)
+    % plot(rst.pos.t, rst.s4j.x, 'Color', c.blue); hold on
+    % plot(traj.t,  traj.rd_dddd(1,:)', '--', 'Color', c.blue)
+    % plot(rst.pos.t, rst.s4j.y, 'Color', c.red); hold on
+    % plot(traj.t,  traj.rd_dddd(2,:)', '--', 'Color', c.red); grid on
+    % title("Snap")
 
 end
 

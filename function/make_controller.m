@@ -1,4 +1,4 @@
-function [ctr, flight_time] = make_controller(flight_time)
+function [ctr, mdl] = make_controller(mdl)
     % Initialize the 'ctr' structure with the same parameters as in the code
 
     % Controller enable
@@ -8,7 +8,7 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.freq_vec = [330 330 330 330];
 
     % Voltage offset
-    ctr.DV = [55 -90 -80 40]; % 195 -5 -130 160
+    ctr.DV = [60 -55 -70 40]; % 195 -5 -130 160
 
     % Use pre-defined trajectory
     ctr.traj.en = 1;
@@ -29,7 +29,7 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.takeoff.time = 1;
 
     % Attitude controller gains [ att_d att_p pos_d pos_p ]
-    ctr.factor = [0.9 0.8 0.95 0.9]; 
+    ctr.factor = [0.75 0.6 0.7 0.8]; 
     ctr.gains = [62   798    6631   13608;     % #1 pakpong nominal gains
                  36   486    2916    6561;     % #2 (S+9)^4
                  48   864    6912   20736;     % #3 (S+12)^4
@@ -52,14 +52,15 @@ function [ctr, flight_time] = make_controller(flight_time)
     ctr.gain.atfd = ctr.gain.at0 * 0; 
     
     % Attitude controller divide by g factor
-    ctr.gain.atmg.factor.x = 1.45;
-    ctr.gain.atmg.factor.y = 1.45;
+    ctr.atmg.en            = 1;
+    ctr.gain.atmg.factor.x = 1.3;
+    ctr.gain.atmg.factor.y = 1.3;
 
     % Altitude controller gains (altitude)
     ctr.gain.al0  = 150 * 0.9;  % p gain [0.55]
     ctr.gain.al1  = 30 * 0.9;    % d gain [0.9]
     ctr.gain.ali  = 15 * 0.6;    % i gain [15]
-    ctr.gain.alfd = 0.9;           % feedforward (tether weight) [0.7 - 1.5]
+    ctr.gain.alfd = 1.1;           % feedforward (tether weight) [0.7 - 1.5]
 
     % Yaw controller gains
     ctr.gain.yaw.fw = 1.78e-5;
@@ -75,7 +76,7 @@ function [ctr, flight_time] = make_controller(flight_time)
     % Torque offset
     ctr.torque_offset.x = 0;
     ctr.torque_offset.y = 0;
-    ctr.thrust_offset   = 0.035; % in acceleration
+    ctr.thrust_offset   = 0.2; % in acceleration
 
     % Torque/force limits
     ctr.lim.taux = 10.0e-5;
@@ -105,7 +106,7 @@ function [ctr, flight_time] = make_controller(flight_time)
 
     % Set flight time to 0.2 if it's openloop
     if ~ctr.en
-        flight_time = 0.2;
+        mdl.flight_time = 0.2;
     end
 
 end

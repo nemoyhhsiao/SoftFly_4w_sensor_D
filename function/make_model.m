@@ -1,4 +1,4 @@
-function [mdl] = make_model(flight_time,rsim)
+function [mdl] = make_model(mdl,rsim)
 
     % Simulink model running frequency
     mdl.f           = 2e3;          % frequency of the controller
@@ -7,13 +7,13 @@ function [mdl] = make_model(flight_time,rsim)
     mdl.T_high      = 1/mdl.f_high;
 
     % Set flight time 
-    mdl.flight_time = flight_time; % actual flapping time
+    mdl.flight_time = mdl.flight_time; % actual flapping time
     if rsim.en
         mdl.i_delay = 0.01;
-        mdl.rt      = flight_time + mdl.i_delay; % Simulink run time
+        mdl.rt      = mdl.flight_time + mdl.i_delay; % Simulink run time
     else
         mdl.i_delay = 2; % initial delay to receive Vicon signals
-        mdl.rt      = flight_time + mdl.i_delay + 1; % Simulink run time
+        mdl.rt      = mdl.flight_time + mdl.i_delay + 1; % Simulink run time
     end
 
     % Environmental parameters
@@ -23,14 +23,16 @@ function [mdl] = make_model(flight_time,rsim)
     % Re-Scaling of Vicon measurement
     mdl.vicon.gain = 1e5;
 
-    % Use archived data to rerun the experiment
-    mdl.rerun = 0;
-    
     % Set the sampling frequency of the filter
     if rsim.en
         mdl.omega_filter.Fs = mdl.f;
     else
         mdl.omega_filter.Fs = mdl.f_high;
+    end
+
+    % Lower sample time for simulation (to save time)
+    if rsim.en
+        mdl.T_high = mdl.T;
     end
 
     % Lowpass filter

@@ -1,17 +1,13 @@
 %% 
 
-clc
-clear
-close all
+clc, clear, close all
 
 % Add path to subfolder
-addpath("model");
-addpath("function");
-addpath("torque_observer")
+addpath("model","function","torque_observer");
 
 % Simulink model
 model_name = 'controller14';
-load_system(model_name) % if it shows model not loaded, run this line in command window
+load_system(model_name) 
 
 % Load look-up table for thrust to voltage mapping
 load('t2v_lut_20231027.mat')
@@ -19,14 +15,17 @@ load('t2v_lut_20231027.mat')
 % Use simulation or Vicon data
 rsim.en = 0;
 
-% Flight time for the model
-flight_time = 6;
+% Re-run controller (use archived data to rerun the experiment)
+mdl.rerun = 0;
 
-% Initialize controller parameters
-[ctr, flight_time] = make_controller(flight_time);
+% Flight time for the model
+mdl.flight_time = 34;
 
 % Initialize model parameters
-mdl = make_model(flight_time,rsim);
+mdl = make_model(mdl,rsim);
+
+% Initialize controller parameters
+[ctr, mdl] = make_controller(mdl);
 
 % Initialize robot parameters
 rbt = make_robot;
@@ -35,7 +34,7 @@ rbt = make_robot;
 [rsim, rbt] = make_simulation(rbt,mdl,rsim);
 
 % Initilaize pre-defined trajectory
-traj = make_trajectory(ctr, mdl);
+traj = make_trajectory(ctr, mdl, rsim);
 
 % Initialize external torque observer
 ctr = make_ext_tor_observer(rsim, mdl, ctr);
@@ -43,12 +42,10 @@ ctr = make_ext_tor_observer(rsim, mdl, ctr);
 ctr2 = ctr; % some Simulink parameters are from 2-robot controller
 rbt2 = rbt; % some Simulink parameters are from 2-robot controller
 
-% Lower sample time for simulation (to save time)
-if rsim.en
-    mdl.T_high = mdl.T;
-end
-
-% set_param(model_name,'SimulationCommand','update')
+% Automatically update control parameters for simulation
+% if rsim.en
+%     set_param(model_name,'SimulationCommand','update')
+% end
 
 %%
 
@@ -74,7 +71,6 @@ if rsim.en
 else
     if mdl.rerun
         load('data/20231125/closedloop22.mat')
-        % load('data/400s/400s_archived_data.mat')
         set_param(strcat(model_name, '/Flying Simulation'), 'commented', 'on'); % comment out simulator
         set_param(strcat(model_name, '/UDP send to Arduino'), 'commented', 'on'); % use realtime block
         set_param(strcat(model_name, '/Vicon UDP receive'), 'commented', 'on'); % use realtime block
