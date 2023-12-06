@@ -13,13 +13,13 @@ load_system(model_name)
 load('t2v_lut_20231027.mat')
 
 % Use simulation or Vicon data
-rsim.en = 0;
+rsim.en = 1;
 
 % Re-run controller (use archived data to rerun the experiment)
 mdl.rerun = 0;
 
 % Flight time for the model
-mdl.flight_time = 34;
+mdl.flight_time = 3;
 
 % Initialize model parameters
 mdl = make_model(mdl,rsim);
@@ -38,6 +38,9 @@ traj = make_trajectory(ctr, mdl, rsim);
 
 % Initialize external torque observer
 ctr = make_ext_tor_observer(rsim, mdl, ctr);
+
+% Initialize somersault strategy
+som = make_somersault(mdl);
 
 ctr2 = ctr; % some Simulink parameters are from 2-robot controller
 rbt2 = rbt; % some Simulink parameters are from 2-robot controller
