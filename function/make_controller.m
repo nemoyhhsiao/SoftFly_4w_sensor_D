@@ -11,7 +11,7 @@ function [ctr, mdl] = make_controller(mdl)
     ctr.DV = [60 -55 -70 40]; % 195 -5 -130 160
 
     % Use pre-defined trajectory
-    ctr.traj.en = 1;
+    ctr.traj.en = 0;
 
     % Yaw control enable
     ctr.yaw.en = 0;
@@ -29,7 +29,7 @@ function [ctr, mdl] = make_controller(mdl)
     ctr.takeoff.time = 1;
 
     % Attitude controller gains [ att_d att_p pos_d pos_p ]
-    ctr.factor = [0.75 0.6 0.7 0.8]; 
+    ctr.factor = [1 1 1 1]; 
     ctr.gains = [62   798    6631   13608;     % #1 pakpong nominal gains
                  36   486    2916    6561;     % #2 (S+9)^4
                  48   864    6912   20736;     % #3 (S+12)^4
