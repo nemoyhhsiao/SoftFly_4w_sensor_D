@@ -18,8 +18,8 @@ ctr.torque_obs.noise.process.omega = 0.1; % 0.1
 ctr.torque_obs.noise.meas = 0.1; % 1
 
 % Torque Observer Factor
-ctr.torque_obs.factor.x = 0; % 0.6
-ctr.torque_obs.factor.y = 0; % 0.6
+ctr.torque_obs.factor.x = 1; % 0.6
+ctr.torque_obs.factor.y = 1; % 0.6
 
 % Initial estimation
 ctr.torque_obs.ext_torq_hat_init = [0; 0;];

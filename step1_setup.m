@@ -13,7 +13,7 @@ load_system(model_name)
 load('t2v_lut_20231027.mat')
 
 % Use simulation or Vicon data
-rsim.en = 1;
+rsim.en = 0;
 
 % Re-run controller (use archived data to rerun the experiment)
 mdl.rerun = 0;
@@ -45,6 +45,7 @@ som = make_somersault(mdl);
 ctr2 = ctr; % some Simulink parameters are from 2-robot controller
 rbt2 = rbt; % some Simulink parameters are from 2-robot controller
 
+ctr.safety.T
 % Automatically update control parameters for simulation
 % if rsim.en
 %     set_param(model_name,'SimulationCommand','update')

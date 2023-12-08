@@ -2,14 +2,14 @@ function [ctr, mdl] = make_controller(mdl)
     % Initialize the 'ctr' structure with the same parameters as in the code
 
     % Controller enable
-    ctr.en = 1;
+    ctr.en = 0;
 
     % Flapping frequency of all four units (Hz)
     ctr.freq_vec = [330 330 330 330];
 
     % Voltage offset
     % ctr.DV = [60 -55 -70 40]; % 195 -5 -130 160
-    ctr.DV = [-100 -100 -100 -100]; % 195 -5 -130 160
+    ctr.DV = [-300 -300 -300 -300]; % 195 -5 -130 160
 
     % Use pre-defined trajectory
     ctr.traj.en = 0;
@@ -20,7 +20,7 @@ function [ctr, mdl] = make_controller(mdl)
     % Setpoint (relative to the initital position
     ctr.setpoint.x = 0; %0.0062;
     ctr.setpoint.y = 0; %-0.0876;
-    ctr.setpoint.z = 0.105; %0.082; % 0.106
+    ctr.setpoint.z = 0.075; %0.082; % 0.106
     ctr.setpoint.yaw = deg2rad(0);
 
     % Landing and takeoff parameters
@@ -30,7 +30,7 @@ function [ctr, mdl] = make_controller(mdl)
     ctr.takeoff.time = 0.5;
 
     % Attitude controller gains [ att_d att_p pos_d pos_p ]
-    ctr.factor = [0.8 0.7 0.8 0.6]; 
+    ctr.factor = [0.9 0.7 0.75 0.7]; 
     ctr.gains = [62   798    6631   13608;     % #1 pakpong nominal gains
                  36   486    2916    6561;     % #2 (S+9)^4
                  48   864    6912   20736;     % #3 (S+12)^4
@@ -53,7 +53,7 @@ function [ctr, mdl] = make_controller(mdl)
     ctr.gain.atfd = ctr.gain.at0 * 0; 
     
     % Attitude controller divide by g factor
-    ctr.atmg.en            = 1;
+    ctr.atmg.en            = 0;
     ctr.gain.atmg.factor.x = 1;
     ctr.gain.atmg.factor.y = 1;
 
@@ -85,11 +85,11 @@ function [ctr, mdl] = make_controller(mdl)
     ctr.lim.tauz = 4e-6 * 1;
 
     % Safety and landing parameters
-    ctr.safety.T = 0.04;
+    ctr.safety.T = 1000; %0.04;
     ctr.safety.enableZone.xmax = 0.6;
     ctr.safety.enableZone.ymax = 0.3;
     ctr.safety.enableZone.zmax = 0.6;
-    ctr.safety.volt = [2000, 2000, 2000, 2000];
+    ctr.safety.volt = [1950, 1950, 1950, 1950];
     ctr.safety.min_cos_roll_pitch = -1;
 
     % Desired yaw trajectory (if needed)
