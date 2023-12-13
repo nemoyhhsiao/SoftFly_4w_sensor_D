@@ -1,8 +1,9 @@
 
 % update parameter in the workspace to the compiled file
-set_param(model_name,'SimulationCommand','update')
-disp('updating ...')
-pause(8)
+
+% set_param(model_name,'SimulationCommand','update')
+% disp('updating ...')
+% pause(8)
 disp("status: "+get_param(model_name,'SimulationStatus'))
 
 % connect

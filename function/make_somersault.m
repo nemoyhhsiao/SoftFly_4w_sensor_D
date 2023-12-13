@@ -1,7 +1,7 @@
 function som = make_somersault(mdl)
     
     % enable somersault
-    som.en = 1;
+    som.en = 0;
 
     % somersault time
     som.t.acc = 1; % time to accelerate upward
@@ -20,7 +20,7 @@ function som = make_somersault(mdl)
     som.threshold.z_dot.acc = 0.4; % positive (m/s)
     som.threshold.z_dot.dec = -0.05; % negative (m/s)
     som.threshold.down.R33  = -0.5; % condition 1: determine when to decelerate, the body z-axis projection to the world z 
-    som.threshold.down.eulx = -2.7; % condition 2: determine when to decelerate, the body z-axis projection to the world z 
+    som.threshold.down.eulx = -2.7; % condition 2: determine when to decelerate
     som.threshold.up.R33    = 0.85; % determine when to get back to hovering, the body z-axis projection to the world z 
 
     % somersault gain factor to prioritize attitude & thrust (som_state == 4)

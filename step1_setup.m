@@ -19,7 +19,7 @@ rsim.en = 0;
 mdl.rerun = 0;
 
 % Flight time for the model
-mdl.flight_time = 3;
+mdl.flight_time = 2;
 
 % Initialize model parameters
 mdl = make_model(mdl,rsim);
@@ -45,7 +45,6 @@ som = make_somersault(mdl);
 ctr2 = ctr; % some Simulink parameters are from 2-robot controller
 rbt2 = rbt; % some Simulink parameters are from 2-robot controller
 
-ctr.safety.T
 % Automatically update control parameters for simulation
 % if rsim.en
 %     set_param(model_name,'SimulationCommand','update')

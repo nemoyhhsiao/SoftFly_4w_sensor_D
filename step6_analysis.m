@@ -990,7 +990,7 @@ if ShowPlot.TorqueControlY
 end
 
 %% higher order trajectory
-if 1
+if 0
     
     f = figure(20); 
     f.Name = 'Higher order derivatives';
