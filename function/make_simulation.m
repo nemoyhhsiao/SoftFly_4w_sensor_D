@@ -6,9 +6,9 @@ function [rsim, rbt] = make_simulation(rbt,mdl,rsim)
     rsim.mdl.T = 1 / rsim.mdl.f;
 
     % Initial conditions
-    rsim.Eul_XYZ.x = 0.1;
+    rsim.Eul_XYZ.x = 0.15;
     rsim.Eul_XYZ.y = 0.1;
-    rsim.Eul_XYZ.z = 0;
+    rsim.Eul_XYZ.z = 3;
     rsim.R0 = eul2rotm([rsim.Eul_XYZ.x rsim.Eul_XYZ.y rsim.Eul_XYZ.z],'XYZ');
     % rsim.R0 = [1; 0; 0; 0; 1; 0; 0; 0; 1];
     rsim.w0 = [0, 0, 0];
@@ -61,11 +61,11 @@ function [rsim, rbt] = make_simulation(rbt,mdl,rsim)
     rsim.dist.z.seed = 2;
 
     % Torque disturbance (Nm)
-    rsim.dist.wx.mean = -1e-6*1;
+    rsim.dist.wx.mean = 1e-6*1;
     rsim.dist.wy.mean = 1e-6*1;
     rsim.dist.wz.mean = -5e-8;
-    rsim.dist.wx.var = 5e-8*1;
-    rsim.dist.wy.var = 5e-8*1;
+    rsim.dist.wx.var = 5e-8*0.5;
+    rsim.dist.wy.var = 5e-8*0.5;
     rsim.dist.wz.var = 1e-12;
     rsim.dist.wx.seed = 3;
     rsim.dist.wy.seed = 4;
