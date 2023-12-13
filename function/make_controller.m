@@ -8,8 +8,8 @@ function [ctr, mdl] = make_controller(mdl)
     ctr.freq_vec = [330 330 330 330];
 
     % Voltage offset
-    ctr.DV = [60 -75 -90 40]; % 195 -5 -130 160
-    % ctr.DV = [-400 -1700 -1700 -1700]; % 195 -5 -130 160
+    ctr.DV = [220 70 55 190]; % 195 -5 -130 160
+    % ctr.DV = [-1700 -1700 -1700 -700]; % 195 -5 -130 160
 
     % Use pre-defined trajectory
     ctr.traj.en = 0;
@@ -20,17 +20,17 @@ function [ctr, mdl] = make_controller(mdl)
     % Setpoint (relative to the initital position
     ctr.setpoint.x = 0; %0.0062;
     ctr.setpoint.y = 0; %-0.0876;
-    ctr.setpoint.z = 0.07; %0.082; % 0.106
+    ctr.setpoint.z = 0.03; %0.082; % 0.106
     ctr.setpoint.yaw = deg2rad(0);
 
     % Landing and takeoff parameters
-    ctr.landing.en = 1;
+    ctr.landing.en = 0;
     ctr.landing.time = 0.5;
     ctr.takeoff.en = 1;
-    ctr.takeoff.time = 0.5;
+    ctr.takeoff.time = 0.3;
 
     % Attitude controller gains [ att_d att_p pos_d pos_p ]
-    ctr.factor = [0.7 0.5 0.45 0.4]; 
+    ctr.factor = [0.9 0.7 0.6 0.6]; 
     ctr.gains = [62   798    6631   13608;     % #1 pakpong nominal gains
                  36   486    2916    6561;     % #2 (S+9)^4
                  48   864    6912   20736;     % #3 (S+12)^4
@@ -89,7 +89,7 @@ function [ctr, mdl] = make_controller(mdl)
     ctr.safety.enableZone.xmax = 0.6;
     ctr.safety.enableZone.ymax = 0.3;
     ctr.safety.enableZone.zmax = 0.6;
-    ctr.safety.volt = [1950, 1950, 1950, 1950];
+    ctr.safety.volt = [2000, 2000, 2000, 2000];
     ctr.safety.min_cos_roll_pitch = -1;
 
     % Desired yaw trajectory (if needed)

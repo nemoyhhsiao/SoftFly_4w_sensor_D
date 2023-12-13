@@ -1933,7 +1933,7 @@
                     section.data(4).logicalSrcIdx = 60;
                     section.data(4).dtTransOffset = 4;
 
-                    ;% controller14_DW.timeenable_PWORK.LoggedData
+                    ;% controller14_DW.safetytimeenable_PWORK.LoggedData
                     section.data(5).logicalSrcIdx = 61;
                     section.data(5).dtTransOffset = 5;
 
@@ -2568,8 +2568,8 @@
     ;%
 
 
-    targMap.checksum0 = 2585550583;
-    targMap.checksum1 = 386884288;
-    targMap.checksum2 = 3396403987;
-    targMap.checksum3 = 648194000;
+    targMap.checksum0 = 3203703254;
+    targMap.checksum1 = 4066304589;
+    targMap.checksum2 = 3551675374;
+    targMap.checksum3 = 131441566;
 

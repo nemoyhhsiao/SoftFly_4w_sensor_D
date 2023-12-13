@@ -19,16 +19,16 @@ rsim.en = 0;
 mdl.rerun = 0;
 
 % Flight time for the model
-mdl.flight_time = 2;
+mdl.flight_time = 1;
 
 % Initialize model parameters
 mdl = make_model(mdl,rsim);
 
-% Initialize controller parameters
-[ctr, mdl] = make_controller(mdl);
-
 % Initialize robot parameters
 rbt = make_robot;
+
+% Initialize controller parameters
+[ctr, mdl] = make_controller(mdl);
 
 % Initialize robot simulation parameters
 [rsim, rbt] = make_simulation(rbt,mdl,rsim);
