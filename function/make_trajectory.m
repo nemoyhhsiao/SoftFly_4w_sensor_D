@@ -20,7 +20,7 @@ traj.thrust_b = zeros(1,(mdl.rt+1)*mdl.f);
 if traj.en
 
     % type of trajectory
-    traj.mode = 5;
+    traj.mode = 6;
 
     % time variables
     t      = mdl.T; % evolving variable for each time step
@@ -190,33 +190,99 @@ if traj.en
                 = R*traj.rd(:,round((t_vec(3)+2*(i-1))*mdl.f):round((t_vec(3)+2*(i-1)+2)*mdl.f));
         end
             
-        
+   elseif traj.mode == 6
+
+        % letters
+        p_hover  = [0; 0; 0.04]; % (m)
+        p_raw    = [p_hover(1), p_hover(2), -p_hover(3);
+                        0,  0,    0;
+                    -0.21,  0,    0;
+                    -0.21,  0,  0.1;
+                    -0.14,  0,    0;
+                    -0.07,  0,  0.1;
+                    -0.07,  0,    0;
+                        0,  0,  0.1;
+                        0,  0,    0;
+                     0.07,  0,  0.1;
+                     0.21,  0,  0.1;
+                     0.14,  0,  0.1;
+                     0.14,  0,    0;
+                     0,     0,    0;
+                     p_hover(1), p_hover(2), -p_hover(3);]';
+        p_temp = repelem(p_raw,1,2);
+        p_vec  = p_temp(:,1:end-1);
+        t_vec = zeros(1,length(p_vec));
+        t_vec(1:4) = [0 2.1 3 3.5];
+        for i = 5:length(p_vec)
+            if rem(i,2) == 1
+                t_vec(i) = t_vec(i-1) + 1;
+            else
+                t_vec(i) = t_vec(i-1) + 0.5;
+            end
+        end
+
+
+        while t <= mdl.rt
+
+            if t <= t_vec(end)
+                % linearly track letter waypoint
+                for i = 1:size(p_vec,2)-1
+                    while t < t_vec(i+1)
+                        traj.rd(:,round(t*mdl.f)) = p_hover + p_vec(:,i) + (p_vec(:,i+1)-p_vec(:,i))./(t_vec(i+1)-t_vec(i)).*(t-t_vec(i));
+                        t = t + mdl.T;
+                    end
+                end
+            else
+                t = t + mdl.T;
+            end
+        end
+
+        traj.cf1  = 1.8;
+        traj.cf2  = 1.8;
+        traj.cf3  = 5;
+        traj.cf11 = 2;
+        traj.cf21 = 2;
+        traj.cf31 = 4;
+
     end
+
+    traj.t_vec = t_vec;
 
     % safety check
     if t_vec(end)>mdl.rt
         error('check time period in the pre-defined trajectory')
     end
     traj.t = t_plot;
+
+    % choose filter parameter
+    if traj.mode ~= 6
+        traj.cf1  = 1.8;
+        traj.cf2  = 1.8;
+        traj.cf3  = 2;
+        traj.cf11 = 2;
+        traj.cf21 = 2;
+        traj.cf31 = 4;
+    end
+
     
     % design filter
     d1 = designfilt("lowpassiir",'FilterOrder', 1, ...
-    'HalfPowerFrequency', 1.8, 'SampleRate',mdl.f, 'DesignMethod', "butter");
+    'HalfPowerFrequency', traj.cf1, 'SampleRate',mdl.f, 'DesignMethod', "butter");
 
     d2 = designfilt("lowpassiir",'FilterOrder', 1, ...
-    'HalfPowerFrequency', 1.8, 'SampleRate',mdl.f, 'DesignMethod', "butter");
+    'HalfPowerFrequency', traj.cf2, 'SampleRate',mdl.f, 'DesignMethod', "butter");
 
     d3 = designfilt("lowpassiir",'FilterOrder', 1, ...
-    'HalfPowerFrequency', 2.5, 'SampleRate',mdl.f, 'DesignMethod', "butter");
+    'HalfPowerFrequency', traj.cf3, 'SampleRate',mdl.f, 'DesignMethod', "butter");
 
     d11 = designfilt("lowpassiir",'FilterOrder', 4, ...
-    'HalfPowerFrequency', 2, 'SampleRate',mdl.f, 'DesignMethod', "butter");
+    'HalfPowerFrequency', traj.cf11, 'SampleRate',mdl.f, 'DesignMethod', "butter");
 
     d21 = designfilt("lowpassiir",'FilterOrder', 4, ...
-    'HalfPowerFrequency', 2, 'SampleRate',mdl.f, 'DesignMethod', "butter");
+    'HalfPowerFrequency', traj.cf21, 'SampleRate',mdl.f, 'DesignMethod', "butter");
 
     d31 = designfilt("lowpassiir",'FilterOrder', 2, ...
-    'HalfPowerFrequency', 4, 'SampleRate',mdl.f, 'DesignMethod', "butter");
+    'HalfPowerFrequency', traj.cf31, 'SampleRate',mdl.f, 'DesignMethod', "butter");
     
     % 1st-order filter 
     traj.rd_raw  = traj.rd;
@@ -248,7 +314,8 @@ if traj.en
     traj.rd_dddd = max(-limit(4),min(limit(4),gradient(traj.rd_ddd)./mdl.T));
 
     % get desired thrust in acc
-    traj.thrust_b = sqrt(sum(traj.rd_dd.^2));
+    traj.thrust_b     = sqrt(sum(traj.rd_dd.^2));
+    traj.thrust_b_dot = gradient(traj.thrust_b)./mdl.T;
     
     
     if 1
@@ -302,7 +369,7 @@ if traj.en
         title("acceleration")
         
         subplot(3,2,4)
-        plot(t_plot,traj.rd_ddd(1:2,:)'); grid on
+        plot(t_plot,traj.rd_ddd(1:3,:)'); grid on
         xlim([1.8 t_vec(end)+0.2])
         % ylim([lower_bound,upper_bound])
         title("jerk")

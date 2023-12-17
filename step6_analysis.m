@@ -29,7 +29,7 @@ ShowPlot.ThisScreen     = 1;
 ShowPlot.NextScreen_4K  = 0;
 ShowPlot.velocity       = 1;
 ShowPlot.z_b            = 0;
-ShowPlot.omega          = 0;
+ShowPlot.omega          = 1;
 ShowPlot.acceleration   = 1;
 
 %% get simulation result from out
