@@ -20,7 +20,7 @@ traj.thrust_b = zeros(1,(mdl.rt+1)*mdl.f);
 if traj.en
 
     % type of trajectory
-    traj.mode = 6;
+    traj.mode = 2;
 
     % time variables
     t      = mdl.T; % evolving variable for each time step
@@ -65,10 +65,18 @@ if traj.en
         % vertical two circles
         radius       = 0.05*1/0.865; % (m)
         angular_rate = 360; % (deg/s)
-        center       = [0; 0; 0.105];
+        center       = [0; 0; 0.15];
         center_r     = center + [radius; 0; 0];
         center_l     = center - [radius; 0; 0];
         t_vec        = [2.1, 3, 4, 5, 6, 7, 7.9] - 1.7*rsim.en; % (s)
+        % t_vec        = [2.1, 3, 4, 6, 8, 9, 9.9] - 1.7*rsim.en; % (s)
+
+        traj.cf1  = 1.6;
+        traj.cf2  = 1.6;
+        traj.cf3  = 2.3;
+        traj.cf11 = 2;
+        traj.cf21 = 2;
+        traj.cf31 = 4;
     
         while t <= mdl.rt
             if t <= t_vec(1)      
@@ -193,26 +201,26 @@ if traj.en
    elseif traj.mode == 6
 
         % letters
-        p_hover  = [0; 0; 0.04]; % (m)
+        p_hover  = [0; 0; 0.06]; % (m)
         p_raw    = [p_hover(1), p_hover(2), -p_hover(3);
-                        0,  0,    0;
-                    -0.21,  0,    0;
-                    -0.21,  0,  0.1;
-                    -0.14,  0,    0;
-                    -0.07,  0,  0.1;
-                    -0.07,  0,    0;
-                        0,  0,  0.1;
-                        0,  0,    0;
-                     0.07,  0,  0.1;
-                     0.21,  0,  0.1;
-                     0.14,  0,  0.1;
-                     0.14,  0,    0;
-                     0,     0,    0;
+                        0,  0,     0;
+                    -0.23,  0,     0;
+                    -0.23,  0,  0.12;
+                    -0.14,  0,  0.05;
+                    -0.05,  0,  0.12;
+                    -0.05,  0,     0;
+                     0.03,  0,     0;
+                     0.03,  0,  0.12;
+                     0.11,  0,  0.12;
+                     0.23,  0,  0.12;
+                     0.17,  0,  0.12;
+                     0.17,  0,     0;
+                     0,     0,     0;
                      p_hover(1), p_hover(2), -p_hover(3);]';
         p_temp = repelem(p_raw,1,2);
         p_vec  = p_temp(:,1:end-1);
         t_vec = zeros(1,length(p_vec));
-        t_vec(1:4) = [0 2.1 3 3.5];
+        t_vec(1:4) = [0 2.1 3 4];
         for i = 5:length(p_vec)
             if rem(i,2) == 1
                 t_vec(i) = t_vec(i-1) + 1;
@@ -246,24 +254,27 @@ if traj.en
 
     end
 
+    % save time vector
     traj.t_vec = t_vec;
+    traj.t     = t_plot;
+    if exist("p_raw")
+        traj.p_raw = p_raw;
+    end
 
     % safety check
-    if t_vec(end)>mdl.rt
+    if t_vec(end) > mdl.rt
         error('check time period in the pre-defined trajectory')
     end
-    traj.t = t_plot;
-
+    
     % choose filter parameter
-    if traj.mode ~= 6
-        traj.cf1  = 1.8;
-        traj.cf2  = 1.8;
-        traj.cf3  = 2;
-        traj.cf11 = 2;
-        traj.cf21 = 2;
-        traj.cf31 = 4;
-    end
-
+    % if traj.mode ~= 6
+    %     traj.cf1  = 0.5;
+    %     traj.cf2  = 0.5;
+    %     traj.cf3  = 1;
+    %     traj.cf11 = 2;
+    %     traj.cf21 = 2;
+    %     traj.cf31 = 1;
+    % end
     
     % design filter
     d1 = designfilt("lowpassiir",'FilterOrder', 1, ...
@@ -299,7 +310,7 @@ if traj.en
     % compensate tether force
     traj.force_factor = 0;
     if traj.mode == 1
-        traj.force_factor = 80 % 5
+        traj.force_factor = 80; % 5
     end
     traj.rd_dd_add = traj.rd.*abs(traj.rd);
     traj.rd_dd_add(1:2,:) = traj.rd_dd_add(1:2,:).*traj.force_factor;
@@ -317,7 +328,7 @@ if traj.en
     traj.thrust_b     = sqrt(sum(traj.rd_dd.^2));
     traj.thrust_b_dot = gradient(traj.thrust_b)./mdl.T;
     
-    
+    % plot trajectory
     if 1
 
         figure(421)

@@ -1067,8 +1067,8 @@
         ;%
         ;% Auto data (controller14_B)
         ;%
-            section.nData     = 96;
-            section.data(96)  = dumData; %prealloc
+            section.nData     = 97;
+            section.data(97)  = dumData; %prealloc
 
                     ;% controller14_B.SaturatingRamp
                     section.data(1).logicalSrcIdx = 0;
@@ -1406,53 +1406,57 @@
                     section.data(84).logicalSrcIdx = 90;
                     section.data(84).dtTransOffset = 169;
 
-                    ;% controller14_B.torque_gyro
+                    ;% controller14_B.torque_gyro_x
                     section.data(85).logicalSrcIdx = 91;
                     section.data(85).dtTransOffset = 170;
 
-                    ;% controller14_B.att_e
+                    ;% controller14_B.torque_gyro_y
                     section.data(86).logicalSrcIdx = 92;
-                    section.data(86).dtTransOffset = 173;
+                    section.data(86).dtTransOffset = 171;
+
+                    ;% controller14_B.att_e
+                    section.data(87).logicalSrcIdx = 93;
+                    section.data(87).dtTransOffset = 172;
 
                     ;% controller14_B.alt_e
-                    section.data(87).logicalSrcIdx = 93;
-                    section.data(87).dtTransOffset = 176;
+                    section.data(88).logicalSrcIdx = 94;
+                    section.data(88).dtTransOffset = 175;
 
                     ;% controller14_B.state
-                    section.data(88).logicalSrcIdx = 94;
-                    section.data(88).dtTransOffset = 177;
+                    section.data(89).logicalSrcIdx = 95;
+                    section.data(89).dtTransOffset = 176;
 
                     ;% controller14_B.debug2
-                    section.data(89).logicalSrcIdx = 96;
-                    section.data(89).dtTransOffset = 178;
+                    section.data(90).logicalSrcIdx = 97;
+                    section.data(90).dtTransOffset = 177;
 
                     ;% controller14_B.debug3
-                    section.data(90).logicalSrcIdx = 97;
-                    section.data(90).dtTransOffset = 179;
+                    section.data(91).logicalSrcIdx = 98;
+                    section.data(91).dtTransOffset = 178;
 
                     ;% controller14_B.debug4
-                    section.data(91).logicalSrcIdx = 98;
-                    section.data(91).dtTransOffset = 180;
+                    section.data(92).logicalSrcIdx = 99;
+                    section.data(92).dtTransOffset = 179;
 
                     ;% controller14_B.rd
-                    section.data(92).logicalSrcIdx = 99;
-                    section.data(92).dtTransOffset = 183;
+                    section.data(93).logicalSrcIdx = 100;
+                    section.data(93).dtTransOffset = 182;
 
                     ;% controller14_B.init_r_out
-                    section.data(93).logicalSrcIdx = 104;
-                    section.data(93).dtTransOffset = 186;
+                    section.data(94).logicalSrcIdx = 105;
+                    section.data(94).dtTransOffset = 185;
 
                     ;% controller14_B.id_out
-                    section.data(94).logicalSrcIdx = 105;
-                    section.data(94).dtTransOffset = 189;
+                    section.data(95).logicalSrcIdx = 106;
+                    section.data(95).dtTransOffset = 188;
 
                     ;% controller14_B.rotm
-                    section.data(95).logicalSrcIdx = 106;
-                    section.data(95).dtTransOffset = 190;
+                    section.data(96).logicalSrcIdx = 107;
+                    section.data(96).dtTransOffset = 189;
 
                     ;% controller14_B.DigitalFilter_o
-                    section.data(96).logicalSrcIdx = 107;
-                    section.data(96).dtTransOffset = 199;
+                    section.data(97).logicalSrcIdx = 108;
+                    section.data(97).dtTransOffset = 198;
 
             nTotData = nTotData + section.nData;
             sigMap.sections(1) = section;
@@ -1462,7 +1466,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_B.PacketInput1_o1
-                    section.data(1).logicalSrcIdx = 108;
+                    section.data(1).logicalSrcIdx = 109;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -1473,19 +1477,19 @@
             section.data(4)  = dumData; %prealloc
 
                     ;% controller14_B.UDPuint162
-                    section.data(1).logicalSrcIdx = 109;
+                    section.data(1).logicalSrcIdx = 110;
                     section.data(1).dtTransOffset = 0;
 
                     ;% controller14_B.UDPuint163
-                    section.data(2).logicalSrcIdx = 110;
+                    section.data(2).logicalSrcIdx = 111;
                     section.data(2).dtTransOffset = 1;
 
                     ;% controller14_B.UDPuint164
-                    section.data(3).logicalSrcIdx = 111;
+                    section.data(3).logicalSrcIdx = 112;
                     section.data(3).dtTransOffset = 2;
 
                     ;% controller14_B.Switch_b
-                    section.data(4).logicalSrcIdx = 112;
+                    section.data(4).logicalSrcIdx = 113;
                     section.data(4).dtTransOffset = 3;
 
             nTotData = nTotData + section.nData;
@@ -1496,19 +1500,19 @@
             section.data(4)  = dumData; %prealloc
 
                     ;% controller14_B.Compare
-                    section.data(1).logicalSrcIdx = 113;
+                    section.data(1).logicalSrcIdx = 114;
                     section.data(1).dtTransOffset = 0;
 
                     ;% controller14_B.Compare_d
-                    section.data(2).logicalSrcIdx = 114;
+                    section.data(2).logicalSrcIdx = 115;
                     section.data(2).dtTransOffset = 1;
 
                     ;% controller14_B.envelope
-                    section.data(3).logicalSrcIdx = 115;
+                    section.data(3).logicalSrcIdx = 116;
                     section.data(3).dtTransOffset = 2;
 
                     ;% controller14_B.voltage
-                    section.data(4).logicalSrcIdx = 116;
+                    section.data(4).logicalSrcIdx = 117;
                     section.data(4).dtTransOffset = 3;
 
             nTotData = nTotData + section.nData;
@@ -1519,7 +1523,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_B.dataready
-                    section.data(1).logicalSrcIdx = 117;
+                    section.data(1).logicalSrcIdx = 118;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -1530,7 +1534,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_B.sf_MATLABFunction_k.output
-                    section.data(1).logicalSrcIdx = 118;
+                    section.data(1).logicalSrcIdx = 119;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -1541,7 +1545,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_B.sf_MATLABFunction_lw.output
-                    section.data(1).logicalSrcIdx = 119;
+                    section.data(1).logicalSrcIdx = 120;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -1552,7 +1556,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_B.sf_MATLABFunction_l.output
-                    section.data(1).logicalSrcIdx = 120;
+                    section.data(1).logicalSrcIdx = 121;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -1563,7 +1567,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_B.sf_MATLABFunction_i.output
-                    section.data(1).logicalSrcIdx = 121;
+                    section.data(1).logicalSrcIdx = 122;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -1574,7 +1578,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_B.sf_RotationMatrix3.w
-                    section.data(1).logicalSrcIdx = 122;
+                    section.data(1).logicalSrcIdx = 123;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -1585,7 +1589,7 @@
             section.data(1)  = dumData; %prealloc
 
                     ;% controller14_B.sf_RotationMatrix2.w
-                    section.data(1).logicalSrcIdx = 123;
+                    section.data(1).logicalSrcIdx = 124;
                     section.data(1).dtTransOffset = 0;
 
             nTotData = nTotData + section.nData;
@@ -1596,19 +1600,19 @@
             section.data(4)  = dumData; %prealloc
 
                     ;% controller14_B.TriggeredSubsystem_d.In1
-                    section.data(1).logicalSrcIdx = 124;
+                    section.data(1).logicalSrcIdx = 125;
                     section.data(1).dtTransOffset = 0;
 
                     ;% controller14_B.TriggeredSubsystem_d.UnitDelay
-                    section.data(2).logicalSrcIdx = 125;
+                    section.data(2).logicalSrcIdx = 126;
                     section.data(2).dtTransOffset = 3;
 
                     ;% controller14_B.TriggeredSubsystem_d.In2
-                    section.data(3).logicalSrcIdx = 126;
+                    section.data(3).logicalSrcIdx = 127;
                     section.data(3).dtTransOffset = 6;
 
                     ;% controller14_B.TriggeredSubsystem_d.UnitDelay1
-                    section.data(4).logicalSrcIdx = 127;
+                    section.data(4).logicalSrcIdx = 128;
                     section.data(4).dtTransOffset = 7;
 
             nTotData = nTotData + section.nData;
@@ -1619,19 +1623,19 @@
             section.data(4)  = dumData; %prealloc
 
                     ;% controller14_B.TriggeredSubsystem.In1
-                    section.data(1).logicalSrcIdx = 128;
+                    section.data(1).logicalSrcIdx = 129;
                     section.data(1).dtTransOffset = 0;
 
                     ;% controller14_B.TriggeredSubsystem.UnitDelay
-                    section.data(2).logicalSrcIdx = 129;
+                    section.data(2).logicalSrcIdx = 130;
                     section.data(2).dtTransOffset = 3;
 
                     ;% controller14_B.TriggeredSubsystem.In2
-                    section.data(3).logicalSrcIdx = 130;
+                    section.data(3).logicalSrcIdx = 131;
                     section.data(3).dtTransOffset = 6;
 
                     ;% controller14_B.TriggeredSubsystem.UnitDelay1
-                    section.data(4).logicalSrcIdx = 131;
+                    section.data(4).logicalSrcIdx = 132;
                     section.data(4).dtTransOffset = 7;
 
             nTotData = nTotData + section.nData;
@@ -2568,8 +2572,8 @@
     ;%
 
 
-    targMap.checksum0 = 863172531;
-    targMap.checksum1 = 334244779;
-    targMap.checksum2 = 3495786202;
-    targMap.checksum3 = 2505766602;
+    targMap.checksum0 = 3187182356;
+    targMap.checksum1 = 1588641640;
+    targMap.checksum2 = 2522524935;
+    targMap.checksum3 = 2111986324;
 

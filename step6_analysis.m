@@ -31,6 +31,7 @@ ShowPlot.velocity       = 1;
 ShowPlot.z_b            = 0;
 ShowPlot.omega          = 1;
 ShowPlot.acceleration   = 1;
+ShowPlot.realtime3D     = 0;
 
 %% get simulation result from out
 
@@ -735,7 +736,7 @@ if ShowPlot.omega
 end
 
 %% plot 3D real-time
-if 0
+if ShowPlot.realtime3D
     f = figure(13);
     f.Name = '3D plot';
 
@@ -990,7 +991,7 @@ if ShowPlot.TorqueControlY
 end
 
 %% higher order trajectory
-if 0
+if 1
     
     f = figure(20); 
     f.Name = 'Higher order derivatives';
