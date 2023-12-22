@@ -8,7 +8,7 @@ function [rsim, rbt] = make_simulation(rbt,mdl,rsim)
     % Initial conditions
     rsim.Eul_XYZ.x = 0.15;
     rsim.Eul_XYZ.y = 0.1;
-    rsim.Eul_XYZ.z = 3;
+    rsim.Eul_XYZ.z = 0;
     rsim.R0 = eul2rotm([rsim.Eul_XYZ.x rsim.Eul_XYZ.y rsim.Eul_XYZ.z],'XYZ');
     % rsim.R0 = [1; 0; 0; 0; 1; 0; 0; 0; 1];
     rsim.w0 = [0, 0, 0];
@@ -46,7 +46,7 @@ function [rsim, rbt] = make_simulation(rbt,mdl,rsim)
 
     % Disturbance enable
     rsim.dist.pos.en = 0;
-    rsim.dist.rot.en = 1;
+    rsim.dist.rot.en = 0;
 
     % Force disturbance (N)
     rbt_mg = mdl.g * rbt.m;  % Mass

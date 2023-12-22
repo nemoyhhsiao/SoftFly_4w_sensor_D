@@ -9,18 +9,19 @@ else
 end
 
 % initialize the variables
-traj.rd       = zeros(3,(mdl.rt+1)*mdl.f);
-traj.rd_d     = zeros(3,(mdl.rt+1)*mdl.f);
-traj.rd_dd    = zeros(3,(mdl.rt+1)*mdl.f);
-traj.rd_ddd   = zeros(3,(mdl.rt+1)*mdl.f);
-traj.rd_dddd  = zeros(3,(mdl.rt+1)*mdl.f);
-traj.thrust_b = zeros(1,(mdl.rt+1)*mdl.f);
+traj.rd           = zeros(3,(mdl.rt+1)*mdl.f);
+traj.rd_d         = zeros(3,(mdl.rt+1)*mdl.f);
+traj.rd_dd        = zeros(3,(mdl.rt+1)*mdl.f);
+traj.rd_ddd       = zeros(3,(mdl.rt+1)*mdl.f);
+traj.rd_dddd      = zeros(3,(mdl.rt+1)*mdl.f);
+traj.thrust_b     = zeros(1,(mdl.rt+1)*mdl.f);
+traj.thrust_b_dot = zeros(1,(mdl.rt+1)*mdl.f);
 
 % define trajectory
 if traj.en
 
     % type of trajectory
-    traj.mode = 2;
+    traj.mode = 5;
 
     % time variables
     t      = mdl.T; % evolving variable for each time step
@@ -158,7 +159,7 @@ if traj.en
         % vertical many circles
         radius       = 0.05*1/0.865; % (m)
         angular_rate = 360; % (deg/s)
-        center       = [0; 0; 0.1];
+        center       = [0; 0; 0.15];
         center_r     = center + [radius; 0; 0];
         center_l     = center - [radius; 0; 0];
         t_vec        = [2.1, 3, 4, 34, 0, 35, 36]; % (s)
@@ -166,6 +167,13 @@ if traj.en
         t1 = 5;
         t2 = 6;
         R = eul2rotm([0 0 pi/15], 'XYZ');
+
+        traj.cf1  = 1.6;
+        traj.cf2  = 1.6;
+        traj.cf3  = 2.3;
+        traj.cf11 = 2;
+        traj.cf21 = 2;
+        traj.cf31 = 4;
     
         while t <= mdl.rt
             if t <= t_vec(1)

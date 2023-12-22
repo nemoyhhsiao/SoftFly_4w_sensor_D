@@ -156,6 +156,11 @@ rst.ast.omex  = rst_all_states.signals(4).values(:,1);
 rst.ast.omey  = rst_all_states.signals(4).values(:,2);
 rst.ast.omez  = rst_all_states.signals(4).values(:,3);
 
+if som.en
+    rst.som.state.t = rst_som_state.time;
+    rst.som.state.s = rst_som_state.signals(1).values;
+end
+
 rst.rbt       = rbt2;
 rst.ctr       = ctr2;
 rst.mdl       = mdl;
@@ -991,7 +996,7 @@ if ShowPlot.TorqueControlY
 end
 
 %% higher order trajectory
-if 1
+if ctr.traj.en
     
     f = figure(20); 
     f.Name = 'Higher order derivatives';
