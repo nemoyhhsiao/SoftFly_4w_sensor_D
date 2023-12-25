@@ -7,7 +7,7 @@
 %endfunction
 %function ChartDataMap(block, system) void
   %createrecord ChartDataElements {\
-    NumChartData   11 \
+    NumChartData   15 \
     ChartDataDefaults {\
       RecordType   "ChartData"\
       Dimensions   []\
@@ -40,56 +40,84 @@
       Description  "EmlPersistent"\
       SFName       ""\
       Path         ""\
-      SrcLocation  "controller14:4080:372-374"\
+      SrcLocation  "controller14:4080:360-362"\
     }\
     ChartData {\
       Name         "id_not_empty"\
       Description  "EmlPersistentSentinel"\
       SFName       ""\
       Path         ""\
-      SrcLocation  "controller14:4080:372-374"\
+      SrcLocation  "controller14:4080:360-362"\
     }\
     ChartData {\
       Name         "som_state"\
       Description  "EmlPersistent"\
       SFName       ""\
       Path         ""\
-      SrcLocation  "controller14:4080:375-384"\
+      SrcLocation  "controller14:4080:363-372"\
     }\
     ChartData {\
       Name         "som_state_not_empty"\
       Description  "EmlPersistentSentinel"\
       SFName       ""\
       Path         ""\
-      SrcLocation  "controller14:4080:375-384"\
+      SrcLocation  "controller14:4080:363-372"\
     }\
     ChartData {\
       Name         "t_fall"\
       Description  "EmlPersistent"\
       SFName       ""\
       Path         ""\
-      SrcLocation  "controller14:4080:385-391"\
+      SrcLocation  "controller14:4080:373-379"\
     }\
     ChartData {\
       Name         "t_fall_not_empty"\
       Description  "EmlPersistentSentinel"\
       SFName       ""\
       Path         ""\
-      SrcLocation  "controller14:4080:385-391"\
+      SrcLocation  "controller14:4080:373-379"\
     }\
     ChartData {\
       Name         "t_dec"\
       Description  "EmlPersistent"\
       SFName       ""\
       Path         ""\
-      SrcLocation  "controller14:4080:392-397"\
+      SrcLocation  "controller14:4080:380-385"\
     }\
     ChartData {\
       Name         "t_dec_not_empty"\
       Description  "EmlPersistentSentinel"\
       SFName       ""\
       Path         ""\
-      SrcLocation  "controller14:4080:392-397"\
+      SrcLocation  "controller14:4080:380-385"\
+    }\
+    ChartData {\
+      Name         "z_setpoint"\
+      Description  "EmlPersistent"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  "controller14:4080:386-396"\
+    }\
+    ChartData {\
+      Name         "z_setpoint_not_empty"\
+      Description  "EmlPersistentSentinel"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  "controller14:4080:386-396"\
+    }\
+    ChartData {\
+      Name         "t_hover"\
+      Description  "EmlPersistent"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  "controller14:4080:397-404"\
+    }\
+    ChartData {\
+      Name         "t_hover_not_empty"\
+      Description  "EmlPersistentSentinel"\
+      SFName       ""\
+      Path         ""\
+      SrcLocation  "controller14:4080:397-404"\
     }\
   }
   %return ChartDataElements

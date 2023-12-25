@@ -25,6 +25,12 @@ ctr.torque_obs.factor.y = 0.3; % 0.6
 ctr.torque_obs.ext_torq_hat_init = [0; 0;];
 ctr.torque_obs.omega_hat_init = [0; 0;];
 
+% Filter value for force input
+ctr.torque_obs.filter_Fc = 55;
+if rsim.en
+    ctr.torque_obs.filter_Fc = 80;
+end
+
 %%
 ctr.torque_obs.initial_torque.x = 0;
 ctr.torque_obs.initial_torque.y = 0;

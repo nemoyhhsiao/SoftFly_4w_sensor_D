@@ -24,7 +24,7 @@ function [rsim, rbt] = make_simulation(rbt,mdl,rsim)
 
     % Robot rotational dynamics damping
     rsim.drag_coef.force = 2.5e-3;       % drag_force = rsim.drag_coef.force * linear_velocity
-    rsim.drag_coef.torque = 9e-7;%9.0e-7;      % drag_torque = rsim.drag_coef.torque * angular_velocity
+    rsim.drag_coef.torque = 9e-8;%9.0e-7;      % drag_torque = rsim.drag_coef.torque * angular_velocity
 
     % Response delay for Vicon measurements
     rsim.delay.Vicon.time = 0.004;
@@ -46,7 +46,7 @@ function [rsim, rbt] = make_simulation(rbt,mdl,rsim)
 
     % Disturbance enable
     rsim.dist.pos.en = 0;
-    rsim.dist.rot.en = 0;
+    rsim.dist.rot.en = 1;
 
     % Force disturbance (N)
     rbt_mg = mdl.g * rbt.m;  % Mass
@@ -64,8 +64,8 @@ function [rsim, rbt] = make_simulation(rbt,mdl,rsim)
     rsim.dist.wx.mean = 1e-6*1;
     rsim.dist.wy.mean = 1e-6*1;
     rsim.dist.wz.mean = -5e-8;
-    rsim.dist.wx.var = 5e-8*0.5;
-    rsim.dist.wy.var = 5e-8*0.5;
+    rsim.dist.wx.var = 5e-8*1;
+    rsim.dist.wy.var = 5e-8*1;
     rsim.dist.wz.var = 1e-12;
     rsim.dist.wx.seed = 3;
     rsim.dist.wy.seed = 4;

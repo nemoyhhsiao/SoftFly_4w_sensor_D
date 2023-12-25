@@ -94,8 +94,8 @@ rst.EulZYX.x = rst.EulZYX.zyx(:,3);
 rst.EulZXY.t  = rst_Eul_XYZ.time;
 rst.EulZXY.zxy = rotm2eul(rst.rotm, 'ZXY');
 rst.EulZXY.z = rst.EulZXY.zxy(:,1);
-rst.EulZXY.y = rst.EulZXY.zxy(:,2);
-rst.EulZXY.x = rst.EulZXY.zxy(:,3);
+rst.EulZXY.y = rst.EulZXY.zxy(:,3);
+rst.EulZXY.x = rst.EulZXY.zxy(:,2);
 
 rst.ome.t     = rst_omega_b.time;
 rst.ome.x     = rst_omega_b.signals(2).values(:,1);
@@ -1067,6 +1067,59 @@ if ctr.traj.en
 
 end
 
+
+%%
+if som.en
+    figure()
+    plot(rst.som.state.t, rst.som.state.s); grid on
+end
+
+%% Euler angles ZXY
+if 1
+    f = figure(20); 
+    f.Name = 'Euler angles ZXY';
+    if 0
+        plot(rst.EulXYZ.t, rad2deg(rst.EulZYX.x)); hold on; grid on;
+        plot(rst.EulXYZ.t, rad2deg(rst.EulZYX.y))
+        plot(rst.EulXYZ.t, rad2deg(rst.EulZYX.z))
+        ylabel('degree');
+        ylim([-20 20])
+    else
+        plot(rst.EulXYZ.t, rst.EulZYX.x, 'r'); hold on
+        plot(rst.EulXYZ.t, rst.EulZYX.y, 'g'); hold on
+        plot(rst.EulXYZ.t, rst.EulZYX.z, 'b')
+        ylabel('radian');
+        % ylim([-0.3 0.3])
+    end
+%     if som.en
+%         % flipping angle
+%         R13 = sin(rst.EulXYZ.z);
+%         R23 = -sin(rst.EulXYZ.y).*cos(rst.EulXYZ.z);
+%         R33 = cos(rst.EulXYZ.y).*cos(rst.EulXYZ.z);
+%         flp = atan2((R13.^2+R23.^2).^0.5, R33);
+%         plot(rst.EulXYZ.t, flp, 'c')
+%         plot([rst.EulXYZ.t(1) rst.EulXYZ.t(end)],[pi,pi], 'b--')
+%     end
+%     plot([rst.mdl.rt, rst.mdl.rt],[-10, 10],'k--','linewidth',2)
+    % plot([rst.t.start, rst.t.start],[rad2deg(min(min(min(rst.EulZYX.x,rst.EulZYX.y),rst.EulZYX.z))), rad2deg(max(max(max(rst.EulZYX.x,rst.EulZYX.y),rst.EulZYX.z)))],'k--','linewidth',1)
+    % plot([rst.t.stop, rst.t.stop],[rad2deg(min(min(min(rst.EulZYX.x,rst.EulZYX.y),rst.EulZYX.z))), rad2deg(max(max(max(rst.EulZYX.x,rst.EulZYX.y),rst.EulZYX.z)))],'k--','linewidth',1)
+    xlim([rst.t.start, rst.t.stop])
+    
+    hold off
+    title('euler angles ZYX')
+%     ylim([-pi,pi])
+    legend('x','y','z','Location','northwest')
+    if ShowPlot.ThisScreen
+        set(gcf, 'Units', 'centimeters');
+        set(gcf, 'Position', [52, 1, 13, 10]); % [l b w h]
+    elseif ShowPlot.NextScreen_4K
+        set(gcf, 'Units', 'normalized');
+        set(gcf, 'Position', [1, 0.45, 0.35, 0.45]); % [l b w h]
+    else
+        set(gcf, 'Units', 'normalized');
+        set(gcf, 'Position', [1, 0.625, 0.25, 0.35]); % [l b w h]        
+    end
+end
 %% body frame error
 
 % rotm_z = eul2rotm([ rst.EulZYX.z zeros(length(rst.EulZYX.z),2)], 'ZYX');

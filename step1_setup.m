@@ -40,7 +40,7 @@ traj = make_trajectory(ctr, mdl, rsim);
 ctr = make_ext_tor_observer(rsim, mdl, ctr);
 
 % Initialize somersault strategy
-som = make_somersault(mdl);
+som = make_somersault(mdl, rsim);
 
 ctr2 = ctr; % some Simulink parameters are from 2-robot controller
 rbt2 = rbt; % some Simulink parameters are from 2-robot controller
