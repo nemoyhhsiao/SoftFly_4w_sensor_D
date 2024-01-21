@@ -1085,9 +1085,9 @@ if 1
         ylabel('degree');
         ylim([-20 20])
     else
-        plot(rst.EulXYZ.t, rst.EulZYX.x, 'r'); hold on
-        plot(rst.EulXYZ.t, rst.EulZYX.y, 'g'); hold on
-        plot(rst.EulXYZ.t, rst.EulZYX.z, 'b')
+        plot(rst.EulXYZ.t, rst.EulZXY.x, 'r'); hold on
+        plot(rst.EulXYZ.t, rst.EulZXY.y, 'g'); hold on
+        plot(rst.EulXYZ.t, rst.EulZXY.z, 'b')
         ylabel('radian');
         % ylim([-0.3 0.3])
     end

@@ -9,8 +9,8 @@ function [rbt] = make_robot()
     rbt.lt = (15) * 1e-3;    % moment arm
 
     % Robot thrust vector offset
-    rbt.angle_offset.x = deg2rad(-2); %0.0157;
-    rbt.angle_offset.y = deg2rad(-2); %-0.015;
+    rbt.angle_offset.x = deg2rad(0); %0.0157;
+    rbt.angle_offset.y = deg2rad(0); %-0.015;
 
     % Inclined stroke-plane version
     rbt.til = 0;

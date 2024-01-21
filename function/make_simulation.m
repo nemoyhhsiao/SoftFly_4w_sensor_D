@@ -24,7 +24,7 @@ function [rsim, rbt] = make_simulation(rbt,mdl,rsim)
 
     % Robot rotational dynamics damping
     rsim.drag_coef.force = 2.5e-3;       % drag_force = rsim.drag_coef.force * linear_velocity
-    rsim.drag_coef.torque = 9e-8;%9.0e-7;      % drag_torque = rsim.drag_coef.torque * angular_velocity
+    rsim.drag_coef.torque = 1e-8;%9.0e-7;      % drag_torque = rsim.drag_coef.torque * angular_velocity
 
     % Response delay for Vicon measurements
     rsim.delay.Vicon.time = 0.004;
