@@ -9,8 +9,8 @@ function [ctr, mdl] = make_controller(mdl)
     ctr.freq_vec = [330 330 330 330];
 
     % Voltage offset
-    ctr.DV = [20 55 70 75];
-    % ctr.DV = [-1700 -1700 -1700 -1700]; % for checking connection
+    ctr.DV = [-40 45 -80 60];
+    % ctr.DV = [800 -1700 -1700 -1700]; % for checking connection
 
     % Use pre-defined trajectory
     ctr.traj.en = 0;
@@ -21,17 +21,17 @@ function [ctr, mdl] = make_controller(mdl)
     % Setpoint (relative to the initital position)
     ctr.setpoint.x = 0;
     ctr.setpoint.y = 0;
-    ctr.setpoint.z = 0.04;
+    ctr.setpoint.z = 0.06;
     ctr.setpoint.yaw = deg2rad(0);
 
     % Landing and takeoff parameters
     ctr.landing.en = 1;
-    ctr.landing.time = 0.3;
+    ctr.landing.time = 0.5;
     ctr.takeoff.en = 1;
-    ctr.takeoff.time = 0.4;
+    ctr.takeoff.time = 0.5;
 
     % Attitude controller gains [ att_d att_p pos_d pos_p ]
-    ctr.factor = [0.8 0.75 0.35 0.3]; % 0.55 0.5
+    ctr.factor = [0.9 0.72 0.75 0.7]; % 0.55 0.5
     ctr.gains = [62   798    6631   13608;     % #1 pakpong nominal gains
                  36   486    2916    6561;     % #2 (S+9)^4
                  48   864    6912   20736;     % #3 (S+12)^4
@@ -40,7 +40,7 @@ function [ctr, mdl] = make_controller(mdl)
                  60  1350   13500   50625; ... % #6 (S+15)^4
                  64  1536   16384   65536; ... % #7 (S+16)^4 % too aggressive
                  ].*ctr.factor; 
-    ctr.gain.n = 4;
+    ctr.gain.n = 4; % 4
     
     % Check stability criterion
     rhStabilityCriterion([1,ctr.gains(ctr.gain.n,:)]);
@@ -50,17 +50,17 @@ function [ctr, mdl] = make_controller(mdl)
     ctr.gain.at2  = ctr.gains(ctr.gain.n,2); % attitude p
     ctr.gain.at1  = ctr.gains(ctr.gain.n,3); % position d
     ctr.gain.at0  = ctr.gains(ctr.gain.n,4); % position p
-    ctr.gain.ati  = 2e-4 *1 *0.001; % world p error to body torque -> i gain
+    ctr.gain.ati  = 2e-4 *0.15; % world p error to body torque -> i gain
     ctr.gain.atfd = ctr.gain.at0 * 0; 
     
     % Attitude controller divide by g factor
-    ctr.atmg.en            = 1;
+    ctr.atmg.en            = 0;
     ctr.gain.atmg.factor.x = 2.1;
     ctr.gain.atmg.factor.y = 2.1;
 
     % Altitude controller gains (altitude)
-    ctr.gain.al0  = 150 * 0.7;  % p gain [0.55]
-    ctr.gain.al1  = 30 * 0.7;    % d gain [0.9]
+    ctr.gain.al0  = 150 * 0.5;  % p gain [0.55]
+    ctr.gain.al1  = 30 * 0.65;   % d gain [0.9]
     ctr.gain.ali  = 15 * 0.7 *0.001;    % i gain [15]
     ctr.gain.alfd = 0.2;           % feedforward (tether weight) [0.7 - 1.5]
 
@@ -90,8 +90,8 @@ function [ctr, mdl] = make_controller(mdl)
     ctr.safety.enableZone.xmax = 0.6;
     ctr.safety.enableZone.ymax = 0.4;
     ctr.safety.enableZone.zmax = 0.5;
-    ctr.safety.volt = [2000, 2000, 2000, 2000];
-    ctr.safety.min_cos_roll_pitch = -1;
+    ctr.safety.volt = [1850, 1850, 1900, 1850];
+    ctr.safety.min_cos_roll_pitch = -0.5;
 
     % Desired yaw trajectory (if needed)
     ctr.yaw.dy.en = 0;

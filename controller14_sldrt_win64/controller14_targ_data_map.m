@@ -42,7 +42,7 @@
             section.nData     = 1;
             section.data(1)  = dumData; %prealloc
 
-                    ;% controller14_P.ctr
+                    ;% controller14_P.lut
                     section.data(1).logicalSrcIdx = 1;
                     section.data(1).dtTransOffset = 0;
 
@@ -53,7 +53,7 @@
             section.nData     = 1;
             section.data(1)  = dumData; %prealloc
 
-                    ;% controller14_P.ctr2
+                    ;% controller14_P.ctr
                     section.data(1).logicalSrcIdx = 2;
                     section.data(1).dtTransOffset = 0;
 
@@ -64,7 +64,7 @@
             section.nData     = 1;
             section.data(1)  = dumData; %prealloc
 
-                    ;% controller14_P.rsim
+                    ;% controller14_P.ctr2
                     section.data(1).logicalSrcIdx = 3;
                     section.data(1).dtTransOffset = 0;
 
@@ -75,7 +75,7 @@
             section.nData     = 1;
             section.data(1)  = dumData; %prealloc
 
-                    ;% controller14_P.som
+                    ;% controller14_P.rsim
                     section.data(1).logicalSrcIdx = 4;
                     section.data(1).dtTransOffset = 0;
 
@@ -86,7 +86,7 @@
             section.nData     = 1;
             section.data(1)  = dumData; %prealloc
 
-                    ;% controller14_P.lut
+                    ;% controller14_P.som
                     section.data(1).logicalSrcIdx = 5;
                     section.data(1).dtTransOffset = 0;
 
@@ -2617,8 +2617,8 @@
     ;%
 
 
-    targMap.checksum0 = 2232446676;
-    targMap.checksum1 = 2881835208;
-    targMap.checksum2 = 289209989;
-    targMap.checksum3 = 463716832;
+    targMap.checksum0 = 2816050582;
+    targMap.checksum1 = 1584805293;
+    targMap.checksum2 = 4141624793;
+    targMap.checksum3 = 3530909017;
 

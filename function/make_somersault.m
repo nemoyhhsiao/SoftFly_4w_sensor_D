@@ -1,7 +1,7 @@
 function som = make_somersault(mdl, rsim)
     
     % enable somersault
-    som.en = 1;
+    som.en = 0;
 
     % somersault testing
     som.testing.en = 0;

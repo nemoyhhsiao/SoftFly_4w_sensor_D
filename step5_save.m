@@ -1,8 +1,8 @@
 close all
 
 % details for saving data
-sf.folder   = "E:\Dropbox (MIT)\SMRL\Soft_fly_data\videos\flight\20240120\";
-sf.control  = "closedloop26_";
+sf.folder   = "E:\Dropbox (MIT)\SMRL\Soft_fly_data\videos\flight\20240407\";
+sf.control  = "closedloop6_";
 sf.robot    = "Nemo44_";
 sf.date     = string(datetime('now','Format','yyyy-MM-dd_HH-mm-ss'));
 sf.filetype = ".mat";
