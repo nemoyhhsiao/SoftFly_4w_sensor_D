@@ -5,13 +5,14 @@ function [rsim, rbt] = make_simulation(rbt,mdl,rsim)
     rsim.mdl.f = 1000;
     rsim.mdl.T = 1 / rsim.mdl.f;
 
-    % Initial conditions
-    rsim.Eul_XYZ.x = 0.15;
-    rsim.Eul_XYZ.y = 0.1;
-    rsim.Eul_XYZ.z = 0;
+    % Initial angular conditions
+    rsim.Eul_XYZ.x = deg2rad(10);
+    rsim.Eul_XYZ.y = deg2rad(10);
+    rsim.Eul_XYZ.z = deg2rad(180);
     rsim.R0 = eul2rotm([rsim.Eul_XYZ.x rsim.Eul_XYZ.y rsim.Eul_XYZ.z],'XYZ');
-    % rsim.R0 = [1; 0; 0; 0; 1; 0; 0; 0; 1];
     rsim.w0 = [0, 0, 0];
+   
+    % Initial translational conditions
     rsim.p0 = [0.02, 0.04, 0.01];
     rsim.v0 = [0, 0, 0];
     rsim.v0_b = (rsim.R0*rsim.v0')';
@@ -27,7 +28,7 @@ function [rsim, rbt] = make_simulation(rbt,mdl,rsim)
     rsim.drag_coef.torque = 1e-8;%9.0e-7;      % drag_torque = rsim.drag_coef.torque * angular_velocity
 
     % Response delay for Vicon measurements
-    rsim.delay.Vicon.time = 0.004;
+    rsim.delay.Vicon.time = 0.001;
     rsim.delay.Vicon.n_steps = floor(rsim.delay.Vicon.time / 0.002);
     if rsim.delay.Vicon.n_steps > 0
         rsim.delay.Vicon.init_val = repmat([rsim.p0'; 0; 0; 0;], 1, rsim.delay.Vicon.n_steps);
@@ -36,7 +37,7 @@ function [rsim, rbt] = make_simulation(rbt,mdl,rsim)
     end
 
     % Response delay for actuator commands
-    rsim.delay.actuator.time = 0.015;
+    rsim.delay.actuator.time = 0.001;
     rsim.delay.actuator.n_steps = round(rsim.delay.actuator.time / mdl.T);
     if rsim.delay.actuator.n_steps > 0
         rsim.delay.actuator.init_val = ones(4, rsim.delay.actuator.n_steps) * rbt.m * mdl.g / 4;
@@ -45,7 +46,7 @@ function [rsim, rbt] = make_simulation(rbt,mdl,rsim)
     end
 
     % Disturbance enable
-    rsim.dist.pos.en = 0;
+    rsim.dist.pos.en = 1;
     rsim.dist.rot.en = 1;
 
     % Force disturbance (N)

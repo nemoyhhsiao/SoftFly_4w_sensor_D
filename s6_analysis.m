@@ -32,6 +32,7 @@ ShowPlot.z_b            = 0;
 ShowPlot.omega          = 1;
 ShowPlot.acceleration   = 1;
 ShowPlot.realtime3D     = 0;
+ShowPlot.angle_comp     = 1;
 
 %% get simulation result from out
 
@@ -78,6 +79,11 @@ rst.EulXYZ.t  = rst_Eul_XYZ.time;
 rst.EulXYZ.x  = rst_Eul_XYZ.signals.values(:,1);
 rst.EulXYZ.y  = rst_Eul_XYZ.signals.values(:,2);
 rst.EulXYZ.z  = rst_Eul_XYZ.signals.values(:,3);
+
+% Sensor Euler angle XYZ
+rst.SenEulXYZ.x  = rst_sensor_EulXYZ.signals.values(:,1);
+rst.SenEulXYZ.y  = rst_sensor_EulXYZ.signals.values(:,2);
+rst.SenEulXYZ.z  = rst_sensor_EulXYZ.signals.values(:,3);
 
 rst.rotm = eul2rotm([rst.EulXYZ.x, rst.EulXYZ.y , rst.EulXYZ.z], 'XYZ');
 rst.rot.R = rst.rotm;
@@ -283,6 +289,35 @@ if ShowPlot.angle
     hold off
     title('euler angles XYZ')
 %     ylim([-pi,pi])
+    legend('x','y','z','Location','northwest')
+    if ShowPlot.ThisScreen
+        set(gcf, 'Units', 'centimeters');
+        set(gcf, 'Position', [26, 13, 13, 10]); % [l b w h]
+    elseif ShowPlot.NextScreen_4K
+        set(gcf, 'Units', 'normalized');
+        set(gcf, 'Position', [1, 0.45, 0.35, 0.45]); % [l b w h]
+    else
+        set(gcf, 'Units', 'normalized');
+        set(gcf, 'Position', [1, 0.625, 0.25, 0.35]); % [l b w h]        
+    end
+end
+
+%% Z_b (comparison Vicon vs. sensor)
+if ShowPlot.angle_comp
+    f = figure(78); 
+    f.Name = 'Z_b comparison';
+
+    rst.SenRotm = eul2rotm([rst.SenEulXYZ.x, rst.SenEulXYZ.y , rst.SenEulXYZ.z], 'XYZ');
+    rst.SenRot.R3  = squeeze(rst.SenRotm(:,3,:));
+
+    plot(rst.EulXYZ.t, squeeze(rst.rot.R3)); hold on
+    plot(rst.EulXYZ.t, rst.SenRot.R3)
+
+    xlim([rst.t.start, rst.t.stop])
+    % ylim([-0.5 1.1])
+    hold off
+    title('Z_b comparison')
+
     legend('x','y','z','Location','northwest')
     if ShowPlot.ThisScreen
         set(gcf, 'Units', 'centimeters');

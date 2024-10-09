@@ -10,7 +10,7 @@ model_name = 'controller14';
 load_system(model_name) 
 
 % Load look-up table for thrust to voltage mapping
-load('t2v_lut_20240404.mat')
+lut = gen_lut;
 
 % Use simulation or Vicon data
 rsim.en = 0;
@@ -19,7 +19,7 @@ rsim.en = 0;
 mdl.rerun = 0;
 
 % Flight time for the model
-mdl.flight_time = 2;
+mdl.flight_time = 10;
 
 % Initialize controller parameters
 [ctr, mdl] = make_controller(mdl);
@@ -104,7 +104,7 @@ else
         set_param(strcat(model_name, '/Goto data_ready for realtime'), 'commented', 'off'); % not use saved Vicon data
         set_param(strcat(model_name, '/Execution Time'), 'commented', 'off'); % comment out
         warning("-->> using real time Vicon data")
-        step2_build
+        s2_build
     end
         
 end
