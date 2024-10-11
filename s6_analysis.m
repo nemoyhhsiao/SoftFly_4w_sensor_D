@@ -261,31 +261,23 @@ end
 if ShowPlot.angle
     f = figure(2); 
     f.Name = 'Euler angles XYZ';
-    if 1
-        plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.x)); hold on; grid on;
-        plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.y))
-        plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.z))
-        ylabel('degree');
-    else
-        plot(rst.EulXYZ.t, rst.EulXYZ.x, 'r'); hold on
-        plot(rst.EulXYZ.t, rst.EulXYZ.y, 'g')
-        plot(rst.EulXYZ.t, rst.EulXYZ.z, 'b')
-        ylabel('radian');
-    end
-%     if som.en
-%         % flipping angle
-%         R13 = sin(rst.EulXYZ.z);
-%         R23 = -sin(rst.EulXYZ.y).*cos(rst.EulXYZ.z);
-%         R33 = cos(rst.EulXYZ.y).*cos(rst.EulXYZ.z);
-%         flp = atan2((R13.^2+R23.^2).^0.5, R33);
-%         plot(rst.EulXYZ.t, flp, 'c')
-%         plot([rst.EulXYZ.t(1) rst.EulXYZ.t(end)],[pi,pi], 'b--')
-%     end
-%     plot([rst.mdl.rt, rst.mdl.rt],[-10, 10],'k--','linewidth',2)
+
+    % Vicon data
+    plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.x)); hold on; grid on;
+    plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.y))
+    plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.z))
+    ylabel('degree');
+
+    % Sensor data
+    plot(rst.EulXYZ.t, rad2deg(rst.SenEulXYZ.x)); hold on; grid on;
+    plot(rst.EulXYZ.t, rad2deg(rst.SenEulXYZ.y))
+    plot(rst.EulXYZ.t, rad2deg(rst.SenEulXYZ.z))
+    ylabel('degree');
+
     plot([rst.t.start, rst.t.start],[rad2deg(min(min(min(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z))), rad2deg(max(max(max(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z)))],'k--','linewidth',1)
     plot([rst.t.stop, rst.t.stop],[rad2deg(min(min(min(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z))), rad2deg(max(max(max(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z)))],'k--','linewidth',1)
     xlim([rst.t.start, rst.t.stop])
-    ylim([-20 20])
+    % ylim([-20 20])
     hold off
     title('euler angles XYZ')
 %     ylim([-pi,pi])
@@ -312,6 +304,16 @@ if ShowPlot.angle_comp
 
     plot(rst.EulXYZ.t, squeeze(rst.rot.R3)); hold on
     plot(rst.EulXYZ.t, rst.SenRot.R3)
+
+    % SenR3 = squeeze(rst.SenRot.R3)';
+    % R3 = squeeze(rst.rot.R3)';
+    % 
+    % for i=1:length(SenR3)
+    %     SenR3_norm(i) = sqrt(SenR3(i,1).^2 + SenR3(i,2).^2 +SenR3(i,3).^2 );
+    %     R3_norm(i) = sqrt(R3(i,1).^2 + R3(i,2).^2 +R3(i,3).^2 );
+    % end
+    % plot(SenR3_norm); hold on
+    % plot(R3_norm)
 
     xlim([rst.t.start, rst.t.stop])
     % ylim([-0.5 1.1])

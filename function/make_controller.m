@@ -3,7 +3,7 @@ function [ctr, mdl] = make_controller(mdl)
     % Initialize the 'ctr' structure with the same parameters as in the code
 
     % Controller enable
-    ctr.en = 0;
+    ctr.en = 1;
 
     % Connection check (for checking electrical connection)
     ctr.elec_cehck = 0;
@@ -12,7 +12,7 @@ function [ctr, mdl] = make_controller(mdl)
     ctr.freq_vec = [330 330 330 330];
 
     % Voltage offset
-    ctr.DV = [55 160 230 220];
+    ctr.DV = [120 135 175 195];
     % ctr.DV = [-2000 -2000 -2000 700]; % for checking connection
 
     % Use pre-defined trajectory
@@ -24,17 +24,17 @@ function [ctr, mdl] = make_controller(mdl)
     % Setpoint (relative to the initital position)
     ctr.setpoint.x = 0;
     ctr.setpoint.y = 0;
-    ctr.setpoint.z = 0.03;
+    ctr.setpoint.z = 0.02;
     ctr.setpoint.yaw = deg2rad(0);
 
     % Landing and takeoff parameters
     ctr.landing.en = 0;
     ctr.landing.time = 0.5;
     ctr.takeoff.en = 1;
-    ctr.takeoff.time = 0.5;
+    ctr.takeoff.time = 0.3;
 
     % Attitude controller gains [ att_d att_p pos_d pos_p ]
-    ctr.factor = [0.7 0.55 0.7 0.5]; % 0.55 0.5
+    ctr.factor = [0.6 0.5 0.45 0.35]; % 0.55 0.5
     ctr.gains = [62   798    6631   13608;     % #1 pakpong nominal gains
                  36   486    2916    6561;     % #2 (S+9)^4
                  48   864    6912   20736;     % #3 (S+12)^4
