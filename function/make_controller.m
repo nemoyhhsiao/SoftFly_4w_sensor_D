@@ -3,17 +3,17 @@ function [ctr, mdl] = make_controller(mdl)
     % Initialize the 'ctr' structure with the same parameters as in the code
 
     % Controller enable
-    ctr.en = 1;
+    ctr.en = 0;
 
     % Connection check (for checking electrical connection)
-    ctr.elec_cehck = 0;
+    ctr.elec_cehck = 1;
 
     % Flapping frequency of all four units (Hz)
     ctr.freq_vec = [330 330 330 330];
 
     % Voltage offset
-    ctr.DV = [120 135 175 195];
-    % ctr.DV = [-2000 -2000 -2000 700]; % for checking connection
+    % ctr.DV = [120 135 175 195];
+    ctr.DV = [700 -2000 -2000 -2000]; % for checking connection
 
     % Use pre-defined trajectory
     ctr.traj.en = 0;
