@@ -2,9 +2,9 @@ function [rbt] = make_robot()
 
     % Robot pysical parameters
     rbt.m = 4 * 225e-6;      % mass in kg
-    rbt.ixx = 0.5*1e-7;    % MoI
-    rbt.iyy = 0.5*1e-7;    % MoI
-    rbt.izz = 0.5*1e-7 * 4;  % MoI
+    rbt.ixx = 0.55*1e-7;    % MoI
+    rbt.iyy = 0.55*1e-7;    % MoI
+    rbt.izz = 0.55*1e-7 * 4;  % MoI
     rbt.ld = (17) * 1e-3;    % moment arm
     rbt.lt = (17) * 1e-3;    % moment arm
 

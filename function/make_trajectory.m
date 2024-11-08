@@ -21,7 +21,7 @@ traj.thrust_b_dot = zeros(1,(mdl.rt+1)*mdl.f);
 if traj.en
 
     % type of trajectory
-    traj.mode = 5;
+    traj.mode = 2;
 
     % time variables
     t      = mdl.T; % evolving variable for each time step
@@ -63,10 +63,10 @@ if traj.en
     
     elseif traj.mode == 2
 
-        % vertical two circles
-        radius       = 0.05*1/0.865; % (m)
+        % Vertical two circles (2024.11.07 perp for Veritasium)
+        radius       = 0.05*1/0.84; % (m)
         angular_rate = 360; % (deg/s)
-        center       = [0; 0; 0.15];
+        center       = [0; 0; 0.07];
         center_r     = center + [radius; 0; 0];
         center_l     = center - [radius; 0; 0];
         t_vec        = [2.1, 3, 4, 5, 6, 7, 7.9] - 1.7*rsim.en; % (s)
@@ -74,10 +74,12 @@ if traj.en
 
         traj.cf1  = 1.6;
         traj.cf2  = 1.6;
-        traj.cf3  = 2.3;
-        traj.cf11 = 2;
-        traj.cf21 = 2;
-        traj.cf31 = 4;
+        traj.cf3  = 2.2;
+        traj.cf11 = 1.2;
+        traj.cf21 = 1.2;
+        traj.cf31 = 2;
+
+        traj.force_factor = 10;
     
         while t <= mdl.rt
             if t <= t_vec(1)      
@@ -316,7 +318,9 @@ if traj.en
     traj.rd(3,:) = filtfilt(d31,traj.rd_1f(3,:));
 
     % compensate tether force
-    traj.force_factor = 0;
+    if ~exist("traj.force_factor")
+        traj.force_factor = 0;
+    end
     if traj.mode == 1
         traj.force_factor = 80; % 5
     end
@@ -372,31 +376,31 @@ if traj.en
         subplot(3,2,1)
         plot(t_plot,traj.rd'); grid on
         xlim([1.8 t_vec(end)+0.2])
-        % ylim([lower_bound,upper_bound])
+        % ylim([-limit(1),limit(1)])
         title("position")
         
         subplot(3,2,2)
         plot(t_plot,traj.rd_d'); grid on
         xlim([1.8 t_vec(end)+0.2])
-        % ylim([lower_bound,upper_bound])
+        ylim([-limit(1),limit(1)])
         title("velocity")
         
         subplot(3,2,3)
         plot(t_plot,traj.rd_dd'); grid on
         xlim([1.8 t_vec(end)+0.2])
-        % ylim([lower_bound,upper_bound])
+        ylim([-limit(2),limit(2)])
         title("acceleration")
         
         subplot(3,2,4)
         plot(t_plot,traj.rd_ddd(1:3,:)'); grid on
         xlim([1.8 t_vec(end)+0.2])
-        % ylim([lower_bound,upper_bound])
+        ylim([-limit(3),limit(3)])
         title("jerk")
         
         subplot(3,2,5)
         plot(t_plot,traj.rd_dddd(1:2,:)'); grid on
         xlim([1.8 t_vec(end)+0.2])
-        % ylim([lower_bound,upper_bound])
+        ylim([-limit(4),limit(4)])
         title("snap")
         
         %

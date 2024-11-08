@@ -10,7 +10,7 @@ rsim.sensing_noise.rpy_sigma = 0.5*ones(3, 1)/180*pi; % 0.5 deg
 rsim.sensing_noise.pos.enable = 1;
 rsim.sensing_noise.rpy.enable = 1;
 
-%% Torque observer params: 
+% Torque observer params: 
 ctr.torque_obs.enable = 1;
 ctr.torque_obs.noise.process.torque_x = 0.06; %25; % 0.25
 ctr.torque_obs.noise.process.torque_y = 0.06; %25; % 0.25
@@ -31,11 +31,11 @@ if rsim.en
     ctr.torque_obs.filter_Fc = 80;
 end
 
-%%
+% Observer initial value
 ctr.torque_obs.initial_torque.x = 0;
 ctr.torque_obs.initial_torque.y = 0;
 
-%% Make torque observer (KF)
+% == Make torque observer (KF) ==
 n_x = 4;
 n_u = 2;
 n_y = 2;
@@ -43,7 +43,6 @@ J = diag([rsim.rbt.ixx, rsim.rbt.iyy])*1e5; % units: [g][dm^2][rad]/[s]
 A = zeros(n_x, n_x);
 %A(1:2, 1:2) = inv(J);
 A(1:2, 3:4) = inv(J);
-
 B = zeros(n_x, n_u); 
 B(1:2, 1:2) = inv(J);
 
@@ -72,12 +71,17 @@ ctr.torque_obs.B = dsys.B;
 ctr.torque_obs.C = dsys.C;
 ctr.torque_obs.D = dsys.D;
 ctr.torque_obs.L = L;
+
 % Express omega in rad/s and the external torque in [g][dm^2]/[s^2]
 ctr.torque_obs.state_scaling = [1.0; 1.0; 1e5; 1e5];
+
 % Express input torque in [g][dm^2]/[s^2]
 ctr.torque_obs.input_scaling = [1e5; 1e5];
+
 % Meas. expressed in rad/s
 ctr.torque_obs.meas_scaling = [1.0; 1.0];
+
 % output state from omage in rad/s and ext torque in [g][dm^2]/[s^2] to rad/s, Nm
 ctr.torque_obs.out_scaling = 1./ctr.torque_obs.state_scaling;
+
 end

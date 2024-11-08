@@ -30,7 +30,7 @@ ShowPlot.NextScreen_4K  = 0;
 ShowPlot.velocity       = 1;
 ShowPlot.z_b            = 0;
 ShowPlot.omega          = 1;
-ShowPlot.acceleration   = 1;
+ShowPlot.acceleration   = 0;
 ShowPlot.realtime3D     = 0;
 ShowPlot.angle_comp     = 1;
 
@@ -81,9 +81,9 @@ rst.EulXYZ.y  = rst_Eul_XYZ.signals.values(:,2);
 rst.EulXYZ.z  = rst_Eul_XYZ.signals.values(:,3);
 
 % Sensor Euler angle XYZ
-rst.SenEulXYZ.x  = rst_sensor_EulXYZ.signals.values(:,1);
-rst.SenEulXYZ.y  = rst_sensor_EulXYZ.signals.values(:,2);
-rst.SenEulXYZ.z  = rst_sensor_EulXYZ.signals.values(:,3);
+% rst.SenEulXYZ.x  = rst_sensor_EulXYZ.signals.values(:,1);
+% rst.SenEulXYZ.y  = rst_sensor_EulXYZ.signals.values(:,2);
+% rst.SenEulXYZ.z  = rst_sensor_EulXYZ.signals.values(:,3);
 
 rst.rotm = eul2rotm([rst.EulXYZ.x, rst.EulXYZ.y , rst.EulXYZ.z], 'XYZ');
 rst.rot.R = rst.rotm;
@@ -171,7 +171,7 @@ rst.rbt       = rbt2;
 rst.ctr       = ctr2;
 rst.mdl       = mdl;
 
-rst.t.id      = find(rst.vot.v1>0);
+rst.t.id      = find(rst.vot.v3>0);
 rst.t.start   = rst.time(rst.t.id(1));
 rst.t.stop    = rst.time(rst.t.id(end));
 
@@ -263,25 +263,25 @@ if ShowPlot.angle
     f.Name = 'Euler angles XYZ';
 
     % Vicon data
-    plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.x)); hold on; grid on;
-    plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.y))
-    plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.z))
+    plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.x),'-','linewidth',1.5, 'Color', c.blue); hold on; grid on;
+    plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.y),'-','linewidth',1.5, 'Color', c.red)
+    plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.z),'-','linewidth',1.5, 'Color', c.yellow)
     ylabel('degree');
 
     % Sensor data
-    plot(rst.EulXYZ.t, rad2deg(rst.SenEulXYZ.x)); hold on; grid on;
-    plot(rst.EulXYZ.t, rad2deg(rst.SenEulXYZ.y))
-    plot(rst.EulXYZ.t, rad2deg(rst.SenEulXYZ.z))
-    ylabel('degree');
+    % plot(rst.EulXYZ.t, rad2deg(rst.SenEulXYZ.x),'linewidth',1, 'Color', c.blue); hold on; grid on;
+    % plot(rst.EulXYZ.t, rad2deg(rst.SenEulXYZ.y),'linewidth',1, 'Color', c.red)
+    % plot(rst.EulXYZ.t, rad2deg(rst.SenEulXYZ.z),'linewidth',1, 'Color', c.yellow)
+    % ylabel('degree');
 
     plot([rst.t.start, rst.t.start],[rad2deg(min(min(min(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z))), rad2deg(max(max(max(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z)))],'k--','linewidth',1)
     plot([rst.t.stop, rst.t.stop],[rad2deg(min(min(min(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z))), rad2deg(max(max(max(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z)))],'k--','linewidth',1)
-    xlim([rst.t.start, rst.t.stop])
+    % xlim([rst.t.start, rst.t.stop])
     % ylim([-20 20])
     hold off
     title('euler angles XYZ')
 %     ylim([-pi,pi])
-    legend('x','y','z','Location','northwest')
+    legend('Vicon x','Vicon y','Vicon z','Sensor x','Sensor y','Sensor z','Location','northwest')
     if ShowPlot.ThisScreen
         set(gcf, 'Units', 'centimeters');
         set(gcf, 'Position', [26, 13, 13, 10]); % [l b w h]
@@ -294,13 +294,64 @@ if ShowPlot.angle
     end
 end
 
+%% Euler angles error
+if 0 % ShowPlot.angle
+    f = figure(102); 
+    f.Name = 'Euler angles error';
+    
+
+    x_error=rad2deg(rst.EulXYZ.x)-rad2deg(rst.SenEulXYZ.x);
+    y_error=rad2deg(rst.EulXYZ.y)-rad2deg(rst.SenEulXYZ.y);
+    z_error=rad2deg(rst.EulXYZ.z)-rad2deg(rst.SenEulXYZ.z);
+
+    x_rmse=rmse(rad2deg(rst.EulXYZ.x),rad2deg(rst.SenEulXYZ.x));
+    y_rmse=rmse(rad2deg(rst.EulXYZ.y),rad2deg(rst.SenEulXYZ.y));
+    z_rmse=rmse(rad2deg(rst.EulXYZ.z),rad2deg(rst.SenEulXYZ.z));
+
+    plot(rst.EulXYZ.t, x_error,'linewidth',1,'Color',c.blue); hold on; grid on;
+    plot(rst.EulXYZ.t, y_error,'linewidth',1,'Color',c.red)
+    plot(rst.EulXYZ.t, z_error,'linewidth',1,'Color',c.yellow)
+    ylabel('degree');
+
+    disp('roll_rmse');
+    disp(x_rmse);
+    disp('pitch_rmse');
+    disp(y_rmse);
+    disp('yaw_rmse');
+    disp(z_rmse);
+    disp('roll_max');
+    disp(max(x_error));
+    disp('picth_max');
+    disp(max(y_error));
+    disp('yaw_max');
+    disp(max(z_error));
+end
+
+
 %% Z_b (comparison Vicon vs. sensor)
-if ShowPlot.angle_comp
+if 0 % ShowPlot.angle_comp
     f = figure(78); 
     f.Name = 'Z_b comparison';
-
+    z_o=[0;0;1];
+    
     rst.SenRotm = eul2rotm([rst.SenEulXYZ.x, rst.SenEulXYZ.y , rst.SenEulXYZ.z], 'XYZ');
     rst.SenRot.R3  = squeeze(rst.SenRotm(:,3,:));
+    
+    z_o=repmat(z_o,1,size(rst.SenRot.R3,2));
+
+    theta_zb_sensor=acos(dot(z_o,rst.SenRot.R3))/pi*180;
+    theta_zb_vicon=acos(dot(z_o,squeeze(rst.rot.R3)))/pi*180;
+
+    % plot(rst.EulXYZ.t, theta_zb_vicon); hold on
+    % plot(rst.EulXYZ.t, theta_zb_sensor)
+
+    % index=find(abs(rst.EulXYZ.t-rst.t.start)<1e-4, 1 );
+    % Vicon_offset=squeeze(rst.rot.R3);
+    % Vicon_offset=Vicon_offset-Vicon_offset(:,index);
+    % Sensor_offset=rst.SenRot.R3-rst.SenRot.R3(:,index);
+
+    % plot(rst.EulXYZ.t, Vicon_offset); hold on
+    % plot(rst.EulXYZ.t, Sensor_offset)
 
     plot(rst.EulXYZ.t, squeeze(rst.rot.R3)); hold on
     plot(rst.EulXYZ.t, rst.SenRot.R3)
@@ -315,12 +366,14 @@ if ShowPlot.angle_comp
     % plot(SenR3_norm); hold on
     % plot(R3_norm)
 
-    xlim([rst.t.start, rst.t.stop])
+    % xlim([rst.t.start, rst.t.stop])
     % ylim([-0.5 1.1])
-    hold off
+    % hold off
+    % title('theta_{zb}')
+    % legend('Vicon','Sensor')
     title('Z_b comparison')
 
-    legend('x','y','z','Location','northwest')
+    % legend('x','y','z','Location','northwest')
     if ShowPlot.ThisScreen
         set(gcf, 'Units', 'centimeters');
         set(gcf, 'Position', [26, 13, 13, 10]); % [l b w h]
@@ -333,6 +386,63 @@ if ShowPlot.angle_comp
     end
 end
 
+%% theta_zb (comparison Vicon vs. sensor)
+if 0 % ShowPlot.angle_comp
+    f = figure(79); 
+    f.Name = 'Z_b comparison';
+    z_o=[0;0;1];
+    
+    rst.SenRotm = eul2rotm([rst.SenEulXYZ.x, rst.SenEulXYZ.y , rst.SenEulXYZ.z], 'XYZ');
+    rst.SenRot.R3  = squeeze(rst.SenRotm(:,3,:));
+    
+    z_o=repmat(z_o,1,size(rst.SenRot.R3,2));
+
+    theta_zb_sensor=acos(dot(z_o,rst.SenRot.R3))/pi*180;
+    theta_zb_vicon=acos(dot(z_o,squeeze(rst.rot.R3)))/pi*180;
+
+    plot(rst.EulXYZ.t, theta_zb_vicon); hold on
+    plot(rst.EulXYZ.t, theta_zb_sensor)
+
+    % index=find(abs(rst.EulXYZ.t-rst.t.start)<1e-4, 1 );
+    % Vicon_offset=squeeze(rst.rot.R3);
+    % Vicon_offset=Vicon_offset-Vicon_offset(:,index);
+    % Sensor_offset=rst.SenRot.R3-rst.SenRot.R3(:,index);
+
+    % plot(rst.EulXYZ.t, Vicon_offset); hold on
+    % plot(rst.EulXYZ.t, Sensor_offset)
+
+    % plot(rst.EulXYZ.t, squeeze(rst.rot.R3)); hold on
+    % plot(rst.EulXYZ.t, rst.SenRot.R3)
+
+    % SenR3 = squeeze(rst.SenRot.R3)';
+    % R3 = squeeze(rst.rot.R3)';
+    % 
+    % for i=1:length(SenR3)
+    %     SenR3_norm(i) = sqrt(SenR3(i,1).^2 + SenR3(i,2).^2 +SenR3(i,3).^2 );
+    %     R3_norm(i) = sqrt(R3(i,1).^2 + R3(i,2).^2 +R3(i,3).^2 );
+    % end
+    % plot(SenR3_norm); hold on
+    % plot(R3_norm)
+
+    % xlim([rst.t.start, rst.t.stop])
+    % ylim([-0.5 1.1])
+    hold off
+    title('theta_{zb}')
+    legend('Vicon','Sensor')
+    % title('Z_b comparison')
+    grid on; 
+    % legend('x','y','z','Location','northwest')
+    if ShowPlot.ThisScreen
+        set(gcf, 'Units', 'centimeters');
+        set(gcf, 'Position', [26, 13, 13, 10]); % [l b w h]
+    elseif ShowPlot.NextScreen_4K
+        set(gcf, 'Units', 'normalized');
+        set(gcf, 'Position', [1, 0.45, 0.35, 0.45]); % [l b w h]
+    else
+        set(gcf, 'Units', 'normalized');
+        set(gcf, 'Position', [1, 0.625, 0.25, 0.35]); % [l b w h]        
+    end
+end
 %% Driving signals
 if ShowPlot.driveSignal
     f = figure(3); 
@@ -397,7 +507,7 @@ if ShowPlot.voltage
     plot([0 rst.time(end)],[1700 1700],'r--')
     hold off
 %     ylim([1300 max(rst.mdl.max_v_vec)])
-    ylim([1300 2000])
+    ylim([1300 1800])
     xlim([rst.t.start, rst.t.stop])
     title('voltage amplitudes')
     legend('1','2','3','4','Location','northwest')
@@ -864,7 +974,7 @@ if 0
 end
 
 %% Euler angles
-if 1
+if 0
     f = figure(15); 
     f.Name = 'Euler angles ZYX';
     if 1

@@ -19,7 +19,7 @@ rsim.en = 0;
 mdl.rerun = 0;
 
 % Flight time for the model
-mdl.flight_time = 0.4;
+mdl.flight_time = 6;
 
 % Initialize controller parameters
 [ctr, mdl] = make_controller(mdl);
@@ -50,6 +50,8 @@ rbt2 = rbt; % some Simulink parameters are from 2-robot controller
 %     set_param(model_name,'SimulationCommand','update')
 % end
 
+ctr.DV
+
 %%
 
 % Use simulator or real-time hardware interface
@@ -69,7 +71,7 @@ if rsim.en
     set_param(strcat(model_name, '/Execution Time'), 'commented', 'on'); % comment out
     warning("-->> using simulator")
     out = sim(model_name, 'SimulationMode','normal');
-    step6_analysis
+    s6_analysis
 
 else
     if mdl.rerun
@@ -102,7 +104,7 @@ else
         set_param(strcat(model_name, '/Goto data_ready for rerun'), 'commented', 'on'); % comment out
         set_param(strcat(model_name, '/Goto vicon_measure for realtime'), 'commented', 'off'); % not use saved Vicon data
         set_param(strcat(model_name, '/Goto data_ready for realtime'), 'commented', 'off'); % not use saved Vicon data
-        set_param(strcat(model_name, '/Execution Time'), 'commented', 'off'); % comment out
+        % set_param(strcat(model_name, '/Execution Time'), 'commented', 'off'); % comment out
         warning("-->> using real time Vicon data")
         s2_build
     end

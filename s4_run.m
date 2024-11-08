@@ -27,6 +27,8 @@ else
     warning("==== execution is not stopped ====")
 end
 
+close all
+
 % details for saving data (sd.) 
 sd.folder   = "data/";
 sd.robot    = "Nemo44_";
