@@ -1,12 +1,12 @@
 function [rbt] = make_robot()
 
     % Robot pysical parameters
-    rbt.m = 4 * 225e-6;      % mass in kg
-    rbt.ixx = 0.55*1e-7;    % MoI
-    rbt.iyy = 0.55*1e-7;    % MoI
+    rbt.m = 4 * 225e-6;      % mass in kg 225 / 200 / 225
+    rbt.ixx = 0.55*1e-7;    % MoI 0.55 / 0.445 / 0.55
+    rbt.iyy = 0.55*1e-7;    % MoI 0.55 / 0.445 / 0.55
     rbt.izz = 0.55*1e-7 * 4;  % MoI
-    rbt.ld = (17) * 1e-3;    % moment arm
-    rbt.lt = (17) * 1e-3;    % moment arm
+    rbt.ld = (17) * 1e-3;    % moment arm 17 / 15 / 17
+    rbt.lt = (17) * 1e-3;    % moment arm 17 / 15 / 17
 
     % Robot thrust vector offset
     rbt.angle_offset.x = deg2rad(0); %0.0157;

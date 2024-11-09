@@ -1,7 +1,7 @@
 function som = make_somersault(mdl, rsim)
     
     % enable somersault
-    som.en = 0;
+    som.en = 1;
 
     % somersault testing
     som.testing.en = 0;
@@ -15,8 +15,8 @@ function som = make_somersault(mdl, rsim)
     end
 
     % somersault openloop thrust
-    som.thrust.acc = mdl.g * 1.6; % acceleration at phase 1 (lift2weight ratio)
-    som.thrust.dec = mdl.g * 1.37; % deceleration at phase 4 (lift2weight ratio)
+    som.thrust.acc = mdl.g * 1.5; % acceleration at phase 1 (lift2weight ratio)
+    som.thrust.dec = mdl.g * 1.25; % deceleration at phase 4 (lift2weight ratio)
 
     % somersault openloop torque & gain
     % som.tor_x.acc = 6e-5;
@@ -24,21 +24,21 @@ function som = make_somersault(mdl, rsim)
     % som.tor_x.gain.dec.p = 1.74e-4;a
     % som.tor_x.gain.dec.d = 4.73e-6;
 
-    som.tor_y.acc = 8.5e-5; % 7.5e-5;
-    som.tor_y.dec = -10e-5; 
+    som.tor_y.acc =  13e-5; % 7.5e-5; 2024.11.08: 8.5e-5
+    som.tor_y.dec = -13e-5; 
     som.tor_y.gain.dec.p = 1.74e-4;
     som.tor_y.gain.dec.d = 4.73e-6*1;
 
     % somersault tunable threshold
-    som.threshold.z_dot.acc = 1; % positive (m/s)
+    som.threshold.z_dot.acc = 0.7; % positive (m/s)
     som.threshold.z_dot.dec = 0; % negative (m/s)
     som.threshold.down.R33  = 1; % condition 1: determine when to decelerate, the body z-axis projection to the world z 
     % som.threshold.down.eulx = -2.7; % condition 2: determine when to decelerate
     som.threshold.down.euly = -6; % determine when to decelerate 5.2
     som.threshold.up.R33    = 0.85; % determine when to get back to hovering, the body z-axis projection to the world z 
-    som.threshold.up.wy    = 20; % determine whether the robot has decelerate enough
-    som.threshold.wy       = 40; % determine whether to use feedback control or just decelerate
-    som.threshold.t_rot_acc = 0.123; % time threshold to enable double flip
+    som.threshold.up.wy     = 20; % determine whether the robot has decelerate enough
+    som.threshold.wy        = 40; % determine whether to use feedback control or just decelerate
+    som.threshold.t_rot_acc = 0.069; % time threshold to enable double flip 0.123 for double flip
 
     % somersault gain factor to prioritize attitude & thrust (som_state == 3)
     som.gain.fact.st3.at3 = 0.5; % attitude d

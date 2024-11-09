@@ -31,7 +31,7 @@ close all
 
 % details for saving data (sd.) 
 sd.folder   = "data/";
-sd.robot    = "Nemo44_";
+sd.robot    = "Bee1_";
 sd.date     = string(datetime('now','Format','yyyy-MM-dd_HH-mm-ss'));
 sd.filetype = ".mat";
 sd.filename = sd.folder + sd.robot + sd.date + sd.filetype;

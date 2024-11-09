@@ -507,7 +507,7 @@ if ShowPlot.voltage
     plot([0 rst.time(end)],[1700 1700],'r--')
     hold off
 %     ylim([1300 max(rst.mdl.max_v_vec)])
-    ylim([1300 1800])
+    ylim([1300 1900])
     xlim([rst.t.start, rst.t.stop])
     title('voltage amplitudes')
     legend('1','2','3','4','Location','northwest')
@@ -633,11 +633,13 @@ end
 
 
 %% torque to angular accelaration 
-if ShowPlot.Tor2Ang
+if 1 %ShowPlot.Tor2Ang
 
     % design filter
     d1 = designfilt("lowpassiir",'FilterOrder', 2, ...
     'HalfPowerFrequency', 0.02, 'DesignMethod', "butter");
+    d2 = designfilt("lowpassiir",'FilterOrder', 3, ...
+    'HalfPowerFrequency', 0.01, 'DesignMethod', "butter");
  
     % get post-omega from real-time Euler
     rst.EulXYZ.fil_x = filtfilt(d1,rst.EulXYZ.x);
@@ -659,16 +661,17 @@ if ShowPlot.Tor2Ang
     rst.ome.from_Eul = angvel(q_from_Eul_fil,mdl.T_high,'point');
 
     % get post-pqr from post-omega
-    rst.ome.fil.x = filtfilt(d1,rst.ome.from_Eul(:,1));
-    rst.ome.fil.y = filtfilt(d1,rst.ome.from_Eul(:,2));
-    rst.ome.fil.z = filtfilt(d1,rst.ome.from_Eul(:,3));
+    rst.ome.fil.x = filtfilt(d2,rst.ome.from_Eul(:,1));
+    rst.ome.fil.y = filtfilt(d2,rst.ome.from_Eul(:,2));
+    rst.ome.fil.z = filtfilt(d2,rst.ome.from_Eul(:,3));
 
     % %%
     % figure()
-    % plot(omega1_1); hold on
-    % plot(rst.ome.raw_x)
+    % %plot(omega1_1); hold on
+    % plot(rst.ome.raw_x); hold on
     % plot(rst.ome.x)
     % plot(rst.ome.from_Eul(:,1))
+    % plot(rst.ome.fil.x)
     % ylim([-10 10])
     % 
     % %%
@@ -687,43 +690,39 @@ if ShowPlot.Tor2Ang
     % plot(rst.ome.from_Eul(:,3))
     % ylim([-10 10])
 
-    %
-    % % get pqr from real-time omega
-    % rst.ome.fil.x = filtfilt(d1,rst.ome.x);
-    % rst.ome.fil.y = filtfilt(d1,rst.ome.y);
-    % 
     % figure(71)
     % plot(rst.ome.x); hold on
     % plot(rst.ome.fil.x)
 
-    f = figure(8); 
+    f = figure(88); 
     f.Name = 'Torque to angular acc';
     
     t_start = rst.t.start + 0.2;
     t_stop  = rst.t.stop - 0.2;
 
     subplot(2,1,1)
-    rst.pqr_dot.x = diff(rst.ome.fil.x)/rst.mdl.T;
+    rst.pqr_dot.x = gradient(rst.ome.fil.x)./rst.mdl.T_high;
     Tx_offset = mean(rst.tor.x(t_start*rst.mdl.f+0.1*rst.mdl.f:t_stop*rst.mdl.f)./rst.rbt.ixx);
-    plot(rst.EulXYZ.t(1:end-1), rst.pqr_dot.x,'Color','#EDB120'); hold on
-    % plot(rst.time, rst.tor.x./rst.rbt.ixx,'Color','#7E2F8E')
+    plot(rst.EulXYZ.t, rst.pqr_dot.x,'Color','#EDB120'); hold on
     plot(rst.time, rst.tor.x./rst.rbt.ixx - Tx_offset,'Color',[0.3 0.3 0.3])
 
     legend('angular acce', 'torque','Location','northwest')
-    ylim([min(min(rst.pqr_dot.x(t_start*rst.mdl.f:t_stop*rst.mdl.f)),min(rst.tor.x(t_start*rst.mdl.f:t_stop*rst.mdl.f)./rst.rbt.ixx)) max(max(rst.pqr_dot.x(t_start*rst.mdl.f:t_stop*rst.mdl.f)),max(rst.tor.x(t_start*rst.mdl.f:t_stop*rst.mdl.f)./rst.rbt.ixx))])
+    % ylim([min(min(rst.pqr_dot.x(t_start*rst.mdl.f:t_stop*rst.mdl.f)),min(rst.tor.x(t_start*rst.mdl.f:t_stop*rst.mdl.f)./rst.rbt.ixx)) max(max(rst.pqr_dot.x(t_start*rst.mdl.f:t_stop*rst.mdl.f)),max(rst.tor.x(t_start*rst.mdl.f:t_stop*rst.mdl.f)./rst.rbt.ixx))])
+    ylim([-100 100])
     xlim([rst.t.start rst.t.stop])
     grid on
     hold off
     title("angular acc vs torque")
 
     subplot(2,1,2)
-    rst.pqr_dot.y = diff(rst.ome.fil.y)/rst.mdl.T;
+    rst.pqr_dot.y = diff(rst.ome.fil.y)/rst.mdl.T_high;
     Ty_offset = mean(rst.tor.y(t_start*rst.mdl.f+0.1*rst.mdl.f:t_stop*rst.mdl.f)./rst.rbt.iyy);
     plot(rst.EulXYZ.t(1:end-1), rst.pqr_dot.y,'Color','#EDB120'); hold on
     % plot(rst.time, rst.tor.y./rst.rbt.iyy,'Color','#7E2F8E')
     plot(rst.time, rst.tor.y./rst.rbt.iyy - Ty_offset,'Color',[0.3 0.3 0.3])
     legend('angular acce', 'torque','Location','northwest')
-    ylim([min(min(rst.pqr_dot.y(t_start*rst.mdl.f:t_stop*rst.mdl.f)),min(rst.tor.y(t_start*rst.mdl.f:t_stop*rst.mdl.f)./rst.rbt.iyy)) max(max(rst.pqr_dot.y(t_start*rst.mdl.f:t_stop*rst.mdl.f)),max(rst.tor.y(t_start*rst.mdl.f:t_stop*rst.mdl.f)./rst.rbt.iyy))])
+    % ylim([min(min(rst.pqr_dot.y(t_start*rst.mdl.f:t_stop*rst.mdl.f)),min(rst.tor.y(t_start*rst.mdl.f:t_stop*rst.mdl.f)./rst.rbt.iyy)) max(max(rst.pqr_dot.y(t_start*rst.mdl.f:t_stop*rst.mdl.f)),max(rst.tor.y(t_start*rst.mdl.f:t_stop*rst.mdl.f)./rst.rbt.iyy))])
+    ylim([-100 100])
     xlim([rst.t.start rst.t.stop])
     grid on
     hold off
@@ -931,7 +930,7 @@ if ShowPlot.realtime3D
 end
 
 %% plot 3D 
-if 0
+if 1
     f = figure(14);
     f.Name = '3D plot';
 
@@ -1222,7 +1221,7 @@ if som.en
 end
 
 %% Euler angles ZXY
-if 1
+if 0
     f = figure(20); 
     f.Name = 'Euler angles ZXY';
     if 0
@@ -1267,6 +1266,7 @@ if 1
         set(gcf, 'Position', [1, 0.625, 0.25, 0.35]); % [l b w h]        
     end
 end
+
 %% body frame error
 
 % rotm_z = eul2rotm([ rst.EulZYX.z zeros(length(rst.EulZYX.z),2)], 'ZYX');

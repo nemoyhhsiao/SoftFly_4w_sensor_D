@@ -66,7 +66,7 @@ if traj.en
         % Vertical two circles (2024.11.07 perp for Veritasium)
         radius       = 0.05*1/0.84; % (m)
         angular_rate = 360; % (deg/s)
-        center       = [0; 0; 0.07];
+        center       = [0; 0; 0.08];
         center_r     = center + [radius; 0; 0];
         center_l     = center - [radius; 0; 0];
         t_vec        = [2.1, 3, 4, 5, 6, 7, 7.9] - 1.7*rsim.en; % (s)
