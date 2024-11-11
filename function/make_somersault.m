@@ -1,7 +1,7 @@
 function som = make_somersault(mdl, rsim)
     
     % enable somersault
-    som.en = 1;
+    som.en = 0;
 
     % somersault testing
     som.testing.en = 0;
@@ -38,19 +38,31 @@ function som = make_somersault(mdl, rsim)
     som.threshold.up.R33    = 0.85; % determine when to get back to hovering, the body z-axis projection to the world z 
     som.threshold.up.wy     = 20; % determine whether the robot has decelerate enough
     som.threshold.wy        = 40; % determine whether to use feedback control or just decelerate
-    som.threshold.t_rot_acc = 0.069; % time threshold to enable double flip 0.123 for double flip
+    som.threshold.t_rot_acc = 0.068; % time threshold to enable double flip 0.123 for double flip
 
     % somersault gain factor to prioritize attitude & thrust (som_state == 3)
-    som.gain.fact.st3.at3 = 0.5; % attitude d
-    som.gain.fact.st3.at2 = 0.5; % attitude p
+    som.gain.fact.st3.at3 = 0.7; % attitude d
+    som.gain.fact.st3.at2 = 0.7; % attitude p
     som.gain.fact.st3.at1 = 0.0; % position d 
     som.gain.fact.st3.at0 = 0.0; % position p
 
     % somersault gain factor to prioritize attitude & thrust (som_state == 4)
-    som.gain.fact.st4.at3 = 0.8; % attitude d
+    som.gain.fact.st4.at3 = 0.85; % attitude d
     som.gain.fact.st4.at2 = 0.8; % attitude p
-    som.gain.fact.st4.at1 = 0.25; % position d 
-    som.gain.fact.st4.at0 = 0.25; % position p
+    som.gain.fact.st4.at1 = 0.15; % position d 
+    som.gain.fact.st4.at0 = 0.15; % position p
+
+    % somersault gain factor to prioritize attitude & thrust (som_state == 4)
+    som.gain.fact.st4.at3 = 0.85; % attitude d
+    som.gain.fact.st4.at2 = 0.85; % attitude p
+    som.gain.fact.st4.at1 = 0.15; % position d 
+    som.gain.fact.st4.at0 = 0.15; % position p
+
+    % somersault gain factor to prioritize attitude & thrust (som_state == 4)
+    som.gain.fact.st45.at3 = 0.85; % attitude d
+    som.gain.fact.st45.at2 = 0.85; % attitude p
+    som.gain.fact.st45.at1 = 0.65; % position d 
+    som.gain.fact.st45.at0 = 0.65; % position p
 
     % time to stay hovering after transit to phase 5
     som.t_hover = 1.5;
