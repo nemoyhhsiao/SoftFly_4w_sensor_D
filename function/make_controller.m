@@ -13,13 +13,15 @@ function [ctr, mdl] = make_controller(mdl)
     % ctr.freq_vec = [100 100 100 100];
 
     % Voltage offset (for openloop or closedloop: rbt.m * g + DV)
-    ctr.DV = [128 116 138 148]; % Bee1 (sensor) 6mm
+    % ctr.DV = [128 116 138 148]; % Bee1 (sensor) 6mm
     % ctr.DV = [50 47 155 52] - 150 ; % Bee2 4mm
-    % ctr.DV = [86 30 110 98]; % Bee3 6mm
+    ctr.DV = [151 146 220 195]; % Bee3 6mm
 
     % Voltage for connection checking (DV only)
     % ctr.DV = [-2000 -2000 -2000 1000];
-    % ctr.DV = [1470 1485 1505 1542]; % Bee 1 nominal
+    % ctr.DV = [1465 1453 1475 1485]; % Bee 1 nominal
+    % ctr.DV = [1495 1483 1505 1515]; % Bee 1 nominal w/ sensor
+    % ctr.DV = [1000 1000 1000 1000]; 
 
     % Use pre-defined trajectory
     ctr.traj.en = 0;
@@ -30,7 +32,7 @@ function [ctr, mdl] = make_controller(mdl)
     % Setpoint (relative to the initital position)
     ctr.setpoint.x = 0;
     ctr.setpoint.y = 0;
-    ctr.setpoint.z = 0.1;
+    ctr.setpoint.z = 0.10;
     ctr.setpoint.yaw = deg2rad(0);
 
     % Landing and takeoff parameters
@@ -38,11 +40,12 @@ function [ctr, mdl] = make_controller(mdl)
     ctr.landing.time = 1;
     ctr.takeoff.en = 1;
     ctr.takeoff.time = 1.5;
+    ctr.rd_d_filt = 1;
 
     % Attitude controller gains [ att_d att_p pos_d pos_p ] [0.55 0.5 0.4 0.35]
-    ctr.factor = [0.92 0.77 0.8 0.75]; % Bee 1 
+    % ctr.factor = [0.92 0.77 0.8 0.75]; % Bee 1 
     % ctr.factor = [0.95 0.8 0.89 0.82]; % Bee 2 
-    % ctr.factor = [0.95 0.8 0.89 0.82]; % Bee 3
+    ctr.factor = [0.95 0.8 0.89 0.82]; % Bee 3
     ctr.gains = [62   798    6631   13608;     % #1 pakpong nominal gains
                  36   486    2916    6561;     % #2 (S+9)^4
                  48   864    6912   20736;     % #3 (S+12)^4
@@ -51,9 +54,9 @@ function [ctr, mdl] = make_controller(mdl)
                  60  1350   13500   50625;     % #6 (S+15)^4
                  64  1536   16384   65536;     % #7 (S+16)^4 % too aggressive
                  ].*ctr.factor; 
-    ctr.gain.n = 4; % Bee 1
+    % ctr.gain.n = 4; % Bee 1
     % ctr.gain.n = 4; % Bee 2
-    % ctr.gain.n = 5; % Bee 3
+    ctr.gain.n = 4; % Bee 3
     
     % Check stability criterion
     rhStabilityCriterion([1,ctr.gains(ctr.gain.n,:)]);
@@ -104,7 +107,7 @@ function [ctr, mdl] = make_controller(mdl)
     ctr.safety.enableZone.ymax = 0.4;
     ctr.safety.enableZone.zmax = 0.5;
     % ctr.safety.volt = [1800, 1800, 1850, 1800];
-    ctr.safety.volt = [1750, 1750, 1750, 1750];
+    ctr.safety.volt = [1700, 1700, 1700, 1700];
     ctr.safety.min_cos_roll_pitch = -0.5;
 
     % Desired yaw trajectory (if needed)

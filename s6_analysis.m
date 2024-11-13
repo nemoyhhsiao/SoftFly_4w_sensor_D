@@ -81,9 +81,9 @@ rst.EulXYZ.y  = rst_Eul_XYZ.signals.values(:,2);
 rst.EulXYZ.z  = rst_Eul_XYZ.signals.values(:,3);
 
 % Sensor Euler angle XYZ
-% rst.SenEulXYZ.x  = rst_sensor_EulXYZ.signals.values(:,1);
-% rst.SenEulXYZ.y  = rst_sensor_EulXYZ.signals.values(:,2);
-% rst.SenEulXYZ.z  = rst_sensor_EulXYZ.signals.values(:,3);
+rst.SenEulXYZ.x  = rst_sensor_EulXYZ.signals.values(:,1);
+rst.SenEulXYZ.y  = rst_sensor_EulXYZ.signals.values(:,2);
+rst.SenEulXYZ.z  = rst_sensor_EulXYZ.signals.values(:,3);
 
 rst.rotm = eul2rotm([rst.EulXYZ.x, rst.EulXYZ.y , rst.EulXYZ.z], 'XYZ');
 rst.rot.R = rst.rotm;
@@ -263,16 +263,16 @@ if ShowPlot.angle
     f.Name = 'Euler angles XYZ';
 
     % Vicon data
-    plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.x),'-','linewidth',1.5, 'Color', c.blue); hold on; grid on;
-    plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.y),'-','linewidth',1.5, 'Color', c.red)
-    plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.z),'-','linewidth',1.5, 'Color', c.yellow)
+    plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.x),':','linewidth',1.5, 'Color', c.blue); hold on; grid on;
+    plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.y),':','linewidth',1.5, 'Color', c.red)
+    plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.z),':','linewidth',1.5, 'Color', c.yellow)
     ylabel('degree');
 
     % Sensor data
-    % plot(rst.EulXYZ.t, rad2deg(rst.SenEulXYZ.x),'linewidth',1, 'Color', c.blue); hold on; grid on;
-    % plot(rst.EulXYZ.t, rad2deg(rst.SenEulXYZ.y),'linewidth',1, 'Color', c.red)
-    % plot(rst.EulXYZ.t, rad2deg(rst.SenEulXYZ.z),'linewidth',1, 'Color', c.yellow)
-    % ylabel('degree');
+    plot(rst.EulXYZ.t, rad2deg(rst.SenEulXYZ.x),'linewidth',1, 'Color', c.blue); hold on; grid on;
+    plot(rst.EulXYZ.t, rad2deg(rst.SenEulXYZ.y),'linewidth',1, 'Color', c.red)
+    plot(rst.EulXYZ.t, rad2deg(rst.SenEulXYZ.z),'linewidth',1, 'Color', c.yellow)
+    ylabel('degree');
 
     plot([rst.t.start, rst.t.start],[rad2deg(min(min(min(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z))), rad2deg(max(max(max(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z)))],'k--','linewidth',1)
     plot([rst.t.stop, rst.t.stop],[rad2deg(min(min(min(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z))), rad2deg(max(max(max(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z)))],'k--','linewidth',1)
@@ -295,7 +295,7 @@ if ShowPlot.angle
 end
 
 %% Euler angles error
-if 0 % ShowPlot.angle
+if ShowPlot.angle
     f = figure(102); 
     f.Name = 'Euler angles error';
     
@@ -329,7 +329,7 @@ end
 
 
 %% Z_b (comparison Vicon vs. sensor)
-if 0 % ShowPlot.angle_comp
+if ShowPlot.angle_comp
     f = figure(78); 
     f.Name = 'Z_b comparison';
     z_o=[0;0;1];
@@ -387,7 +387,7 @@ if 0 % ShowPlot.angle_comp
 end
 
 %% theta_zb (comparison Vicon vs. sensor)
-if 0 % ShowPlot.angle_comp
+if ShowPlot.angle_comp
     f = figure(79); 
     f.Name = 'Z_b comparison';
     z_o=[0;0;1];
