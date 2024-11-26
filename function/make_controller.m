@@ -15,7 +15,8 @@ function [ctr, mdl] = make_controller(mdl)
     % Voltage offset (for openloop or closedloop: rbt.m * g + DV)
     % ctr.DV = [128 116 138 148]; % Bee1 (sensor) 6mm
     % ctr.DV = [50 47 155 52] - 150 ; % Bee2 4mm
-    ctr.DV = [151 146 220 195]; % Bee3 6mm
+    % ctr.DV = [245 205 280 260]; % Bee3 6mm    
+    ctr.DV = [132 92 167 147]; % Bee3 6mm per Tony's request on rbt.m
 
     % Voltage for connection checking (DV only)
     % ctr.DV = [-2000 -2000 -2000 1000];
@@ -32,14 +33,14 @@ function [ctr, mdl] = make_controller(mdl)
     % Setpoint (relative to the initital position)
     ctr.setpoint.x = 0;
     ctr.setpoint.y = 0;
-    ctr.setpoint.z = 0.10;
+    ctr.setpoint.z = 0.07;
     ctr.setpoint.yaw = deg2rad(0);
 
     % Landing and takeoff parameters
-    ctr.landing.en = 1;
+    ctr.landing.en = 0;
     ctr.landing.time = 1;
     ctr.takeoff.en = 1;
-    ctr.takeoff.time = 1.5;
+    ctr.takeoff.time = 0.8;
     ctr.rd_d_filt = 1;
 
     % Attitude controller gains [ att_d att_p pos_d pos_p ] [0.55 0.5 0.4 0.35]
@@ -107,7 +108,7 @@ function [ctr, mdl] = make_controller(mdl)
     ctr.safety.enableZone.ymax = 0.4;
     ctr.safety.enableZone.zmax = 0.5;
     % ctr.safety.volt = [1800, 1800, 1850, 1800];
-    ctr.safety.volt = [1700, 1700, 1700, 1700];
+    ctr.safety.volt = [1750, 1750, 1750, 1750];
     ctr.safety.min_cos_roll_pitch = -0.5;
 
     % Desired yaw trajectory (if needed)

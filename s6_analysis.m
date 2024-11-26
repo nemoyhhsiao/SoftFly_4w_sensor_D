@@ -62,10 +62,10 @@ rst.vel.x     = rst_p_dot.signals.values(:,1);
 rst.vel.y     = rst_p_dot.signals.values(:,2);
 rst.vel.z     = rst_p_dot.signals.values(:,3);
 
-rst.acc.t     = rst_p_dotdot.time;
-rst.acc.x     = rst_p_dotdot.signals.values(:,1);
-rst.acc.y     = rst_p_dotdot.signals.values(:,2);
-rst.acc.z     = rst_p_dotdot.signals.values(:,3);
+% rst.acc.t     = rst_p_dotdot.time;
+% rst.acc.x     = rst_p_dotdot.signals.values(:,1);
+% rst.acc.y     = rst_p_dotdot.signals.values(:,2);
+% rst.acc.z     = rst_p_dotdot.signals.values(:,3);
 
 rst.pdesp.t    = rst_p_vs_p_des.time;
 rst.pdesp.x    = rst_p_vs_p_des.signals(1).values(:,1);
@@ -133,7 +133,10 @@ rst.ithr.t    = rst_int_thrust.time;
 rst.ithr.thr  = rst_int_thrust.signals.values(:,1);
 
 rst.en.t      = rst_en.time;
-rst.en.en     = rst_en.signals.values;
+rst.en.en(:,1) = rst_en.signals(1).values;
+rst.en.en(:,2) = rst_en.signals(2).values;
+rst.en.en(:,3) = rst_en.signals(3).values;
+rst.en.en(:,4) = rst_en.signals(4).values;
 
 rst.drs.t     = rst_driving_signals.time;
 rst.drs.s1    = rst_driving_signals.signals.values(:,1);
@@ -181,6 +184,8 @@ rst.t_h.log3  = rst.pos.t > 45;
 rst.t_h.log4  = rst.pos.t < 43;
 rst.t_h.logic = (rst.t_h.log1 == rst.t_h.log2) == ~(rst.t_h.log3 == rst.t_h.log4);
 rst.t_h.id    = find(rst.t_h.logic);
+
+rst = get_acc_vel_from_pos(rst, 0.003, 0.004, 1, 1, 1); 
 
 addpath("function");
 c = get_color;
@@ -567,22 +572,15 @@ end
 %% Z Force
 if ShowPlot.forceZ
 
-    % design filter
-    d1 = designfilt("lowpassiir",'FilterOrder', 2, ...
-    'HalfPowerFrequency', 0.005, 'DesignMethod', "butter");
- 
-    % get post-omega from real-time Euler
-    rst.acc.fil.z = filtfilt(d1,rst.acc.z);
-
     f = figure(6); 
-    f.Name = 'Thrust in Z';
-    plot(rst.time, rst.thrust./mdl.g./rbt.m + mdl.g, 'm'); hold on; grid on; % in m/s^2
-    plot(rst.acc.t, rst.acc.fil.z + rst.mdl.g, 'linewidth',1); 
+    f.Name = 'Thrust in Z_b';
+    con = plot(rst.time, rst.thrust./mdl.g./rbt.m + mdl.g, 'm'); hold on; grid on; % in m/s^2
+    acc = plot(rst.pos.t, sqrt(rst.acc.from_p.x.^2+rst.acc.from_p.y.^2+rst.acc.from_p.z.^2) + rst.mdl.g, 'linewidth',1); 
     plot([rst.mdl.i_delay rst.mdl.rt], [rst.mdl.g, rst.mdl.g],'--')
     title('force z')
     xlim([rst.mdl.i_delay rst.mdl.rt])
     ylim([6 13])
-    legend('control', 'robot acc')
+    legend([con acc], 'control', 'robot acc')
 % %     set(gcf, 'Units', 'centimeters');
 % %     set(gcf, 'Position', [26, 1, 13, 10]); % [l b w h]
 %     set(gcf, 'Units', 'normalized');

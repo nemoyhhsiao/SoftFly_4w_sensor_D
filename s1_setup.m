@@ -15,11 +15,11 @@ lut = gen_lut;
 % Use simulation or Vicon data
 rsim.en = 0;
 
-% Re-run controller (use archived data to rerun the experiment)
+% Re-run controller (use archived data to rerun the experiment)s4
 mdl.rerun = 0;
 
 % Flight time for the model
-mdl.flight_time = 10;
+mdl.flight_time = 5;
 
 % Initialize controller parameters
 [ctr, mdl] = make_controller(mdl);
@@ -29,6 +29,9 @@ mdl = make_model(mdl,rsim);
 
 % Initialize robot parameters
 rbt = make_robot;
+
+% Initialize sensor parameters
+sen = make_sensor(mdl,rsim);
 
 % Initialize robot simulation parameters
 [rsim, rbt] = make_simulation(rbt,mdl,rsim);
@@ -69,6 +72,12 @@ if rsim.en
     set_param(strcat(model_name, '/Goto vicon_measure for realtime'), 'commented', 'off'); % not use saved Vicon data
     set_param(strcat(model_name, '/Goto data_ready for realtime'), 'commented', 'off'); % not use saved Vicon data
     set_param(strcat(model_name, '/Execution Time'), 'commented', 'on'); % comment out
+    set_param(strcat(model_name, '/Goto IMU for realtime'), 'commented', 'on'); 
+    set_param(strcat(model_name, '/Goto range_finder for realtime'), 'commented', 'on'); 
+    set_param(strcat(model_name, '/Goto optical for realtime'), 'commented', 'on'); 
+    set_param(strcat(model_name, '/Goto IMU for sim'), 'commented', 'off'); 
+    set_param(strcat(model_name, '/Goto range_finder for sim'), 'commented', 'off'); 
+    set_param(strcat(model_name, '/Goto optical for sim'), 'commented', 'off'); 
     warning("-->> using simulator")
     out = sim(model_name, 'SimulationMode','normal');
     s6_analysis
@@ -105,7 +114,13 @@ else
         set_param(strcat(model_name, '/Goto vicon_measure for realtime'), 'commented', 'off'); % not use saved Vicon data
         set_param(strcat(model_name, '/Goto data_ready for realtime'), 'commented', 'off'); % not use saved Vicon data
         % set_param(strcat(model_name, '/Execution Time'), 'commented', 'off'); % comment out
-        warning("-->> using real time Vicon data")
+        set_param(strcat(model_name, '/Goto IMU for realtime'), 'commented', 'off'); 
+        set_param(strcat(model_name, '/Goto range_finder for realtime'), 'commented', 'off'); 
+        set_param(strcat(model_name, '/Goto optical for realtime'), 'commented', 'off'); 
+        set_param(strcat(model_name, '/Goto IMU for sim'), 'commented', 'on'); 
+        set_param(strcat(model_name, '/Goto range_finder for sim'), 'commented', 'on'); 
+        set_param(strcat(model_name, '/Goto optical for sim'), 'commented', 'on'); 
+            warning("-->> using real time Vicon data")
         s2_build
     end
         
