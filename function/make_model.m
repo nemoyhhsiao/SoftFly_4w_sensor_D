@@ -12,7 +12,7 @@ function [mdl] = make_model(mdl,rsim)
         mdl.i_delay = 0.01;
         mdl.rt      = mdl.flight_time + mdl.i_delay; % Simulink run time
     else
-        mdl.i_delay = 5; % initial delay to receive Vicon signals
+        mdl.i_delay = 2; % initial delay to receive Vicon signals
         mdl.rt      = mdl.flight_time + mdl.i_delay + 1; % Simulink run time
     end
 

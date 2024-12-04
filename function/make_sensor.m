@@ -1,13 +1,13 @@
 function sen = make_sensor(mdl, rsim)
 
     % Use sensor input (master switch)
-    sen.en = 1; % 1: use on-board sensor, 0: use Vicon only
+    sen.en = 0; % 1: use on-board sensor, 0: use Vicon only
 
     % Use IMU
-    sen.IMU.en = 1; % 0/1
+    sen.IMU.en = 0; % 0/1
 
     % Use range finder (laser distance sensor)
-    sen.rgf.en = 1; % 0/1
+    sen.rgf.en = 0; % 0/1
     sen.rgf.filt_fc = 0.1;
     if rsim.en
         sen.rgf.filt_fs = 400;

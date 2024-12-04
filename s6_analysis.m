@@ -11,7 +11,7 @@ ShowPlot.torque         = 1;
 ShowPlot.forceZ         = 1;
 ShowPlot.iTorque        = 1;
 ShowPlot.iForceZ        = 1;
-ShowPlot.en             = 1;
+ShowPlot.en             = 0;
 ShowPlot.iCompareX      = 0;
 ShowPlot.iCompareY      = 0;
 ShowPlot.iCompareZ      = 0;
@@ -133,10 +133,10 @@ rst.ithr.t    = rst_int_thrust.time;
 rst.ithr.thr  = rst_int_thrust.signals.values(:,1);
 
 rst.en.t      = rst_en.time;
-rst.en.en(:,1) = rst_en.signals(1).values;
-rst.en.en(:,2) = rst_en.signals(2).values;
-rst.en.en(:,3) = rst_en.signals(3).values;
-rst.en.en(:,4) = rst_en.signals(4).values;
+% rst.en.en(:,1) = rst_en.signals(1).values;
+% rst.en.en(:,2) = rst_en.signals(2).values;
+% rst.en.en(:,3) = rst_en.signals(3).values;
+% rst.en.en(:,4) = rst_en.signals(4).values;
 
 rst.drs.t     = rst_driving_signals.time;
 rst.drs.s1    = rst_driving_signals.signals.values(:,1);
@@ -245,6 +245,7 @@ if ShowPlot.position
     plot([rst.t.stop, rst.t.stop],[min(min([rst.pos.x,rst.pos.y,rst.pos.z]))*100, max(max([rst.pos.x,rst.pos.y,rst.pos.z]))*100],'k--','linewidth',1.2)
     title('x y z position')
     ylabel('cm')
+    xlabel('seconds')
     legend('x','y','z','Location','northwest')
     xlim([rst.t.start, rst.t.stop])
     grid on
@@ -272,17 +273,20 @@ if ShowPlot.angle
     plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.y),':','linewidth',1.5, 'Color', c.red)
     plot(rst.EulXYZ.t, rad2deg(rst.EulXYZ.z),':','linewidth',1.5, 'Color', c.yellow)
     ylabel('degree');
+    xlabel('seconds');
 
     % Sensor data
     plot(rst.EulXYZ.t, rad2deg(rst.SenEulXYZ.x),'linewidth',1, 'Color', c.blue); hold on; grid on;
     plot(rst.EulXYZ.t, rad2deg(rst.SenEulXYZ.y),'linewidth',1, 'Color', c.red)
     plot(rst.EulXYZ.t, rad2deg(rst.SenEulXYZ.z),'linewidth',1, 'Color', c.yellow)
     ylabel('degree');
+    xlabel('seconds');
 
     plot([rst.t.start, rst.t.start],[rad2deg(min(min(min(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z))), rad2deg(max(max(max(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z)))],'k--','linewidth',1)
     plot([rst.t.stop, rst.t.stop],[rad2deg(min(min(min(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z))), rad2deg(max(max(max(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z)))],'k--','linewidth',1)
     % xlim([rst.t.start, rst.t.stop])
     % ylim([-20 20])
+    xlim([5,15])
     hold off
     title('euler angles XYZ')
 %     ylim([-pi,pi])
