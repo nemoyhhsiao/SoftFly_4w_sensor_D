@@ -185,7 +185,7 @@ rst.t_h.log4  = rst.pos.t < 43;
 rst.t_h.logic = (rst.t_h.log1 == rst.t_h.log2) == ~(rst.t_h.log3 == rst.t_h.log4);
 rst.t_h.id    = find(rst.t_h.logic);
 
-rst = get_acc_vel_from_pos(rst, 0.003, 0.004, 1, 1, 1); 
+rst = get_acc_vel_from_pos(rst, 0.003, 0.004, 0, 0, 0); 
 
 addpath("function");
 c = get_color;

@@ -25,7 +25,7 @@ function [ctr, mdl] = make_controller(mdl)
     % ctr.DV = [1000 1000 1000 1000]; 
 
     % Use pre-defined trajectory
-    ctr.traj.en = 1;
+    ctr.traj.en = 0;
 
     % Yaw control enable
     ctr.yaw.en = 0;

@@ -1,7 +1,7 @@
 function sen = make_sensor(mdl, rsim)
 
     % Use sensor input (master switch)
-    sen.en = 0; % 1: use on-board sensor, 0: use Vicon only
+    sen.en = 1; % 1: use on-board sensor, 0: use Vicon only
 
     % Use IMU
     sen.IMU.en = 0; % 0/1
@@ -19,6 +19,8 @@ function sen = make_sensor(mdl, rsim)
 
     % Use optical flow
     sen.opt.en = 0; % 0/1
+    sen.opt.k = 0.206;
+    sen.opt.threshold = 2;
 
 
 
