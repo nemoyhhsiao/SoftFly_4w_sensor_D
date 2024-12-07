@@ -3,7 +3,7 @@
 clc, clear, close all
 
 % Add path to subfolder
-addpath("model","function","torque_observer");
+addpath("model","function","torque_observer","estimator");
 
 % Simulink model
 model_name = 'controller14';
