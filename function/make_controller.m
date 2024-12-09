@@ -13,10 +13,10 @@ function [ctr, mdl] = make_controller(mdl)
     % ctr.freq_vec = [100 100 100 100];
 
     % Voltage offset (for openloop or closedloop: rbt.m * g + DV)
-    ctr.DV = [122 162 180 227]; % Bee1 6mm
+    % ctr.DV = [122 162 180 227]; % Bee1 6mm
     % ctr.DV = [50 47 155 52] - 150 ; % Bee2 4mm
     % ctr.DV = [245 205 280 260]; % Bee3 6mm    
-    % ctr.DV = [190 100 142 132]; % Bee3 6mm per Tony's request on rbt.m
+    ctr.DV = [190 70 140 125]; % Bee3 6mm per Tony's request on rbt.m
 
     % Voltage for connection checking (DV only)
     % ctr.DV = [-2000 -2000 -2000 1000];
@@ -33,18 +33,18 @@ function [ctr, mdl] = make_controller(mdl)
     % Setpoint (relative to the initital position)
     ctr.setpoint.x = 0;
     ctr.setpoint.y = 0;
-    ctr.setpoint.z = 0.05;
+    ctr.setpoint.z = 0.02;
     ctr.setpoint.yaw = deg2rad(0);
 
     % Landing and takeoff parameters
-    ctr.landing.en = 1;
+    ctr.landing.en = 0;
     ctr.landing.time = 0.5;
     ctr.takeoff.en = 1;
-    ctr.takeoff.time = 0.8;
+    ctr.takeoff.time = 0.2;
     ctr.rd_d_filt = 1;
 
     % Attitude controller gains [ att_d att_p pos_d pos_p ] [0.55 0.5 0.4 0.35]
-    ctr.factor = [0.95 0.82 0.82 0.77]; % Bee 1 
+    ctr.factor = [0.95 0.8 0.75 0.72]; % Bee 1 
     % ctr.factor = [0.95 0.8 0.89 0.82]; % Bee 2 
     % ctr.factor = [0.95 0.8 0.89 0.82]; % Bee 3
     ctr.gains = [62   798    6631   13608;     % #1 pakpong nominal gains

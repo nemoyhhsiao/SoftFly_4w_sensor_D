@@ -3,7 +3,7 @@
 clc, clear, close all
 
 % Add path to subfolder
-addpath("model","function","torque_observer","estimator");
+addpath("model","function","torque_observer","estimator","ukf");
 
 % Simulink model
 model_name = 'controller14';
@@ -19,7 +19,7 @@ rsim.en = 0;
 mdl.rerun = 0;
 
 % Flight time for the model
-mdl.flight_time = 30;
+mdl.flight_time = 10;
 
 % Initialize controller parameters
 [ctr, mdl] = make_controller(mdl);
@@ -47,6 +47,10 @@ som = make_somersault(mdl, rsim);
 
 ctr2 = ctr; % some Simulink parameters are from 2-robot controller
 rbt2 = rbt; % some Simulink parameters are from 2-robot controller
+
+% Initialize UKF
+[ukf_sys, ukf_s0, ukf_P0_flat, ukf_prediction_time, ukf_use_prediction, ukf_params] = controller_setup_ukf(rbt, mdl, rsim);
+
 
 % Automatically update control parameters for simulation
 % if rsim.en

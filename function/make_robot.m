@@ -1,7 +1,7 @@
 function [rbt] = make_robot()
 
     % Robot pysical parameters
-    rbt.m = 4 * 225e-6;      % mass in kg 225 / 200 / 225 / 300
+    rbt.m = 4 * 300e-6;      % mass in kg 225 / 200 / 225 / 300
     rbt.ixx = 0.55*1e-7;    % MoI 0.55 / 0.445 / 0.55
     rbt.iyy = 0.55*1e-7;    % MoI 0.55 / 0.445 / 0.55
     rbt.izz = 0.55*1e-7 * 4;  % MoI

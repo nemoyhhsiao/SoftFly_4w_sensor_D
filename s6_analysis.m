@@ -29,7 +29,7 @@ ShowPlot.ThisScreen     = 1;
 ShowPlot.NextScreen_4K  = 0;
 ShowPlot.velocity       = 1;
 ShowPlot.z_b            = 0;
-ShowPlot.omega          = 1;
+ShowPlot.omega          = 0;
 ShowPlot.acceleration   = 0;
 ShowPlot.realtime3D     = 0;
 ShowPlot.angle_comp     = 1;
@@ -75,10 +75,10 @@ rst.pdesp.desx = rst_p_vs_p_des.signals(2).values(:,1);
 rst.pdesp.desy = rst_p_vs_p_des.signals(2).values(:,2);
 rst.pdesp.desz = rst_p_vs_p_des.signals(2).values(:,3);
 
-rst.EulXYZ.t  = rst_Eul_XYZ.time;
-rst.EulXYZ.x  = rst_Eul_XYZ.signals.values(:,1);
-rst.EulXYZ.y  = rst_Eul_XYZ.signals.values(:,2);
-rst.EulXYZ.z  = rst_Eul_XYZ.signals.values(:,3);
+% rst.EulXYZ.t  = rst_Eul_XYZ.time;
+% rst.EulXYZ.x  = rst_Eul_XYZ.signals.values(:,1);
+% rst.EulXYZ.y  = rst_Eul_XYZ.signals.values(:,2);
+% rst.EulXYZ.z  = rst_Eul_XYZ.signals.values(:,3);
 
 % Sensor Euler angle XYZ
 rst.SenEulXYZ.x  = rst_sensor_EulXYZ.signals.values(:,1);
@@ -103,15 +103,15 @@ rst.EulZXY.z = rst.EulZXY.zxy(:,1);
 rst.EulZXY.y = rst.EulZXY.zxy(:,3);
 rst.EulZXY.x = rst.EulZXY.zxy(:,2);
 
-rst.ome.t     = rst_omega_b.time;
-rst.ome.x     = rst_omega_b.signals(2).values(:,1);
-rst.ome.y     = rst_omega_b.signals(2).values(:,2);
-rst.ome.z     = rst_omega_b.signals(2).values(:,3);
-
-rst.ome.t     = rst_omega_b.time;
-rst.ome.raw_x = rst_omega_b.signals(1).values(:,1);
-rst.ome.raw_y = rst_omega_b.signals(1).values(:,2);
-rst.ome.raw_z = rst_omega_b.signals(1).values(:,3);
+% rst.ome.t     = rst_omega_b.time;
+% rst.ome.x     = rst_omega_b.signals(2).values(:,1);
+% rst.ome.y     = rst_omega_b.signals(2).values(:,2);
+% rst.ome.z     = rst_omega_b.signals(2).values(:,3);
+% 
+% rst.ome.t     = rst_omega_b.time;
+% rst.ome.raw_x = rst_omega_b.signals(1).values(:,1);
+% rst.ome.raw_y = rst_omega_b.signals(1).values(:,2);
+% rst.ome.raw_z = rst_omega_b.signals(1).values(:,3);
 
 rst.tor.x     = rst_torque_b.signals(1).values(:,1); %.*9.8e-6;
 rst.tor.y     = rst_torque_b.signals(2).values(:,1); %.*9.8e-6;
@@ -286,7 +286,7 @@ if ShowPlot.angle
     plot([rst.t.stop, rst.t.stop],[rad2deg(min(min(min(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z))), rad2deg(max(max(max(rst.EulXYZ.x,rst.EulXYZ.y),rst.EulXYZ.z)))],'k--','linewidth',1)
     % xlim([rst.t.start, rst.t.stop])
     % ylim([-20 20])
-    xlim([5,15])
+
     hold off
     title('euler angles XYZ')
 %     ylim([-pi,pi])

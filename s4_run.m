@@ -38,18 +38,18 @@ sd.filename = sd.folder + sd.robot + sd.date + sd.filetype;
 save(sd.filename);
 
 % details for saving archived data (sda.)
-if rsim.en ~= 1 && mdl.rerun ~= 1 
-    sda.folder   = "data/";
-    sda.name     = "archived_";
-    sda.date     = string(datetime('now','Format','yyyy-MM-dd_HH-mm-ss'));
-    sda.filetype = ".mat";
-    sda.filename = sda.folder + sda.name + sda.date + sda.filetype;
-    
-    archived_data_ready = rst_vicon_data_ready.signals.values;
-    archived_p_raw      = rst_p_raw.signals.values;
-    archived_Eul_XYZ    = rst_Eul_XYZ.signals.values;
-    save(sda.filename, "archived_data_ready","archived_p_raw","archived_Eul_XYZ");
-end
+% if rsim.en ~= 1 && mdl.rerun ~= 1 
+%     sda.folder   = "data/";
+%     sda.name     = "archived_";
+%     sda.date     = string(datetime('now','Format','yyyy-MM-dd_HH-mm-ss'));
+%     sda.filetype = ".mat";
+%     sda.filename = sda.folder + sda.name + sda.date + sda.filetype;
+% 
+%     archived_data_ready = rst_vicon_data_ready.signals.values;
+%     archived_p_raw      = rst_p_raw.signals.values;
+%     archived_Eul_XYZ    = rst_Eul_XYZ.signals.values;
+%     save(sda.filename, "archived_data_ready","archived_p_raw","archived_Eul_XYZ");
+% end
 
 % show in command windows
 disp(' ')
