@@ -14,9 +14,9 @@ function [ctr, mdl] = make_controller(mdl)
 
     % Voltage offset (for openloop or closedloop: rbt.m * g + DV)
     % ctr.DV = [122 162 180 227]; % Bee1 6mm
-    % ctr.DV = [50 47 155 52] - 150 ; % Bee2 4mm
+    % ctr.DV = [50 47 51 50] - 150 ; % Bee2 4mm
     % ctr.DV = [245 205 280 260]; % Bee3 6mm    
-    ctr.DV = [190 70 140 125]; % Bee3 6mm per Tony's request on rbt.m
+    ctr.DV = [162 112 152 135]; % Bee3 6mm per Tony's request on rbt.m 2024.12.10
 
     % Voltage for connection checking (DV only)
     % ctr.DV = [-2000 -2000 -2000 1000];
@@ -33,18 +33,18 @@ function [ctr, mdl] = make_controller(mdl)
     % Setpoint (relative to the initital position)
     ctr.setpoint.x = 0;
     ctr.setpoint.y = 0;
-    ctr.setpoint.z = 0.02;
+    ctr.setpoint.z = 0.03;
     ctr.setpoint.yaw = deg2rad(0);
 
     % Landing and takeoff parameters
     ctr.landing.en = 0;
     ctr.landing.time = 0.5;
     ctr.takeoff.en = 1;
-    ctr.takeoff.time = 0.2;
+    ctr.takeoff.time = 1;
     ctr.rd_d_filt = 1;
 
     % Attitude controller gains [ att_d att_p pos_d pos_p ] [0.55 0.5 0.4 0.35]
-    ctr.factor = [0.95 0.8 0.75 0.72]; % Bee 1 
+    ctr.factor = [0.95 0.8 0.54 0.49]; % Bee 1 [0.95 0.8 0.73 0.7]
     % ctr.factor = [0.95 0.8 0.89 0.82]; % Bee 2 
     % ctr.factor = [0.95 0.8 0.89 0.82]; % Bee 3
     ctr.gains = [62   798    6631   13608;     % #1 pakpong nominal gains
@@ -67,7 +67,7 @@ function [ctr, mdl] = make_controller(mdl)
     ctr.gain.at2  = ctr.gains(ctr.gain.n,2); % attitude p
     ctr.gain.at1  = ctr.gains(ctr.gain.n,3); % position d
     ctr.gain.at0  = ctr.gains(ctr.gain.n,4); % position p
-    ctr.gain.ati  = 2e-4 *0.5; % world p error to body torque -> i gain
+    ctr.gain.ati  = 2e-4 *0.0005; % world p error to body torque -> i gain
     ctr.gain.atfd = ctr.gain.at0 * 0; 
     
     % Attitude controller divide by g factor
@@ -76,8 +76,8 @@ function [ctr, mdl] = make_controller(mdl)
     ctr.gain.atmg.factor.y = 2.1;
 
     % Altitude controller gains (altitude)
-    ctr.gain.al0  = 150 * 0.5;    % p gain [0.55]
-    ctr.gain.al1  = 30  * 0.65;   % d gain [0.9]
+    ctr.gain.al0  = 150 * 0.35;    % p gain [0.55]
+    ctr.gain.al1  = 30  * 0.5;   % d gain [0.9]
     ctr.gain.ali  = 15  * 0.7;    % i gain [15]
     ctr.gain.alfd = 0.01;          % feedforward (tether weight)
 

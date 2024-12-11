@@ -8,22 +8,22 @@ ShowPlot.angle          = 1;
 ShowPlot.driveSignal    = 1;
 ShowPlot.voltage        = 1;
 ShowPlot.torque         = 1;
-ShowPlot.forceZ         = 1;
-ShowPlot.iTorque        = 1;
-ShowPlot.iForceZ        = 1;
+ShowPlot.forceZ         = 0;
+ShowPlot.iTorque        = 0;
+ShowPlot.iForceZ        = 0;
 ShowPlot.en             = 0;
 ShowPlot.iCompareX      = 0;
 ShowPlot.iCompareY      = 0;
 ShowPlot.iCompareZ      = 0;
 ShowPlot.iCompareF      = 0;
-ShowPlot.yawControl     = 1;
-ShowPlot.yawControlPD   = 1;
+ShowPlot.yawControl     = 0;
+ShowPlot.yawControlPD   = 0;
 ShowPlot.TorqueControlX = 1;
 ShowPlot.TorqueControlY = 0;
-ShowPlot.x_offset       = 1;
-ShowPlot.y_offset       = 1;
+ShowPlot.x_offset       = 0;
+ShowPlot.y_offset       = 0;
 ShowPlot.Tor2Ang        = 0;
-ShowPlot.volt_comp      = 1;
+ShowPlot.volt_comp      = 0;
 ShowPlot.extTorq        = 1;
 ShowPlot.ThisScreen     = 1;
 ShowPlot.NextScreen_4K  = 0;
@@ -32,7 +32,7 @@ ShowPlot.z_b            = 0;
 ShowPlot.omega          = 0;
 ShowPlot.acceleration   = 0;
 ShowPlot.realtime3D     = 0;
-ShowPlot.angle_comp     = 1;
+ShowPlot.angle_comp     = 0;
 
 %% get simulation result from out
 
@@ -85,23 +85,23 @@ rst.SenEulXYZ.x  = rst_sensor_EulXYZ.signals.values(:,1);
 rst.SenEulXYZ.y  = rst_sensor_EulXYZ.signals.values(:,2);
 rst.SenEulXYZ.z  = rst_sensor_EulXYZ.signals.values(:,3);
 
-rst.rotm = eul2rotm([rst.EulXYZ.x, rst.EulXYZ.y , rst.EulXYZ.z], 'XYZ');
-rst.rot.R = rst.rotm;
-rst.rot.R1 = rst.rot.R(:,1,:);
-rst.rot.R2 = rst.rot.R(:,2,:);
-rst.rot.R3 = rst.rot.R(:,3,:);
+% rst.rotm = eul2rotm([rst.EulXYZ.x, rst.EulXYZ.y , rst.EulXYZ.z], 'XYZ');
+% rst.rot.R = rst.rotm;
+% rst.rot.R1 = rst.rot.R(:,1,:);
+% rst.rot.R2 = rst.rot.R(:,2,:);
+% rst.rot.R3 = rst.rot.R(:,3,:);
 
-rst.EulZYX.t  = rst_Eul_XYZ.time;
-rst.EulZYX.zyx = rotm2eul(rst.rotm, 'ZYX');
-rst.EulZYX.z = rst.EulZYX.zyx(:,1);
-rst.EulZYX.y = rst.EulZYX.zyx(:,2);
-rst.EulZYX.x = rst.EulZYX.zyx(:,3);
+% rst.EulZYX.t  = rst_Eul_XYZ.time;
+% rst.EulZYX.zyx = rotm2eul(rst.rotm, 'ZYX');
+% rst.EulZYX.z = rst.EulZYX.zyx(:,1);
+% rst.EulZYX.y = rst.EulZYX.zyx(:,2);
+% rst.EulZYX.x = rst.EulZYX.zyx(:,3);
 
-rst.EulZXY.t  = rst_Eul_XYZ.time;
-rst.EulZXY.zxy = rotm2eul(rst.rotm, 'ZXY');
-rst.EulZXY.z = rst.EulZXY.zxy(:,1);
-rst.EulZXY.y = rst.EulZXY.zxy(:,3);
-rst.EulZXY.x = rst.EulZXY.zxy(:,2);
+% rst.EulZXY.t  = rst_Eul_XYZ.time;
+% rst.EulZXY.zxy = rotm2eul(rst.rotm, 'ZXY');
+% rst.EulZXY.z = rst.EulZXY.zxy(:,1);
+% rst.EulZXY.y = rst.EulZXY.zxy(:,3);
+% rst.EulZXY.x = rst.EulZXY.zxy(:,2);
 
 % rst.ome.t     = rst_omega_b.time;
 % rst.ome.x     = rst_omega_b.signals(2).values(:,1);
@@ -635,7 +635,7 @@ end
 
 
 %% torque to angular accelaration 
-if 1 %ShowPlot.Tor2Ang
+if ShowPlot.Tor2Ang
 
     % design filter
     d1 = designfilt("lowpassiir",'FilterOrder', 2, ...
